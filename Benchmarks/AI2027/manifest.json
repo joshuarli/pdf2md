@@ -1,0 +1,13 @@
+{
+  "sourceFilename": "ai-2027.pdf",
+  "sourceURL": "https://ai-2027.com/ai-2027.pdf",
+  "sha256": "7c7c672f66bc683369c0912c652edff2ac92eda358db246064d6ade7d6d62525",
+  "byteSize": 8863479,
+  "pageCount": 71,
+  "goldenFilename": "golden.md",
+  "rasterFilename": "ai-2027-raster.pdf",
+  "bornDigitalTextMatch": 0.99,
+  "rasterTextMatch": 0.95,
+  "rasterNovelText": 0.01,
+  "pageFloor": 0.85
+}
