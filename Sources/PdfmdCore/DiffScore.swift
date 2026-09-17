@@ -28,7 +28,7 @@ public struct ScoreReport: Sendable {
 }
 
 public func scoreTokens(gold: [String], candidate: [String]) -> ScoreReport {
-    let matches = myersMatches(gold: gold, candidate: candidate)
+    let matches = alignTokens(gold: gold, candidate: candidate)
     var deletions = 0
     var insertions = 0
     var replacements = 0
@@ -60,14 +60,73 @@ public func scoreTokens(gold: [String], candidate: [String]) -> ScoreReport {
     )
 }
 
-/// Myers greedy LCS: returns matched (goldIndex, candidateIndex) pairs in
-/// order. Two phases: a forward-only pass finds the edit distance with O(D)
-/// memory, then a second pass records the trace for backtracking. Inputs
-/// whose distance exceeds `maximumD` (or whose sizes already prove it)
-/// abort to no matches instead of exploding time/memory, and the report
-/// still shows the honest token counts with a 0% match. Legitimate
-/// candidate-vs-gold comparisons of the same document stay far below the
-/// cap; catastrophic drafts fail loudly instead of hanging the runner.
+/// Patience alignment: tokens unique to both windows anchor the comparison
+/// and Myers runs within the pieces between anchors. Moved blocks (gold
+/// footnotes at page end vs candidate footnotes inline) become
+/// honestly-counted change hunks instead of pushing the global edit distance
+/// past measurability. Windows with no unique anchor fall back to capped
+/// Myers, which aborts divergent spans to all-change.
+func alignTokens(gold: [String], candidate: [String], maximumWindowProduct: Int = 4_000_000) -> [(Int, Int)] {
+    patience(gold: gold, g0: 0, g1: gold.count, candidate: candidate, c0: 0, c1: candidate.count, maximumWindowProduct: maximumWindowProduct)
+}
+
+func patience(
+    gold: [String], g0: Int, g1: Int,
+    candidate: [String], c0: Int, c1: Int,
+    maximumWindowProduct: Int
+) -> [(Int, Int)] {
+    if g0 >= g1 || c0 >= c1 { return [] }
+    if (g1 - g0) * (c1 - c0) <= maximumWindowProduct {
+        return myersMatches(
+            gold: Array(gold[g0..<g1]),
+            candidate: Array(candidate[c0..<c1])
+        ).map { ($0 + g0, $1 + c0) }
+    }
+    // Unique-in-window anchor nearest the middle keeps recursion balanced.
+    var goldCounts: [String: Int] = [:]
+    for i in g0..<g1 { goldCounts[gold[i], default: 0] += 1 }
+    var candIndex: [String: Int] = [:]
+    var candCounts: [String: Int] = [:]
+    for i in c0..<c1 {
+        candCounts[candidate[i], default: 0] += 1
+        candIndex[candidate[i]] = i
+    }
+    let mid = (g0 + g1) / 2
+    var anchor: (Int, Int)?
+    var radius = 0
+    while anchor == nil {
+        let lo = mid - radius
+        let hi = mid + radius
+        if lo < g0 && hi >= g1 { break }
+        for i in [lo, hi] {
+            guard i >= g0, i < g1 else { continue }
+            let token = gold[i]
+            if goldCounts[token] == 1, candCounts[token] == 1, let c = candIndex[token] {
+                anchor = (i, c)
+                break
+            }
+        }
+        radius += 1
+    }
+    guard let (ga, ca) = anchor else {
+        // No anchor: capped Myers decides (usually aborts to all-change).
+        return myersMatches(
+            gold: Array(gold[g0..<g1]),
+            candidate: Array(candidate[c0..<c1])
+        ).map { ($0 + g0, $1 + c0) }
+    }
+    return patience(gold: gold, g0: g0, g1: ga, candidate: candidate, c0: c0, c1: ca, maximumWindowProduct: maximumWindowProduct)
+        + [(ga, ca)]
+        + patience(gold: gold, g0: ga + 1, g1: g1, candidate: candidate, c0: ca + 1, c1: c1, maximumWindowProduct: maximumWindowProduct)
+}
+/// Myers greedy LCS over one window. Two phases: a forward-only pass finds
+/// the edit distance with O(D) memory, then a second pass records the trace
+/// for backtracking. Inputs whose distance exceeds `maximumD` (or whose
+/// sizes already prove it) abort to no matches instead of exploding
+/// time/memory, and the report still shows the honest token counts with a
+/// 0% match. Legitimate candidate-vs-gold comparisons of the same document
+/// stay far below the cap; catastrophic drafts fail loudly instead of
+/// hanging the runner.
 func myersMatches(gold: [String], candidate: [String], maximumD: Int = 5_000) -> [(Int, Int)] {
     let n = gold.count
     let m = candidate.count

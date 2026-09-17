@@ -3,7 +3,9 @@
 /// ever revises this draft.
 
 public func renderPage(_ page: PageIR) -> String {
-    page.blocks.map { renderBlock($0.kind) }.joined(separator: "\n\n")
+    (page.blocks.map { renderBlock($0.kind) }
+        + page.footnoteDefinitions.map { "[^\($0.marker)]: \($0.text)" })
+        .joined(separator: "\n\n")
 }
 
 public func renderDocument(pages: [PageIR]) -> String {

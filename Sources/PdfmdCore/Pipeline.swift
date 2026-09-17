@@ -36,6 +36,8 @@ public struct Pipeline: Sendable {
         var nativeText: String
         var image: CGImage
         var size: CGSize
+        /// Native lines with dominant type size, for footnote segmentation.
+        var fontLines: [(size: Double, text: String)]
     }
 
     public func convert(
@@ -59,6 +61,7 @@ public struct Pipeline: Sendable {
             page.blocks = reconciled.blocks
             if reconciled.disagreement { page.complexity.nativeVisionDisagreement = true }
             page.blocks = deduplicate(page.blocks)
+            page.blocks = suppressUnsupportedScript(blocks: page.blocks, nativeText: payload.nativeText, quality: quality)
             page.blocks = orderBlocksForReading(page.blocks)
             page.complexity = detectComplexity(page)
             document.append(page)
@@ -67,6 +70,23 @@ public struct Pipeline: Sendable {
         // Pass 2: document-level cleanup over lightweight IR.
         let stripped = stripRepeatedFurniture(pages: document.map(\.blocks))
         for index in document.indices { document[index].blocks = stripped[index] }
+
+        // Footnote relocation to page-end definitions (gold layout §23).
+        // Native-guided when the layer is trustworthy, geometric otherwise.
+        let payloadsByNumber = Dictionary(uniqueKeysWithValues: payloads.map { ($0.pageNumber, $0) })
+        for index in document.indices {
+            let relocated: RelocatedFootnotes
+            if let payload = payloadsByNumber[document[index].pageNumber],
+                document[index].nativeTextQuality == .trustworthy
+            {
+                relocated = relocateFootnotesWithNative(
+                    blocks: document[index].blocks, nativeLines: payload.fontLines)
+            } else {
+                relocated = relocateFootnotes(document[index].blocks)
+            }
+            document[index].blocks = relocated.blocks
+            document[index].footnoteDefinitions = relocated.definitions
+        }
 
         // Pass 3: deterministic Markdown for every page.
         var drafts = document.map { renderPage($0) }
@@ -144,7 +164,10 @@ public struct Pipeline: Sendable {
             guard let image = renderCGImage(of: pdfPage, dpi: dpi) else {
                 throw PDFSourceError.renderFailed(page: pageNumber)
             }
-            payloads.append(PagePayload(pageNumber: pageNumber, nativeText: text, image: image, size: size))
+            payloads.append(PagePayload(
+                pageNumber: pageNumber, nativeText: text, image: image, size: size,
+                fontLines: fontLines(of: pdfPage)
+            ))
         }
         return payloads
     }

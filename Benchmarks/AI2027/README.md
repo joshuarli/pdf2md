@@ -38,12 +38,19 @@ novel text, no substantive page below ~85%.
 
 ## Baselines (record here as they land)
 
-- A: `PDFPage.string` only — _pending_
+- A: `PDFPage.string` only — 93.06% match / 4.7% novel (raw native join vs
+  gold; the gap is the curation delta: footnote relocation, dropped running
+  heads, rebuilt tables, hyphen joins)
 - B: `RecognizeDocumentsRequest` only — _pending_
 - C: Vision + deterministic Markdown — _pending_
 - D: + native reconciliation — _pending_
 - E: + text-only FM repair (macOS 26) — _pending_
 - Final: + selective multimodal repair (macOS 27+) — _pending_
+
+First pipeline measurement (deterministic, pre-footnote-relocation):
+77.46% match / 17.3% novel, 44,213/45,328 gold tokens matched. The penalty
+is almost entirely insertions (9.1k: inline footnote markers, running-head
+residue, OCR confetti, sidebar duplication) — text recall is already 97.5%.
 
 ## Ambiguous gold decisions
 

@@ -69,10 +69,31 @@ public func deduplicateOverlappingText(_ blocks: [PageBlock], threshold: Double 
         return $0.offset < $1.offset
     }
     var suppressed = Set<Int>()
+    // Token bags for the coverage check: containment alone is not
+    // duplication (a footnote lives inside its column's bounding box).
+    let bags = blocks.map { block -> [String: Int] in
+        var counts: [String: Int] = [:]
+        for token in dedupTokens(block.kind.plainText) {
+            counts[token, default: 0] += 1
+        }
+        return counts
+    }
+    func coverage(_ inner: Int, _ outer: Int) -> Double {
+        let innerBag = bags[inner]
+        let total = innerBag.values.reduce(0, +)
+        guard total > 0 else { return 0 }
+        var covered = 0
+        for (token, count) in innerBag {
+            covered += min(count, bags[outer][token, default: 0])
+        }
+        return Double(covered) / Double(total)
+    }
     for (i, a) in ordered {
         guard !suppressed.contains(i) else { continue }
         for (j, b) in ordered where j != i && !suppressed.contains(j) {
-            if b.region.isSubstantiallyContained(in: a.region, threshold: threshold) {
+            if b.region.isSubstantiallyContained(in: a.region, threshold: threshold)
+                && coverage(j, i) >= threshold
+            {
                 suppressed.insert(j)
             }
         }
@@ -80,6 +101,13 @@ public func deduplicateOverlappingText(_ blocks: [PageBlock], threshold: Double 
     return blocks.enumerated().filter { !suppressed.contains($0.offset) }.map(\.element)
 }
 
+/// Token bags for dedup comparison. Hyphen-blind: Vision splits wrapped
+/// words ("align- \\n ment") while native text joins them ("alignment");
+/// comparing with hyphens removed keeps wrap artifacts from defeating
+/// coverage. Only used to DECIDE duplication — kept text stays verbatim.
+func dedupTokens(_ text: String) -> [String] {
+    tokenize(normalizeForScoring(text.replacingOccurrences(of: "-", with: "")))
+}
 /// Suppress textually redundant blocks regardless of geometry. Vision emits
 /// whole-page transcripts once per strip/region (ai-2027.pdf cover: eleven
 /// disjoint strips, identical text), which geometric containment cannot see.
@@ -96,7 +124,7 @@ public func deduplicateIdenticalText(
         let tokens: [String]
         switch block.kind {
         case .title(let text), .heading(_, let text), .paragraph(let text):
-            tokens = tokenize(normalizeForScoring(text))
+            tokens = dedupTokens(text)
         case .list, .table:
             return true
         }
@@ -117,6 +145,35 @@ public func deduplicateIdenticalText(
     }
 }
 
+/// Suppress blocks in a script the native layer never uses. When the
+/// trustworthy native text has no CJK characters, a short CJK-only Vision
+/// block ("良良。包良" hallucinated from a graphic) is OCR confetti, not
+/// content. Gated on script evidence, not language: a genuinely mixed
+/// document keeps everything.
+public func suppressUnsupportedScript(
+    blocks: [PageBlock],
+    nativeText: String,
+    quality: NativeTextQuality,
+    maximumTokens: Int = 6
+) -> [PageBlock] {
+    guard quality == .trustworthy, !nativeText.contains(where: isCJK) else { return blocks }
+    return blocks.filter { block in
+        let text: String
+        switch block.kind {
+        case .title(let value), .heading(_, let value), .paragraph(let value):
+            text = value
+        case .list, .table:
+            return true
+        }
+        let hasLatin = text.contains { $0.isASCII && ($0.isLetter || $0.isNumber) }
+        if !hasLatin, text.contains(where: isCJK),
+            tokenize(normalizeForScoring(text)).count <= maximumTokens
+        {
+            return false
+        }
+        return true
+    }
+}
 /// Suppress OCR confetti: small regions carrying little text (a misread
 /// dashboard caption, "囵", "E", axis labels) from graphics Vision tried to
 /// read as prose. Footnotes, margin notes, headings, and real one-line

@@ -82,34 +82,82 @@ public func reconcileParagraphs(
     let nativeParas = splitNativeParagraphs(nativeText)
     guard !nativeParas.isEmpty else { return (blocks, false) }
     let nativeTokenized = nativeParas.map { tokenize(normalizeForScoring($0)) }
+    // Titles/headings match against native LINES: a display title sits on
+    // one line, while paragraph grouping would glue it to its body.
+    let nativeLines = nativeText.components(separatedBy: .newlines)
+        .map { $0.trimmingCharacters(in: .whitespaces) }
+        .filter { !$0.isEmpty }
+    let nativeLineTokenized = nativeLines.map { tokenize(normalizeForScoring($0)) }
+
+    /// Title/heading match against native lines. Titles are short and OCR
+    /// mangles them hard ("CODERIN FARLY"), so the threshold is lower — but
+    /// the native line must be about the same length, otherwise a two-word
+    /// title would happily adopt a whole sentence that shares its words
+    /// ("AI 2027" must not become "AI 2027 We predict..."). Very short
+    /// titles stay strict: one shared word must not retitle a stub.
+    func bestTitleMatch(_ visionTokens: [String]) -> String? {
+        guard !visionTokens.isEmpty else { return nil }
+        let found = findBest(visionTokens, candidates: Array(zip(nativeLines, nativeLineTokenized)))
+        let threshold = visionTokens.count <= 4 ? 0.75 : 0.4
+        guard found.ratio >= threshold else { return nil }
+        let nativeCount = tokenize(normalizeForScoring(found.text)).count
+        guard abs(nativeCount - visionTokens.count) <= max(3, visionTokens.count / 2) else { return nil }
+        return found.text
+    }
+
+    /// Best native candidate regardless of threshold, so the disagreement
+    /// signal sees misses as well as hits.
+    func findBest(
+        _ visionTokens: [String],
+        candidates: [(String, [String])]
+    ) -> (text: String, ratio: Double) {
+        guard !visionTokens.isEmpty else { return ("", 0) }
+        var bestRatio = 0.0
+        var bestText = ""
+        for (text, tokens) in candidates {
+            guard !tokens.isEmpty else { continue }
+            let ratio = Double(longestOrderedMatchCount(tokens, visionTokens)) / Double(visionTokens.count)
+            if ratio > bestRatio {
+                bestRatio = ratio
+                bestText = text
+            }
+        }
+        return (bestText, bestRatio)
+    }
 
     var ratios: [Double] = []
     let reconciled = blocks.map { block -> PageBlock in
-        guard case .paragraph(let visionText) = block.kind else { return block }
-        let visionTokens = tokenize(normalizeForScoring(visionText))
-        guard !visionTokens.isEmpty else { return block }
-        var bestRatio = 0.0
-        var bestPara = ""
-        for (para, tokens) in zip(nativeParas, nativeTokenized) {
-            guard !tokens.isEmpty else { continue }
-            let matched = longestOrderedMatchCount(tokens, visionTokens)
-            let ratio = Double(matched) / Double(visionTokens.count)
-            if ratio > bestRatio {
-                bestRatio = ratio
-                bestPara = para
-            }
-        }
-        ratios.append(bestRatio)
-        // Short blocks get a one-token allowance (see shouldPreferNative).
-        if bestRatio >= minimumAgreement
-            || (visionTokens.count <= 8 && bestRatio * Double(visionTokens.count) + 1 >= Double(visionTokens.count))
-        {
+        switch block.kind {
+        case .paragraph(let visionText):
+            let visionTokens = tokenize(normalizeForScoring(visionText))
+            guard !visionTokens.isEmpty else { return block }
+            let found = findBest(visionTokens, candidates: Array(zip(nativeParas, nativeTokenized)))
+            ratios.append(found.ratio)
+            let ok = found.ratio >= minimumAgreement
+                || (visionTokens.count <= 8
+                    && found.ratio * Double(visionTokens.count) + 1 >= Double(visionTokens.count))
+            guard ok else { return block }
             var swapped = block
-            swapped.kind = .paragraph(bestPara)
+            swapped.kind = .paragraph(found.text)
             swapped.source = .reconciled
             return swapped
+        case .title(let visionText):
+            let visionTokens = tokenize(normalizeForScoring(visionText))
+            guard let match = bestTitleMatch(visionTokens) else { return block }
+            var swapped = block
+            swapped.kind = .title(match)
+            swapped.source = .reconciled
+            return swapped
+        case .heading(let level, let visionText):
+            let visionTokens = tokenize(normalizeForScoring(visionText))
+            guard let match = bestTitleMatch(visionTokens) else { return block }
+            var swapped = block
+            swapped.kind = .heading(level: level, text: match)
+            swapped.source = .reconciled
+            return swapped
+        case .list, .table:
+            return block
         }
-        return block
     }
     let mean = ratios.isEmpty ? 1 : ratios.reduce(0, +) / Double(ratios.count)
     return (reconciled, mean < 0.6)

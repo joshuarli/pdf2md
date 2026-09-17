@@ -14,6 +14,23 @@ import Testing
     #expect(report.deletions == 0 && report.insertions == 0)
 }
 
+@Test func movedBlockScoresAsChangeNotCatastrophe() {
+    // Footnote at page end (gold) vs inline (candidate): patience anchors
+    // around the move keep measurement feasible. Standard diff semantics
+    // count a move twice (deletion here, insertion there) — only adjacent
+    // delete+insert runs pair into replacements. This is precisely why the
+    // pipeline must learn gold's footnote placement (plan.md Phase 3)
+    // instead of the scorer pretending moves are free.
+    let body = ["the", "quick", "brown", "fox", "jumps", "over", "over", "unique-anchor-one"]
+    let note = ["see", "the", "supplement", "unique-anchor-two"]
+    let gold = body + note
+    let candidate = ["the", "quick"] + note + ["brown", "fox", "jumps", "over", "over", "unique-anchor-one"]
+    let report = scoreTokens(gold: gold, candidate: candidate)
+    #expect(report.matchingTokens == 8)
+    #expect(report.deletions == 4 && report.insertions == 4)
+    #expect(abs(report.textMatch - (1 - 8.0 / 12.0)) < 1e-9)
+}
+
 @Test func normalizationStripsMarkdown() {
     #expect(normalizeForScoring("# Hello **world**") == "Hello world")
     #expect(normalizeForScoring("[text](https://example.com)") == "text")

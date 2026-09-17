@@ -11,6 +11,9 @@ public struct PageIR: Sendable {
     public var nativeTextQuality: NativeTextQuality
     public var blocks: [PageBlock]
     public var complexity: ComplexitySignals
+    /// Footnote definitions relocated out of the geometric flow, rendered
+    /// after the body ("[^5]: ..."). Empty until the relocation stage runs.
+    public var footnoteDefinitions: [FootnoteDefinition]
 
     public init(
         pageNumber: Int,
@@ -18,7 +21,8 @@ public struct PageIR: Sendable {
         pageHeight: Double,
         nativeTextQuality: NativeTextQuality = .empty,
         blocks: [PageBlock] = [],
-        complexity: ComplexitySignals = ComplexitySignals()
+        complexity: ComplexitySignals = ComplexitySignals(),
+        footnoteDefinitions: [FootnoteDefinition] = []
     ) {
         self.pageNumber = pageNumber
         self.pageWidth = pageWidth
@@ -26,6 +30,7 @@ public struct PageIR: Sendable {
         self.nativeTextQuality = nativeTextQuality
         self.blocks = blocks
         self.complexity = complexity
+        self.footnoteDefinitions = footnoteDefinitions
     }
 }
 
@@ -150,8 +155,9 @@ extension BlockKind {
 }
 
 extension PageIR {
-    /// Plain-text projection of the page in block order.
+    /// Plain-text projection of the page in block order, definitions last.
     public var plainText: String {
-        blocks.map(\.kind.plainText).joined(separator: "\n")
+        (blocks.map(\.kind.plainText) + footnoteDefinitions.map { "[^\($0.marker)]: \($0.text)" })
+            .joined(separator: "\n")
     }
 }

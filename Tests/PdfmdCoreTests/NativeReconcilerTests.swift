@@ -53,3 +53,17 @@ import Testing
     #expect(blocks[0].source == .vision)
     #expect(disagreement)
 }
+
+@Test func garbledTitleReconcilesToNativeLine() {
+    let native = "Some body text here.\nAppendix G - Why we forecast a superhuman coder in early 2027\nMore body text."
+    let (blocks, _) = reconcileParagraphs(
+        nativeText: native, quality: .trustworthy,
+        blocks: [PageBlock(kind: .title("APPENDIX C. WHY IVE FORECAST A SUPERBUMAN CODERIN FARLY 2027"), region: .fullPage, source: .vision)]
+    )
+    guard case .title(let text) = blocks[0].kind else {
+        Issue.record("expected title")
+        return
+    }
+    #expect(text == "Appendix G - Why we forecast a superhuman coder in early 2027")
+    #expect(blocks[0].source == .reconciled)
+}

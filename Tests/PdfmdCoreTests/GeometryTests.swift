@@ -53,6 +53,19 @@ func block(_ x: Double, _ y: Double, _ w: Double, _ h: Double, text: String = "t
     #expect(deduplicate([a, b]).count == 2)
 }
 
+@Test func footnoteInsideBodyBoxSurvives() {
+    // A footnote sitting inside its column's bounding box is not a
+    // duplicate: containment without textual coverage must not suppress.
+    let body = PageBlock(
+        kind: .paragraph("The quick brown fox jumps over the lazy dog near the riverbank today."),
+        region: NormalizedRect(x: 0.07, y: 0.1, width: 0.58, height: 0.6), source: .vision)
+    let footnote = PageBlock(
+        kind: .paragraph("See the supplement on fox behavior for details."),
+        region: NormalizedRect(x: 0.07, y: 0.6, width: 0.5, height: 0.05), source: .vision)
+    let result = deduplicate([body, footnote])
+    #expect(result.count == 2)
+}
+
 @Test func identicalStripsCollapse() {
     // Cover page: disjoint strips carrying the same whole-page transcript.
     let cover = "AI AI Futures Project 2027 Daniel Kokotajlo Scott Alexander Thomas Larsen Eli Lifland"
@@ -78,6 +91,17 @@ func block(_ x: Double, _ y: Double, _ w: Double, _ h: Double, text: String = "t
     let result = deduplicate([junk, label, caption, footnote])
     #expect(result.count == 1)
     #expect(result[0].kind.plainText.hasPrefix("A real footnote"))
+}
+
+@Test func foreignScriptConfettiSuppressed() {
+    let native = "An English document with no CJK characters at all."
+    let cjk = PageBlock(kind: .title("良良。包良"), region: NormalizedRect(x: 0.1, y: 0.4, width: 0.5, height: 0.05), source: .vision)
+    let body = PageBlock(kind: .paragraph("Genuine body text stays put."), region: .fullPage, source: .vision)
+    let cleaned = suppressUnsupportedScript(blocks: [cjk, body], nativeText: native, quality: .trustworthy)
+    #expect(cleaned.count == 1)
+    // Genuinely mixed documents keep everything.
+    let kept = suppressUnsupportedScript(blocks: [cjk, body], nativeText: native + " 日本語", quality: .trustworthy)
+    #expect(kept.count == 2)
 }
 
 @Test func bandSortOrdersRows() {
