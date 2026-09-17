@@ -8,7 +8,7 @@ The project should be unusually focused and small. The goal is not to recreate M
 pdfmd input.pdf
 ```
 
-implemented using the document-intelligence capabilities already shipped in macOS 27.
+implemented using the document-intelligence capabilities already shipped in macOS 26, with an opportunistic macOS 27 multimodal repair path.
 
 # 1. Core objective
 
@@ -36,7 +36,7 @@ Vision RecognizeDocumentsRequest
                        │                                      │
                        ▼                                      │
              Apple Foundation Models                         │
-             + original page image                           │
+             + page image (macOS 27+ only)                           │
              + structured extraction                         │
              + Markdown draft                                │
                        │                                      │
@@ -76,10 +76,10 @@ Do not describe ordinary illustrations unless their textual content belongs in t
 
 Target only:
 
-* macOS 27.0+
+* macOS 26.0+
 * Swift 6.3
 * Swift 6 language mode
-* Xcode 27 SDK/toolchain
+* Xcode 27 SDK/toolchain (compile with Xcode 27, deploy back to macOS 26)
 * Swift Package Manager
 * Apple Silicon
 * Terminal-driven development
@@ -121,9 +121,39 @@ Explicitly do not use:
 
 The release artifact should be a normal native Swift executable.
 
-`Package.swift` should use Swift tools 6.3, Swift 6 language mode, and a macOS 27 deployment target.
+`Package.swift` should use Swift tools 6.3, Swift 6 language mode, and a macOS 26 deployment target, compiling with the Xcode 27 SDK. The macOS 27-only code (page-image attachments) is isolated behind `if #available(macOS 27, *)`.
 
-Do not add compatibility code for macOS 26 or older.
+Do not add compatibility code for macOS 25 or older.
+
+## 2.1 macOS 26 vs macOS 27 capability split
+
+The only material macOS 27 dependency in this spec is Foundation Models
+seeing the rendered page as an image. Everything else — PDFKit extraction,
+rasterization, `RecognizeDocumentsRequest` structure, deterministic Markdown,
+reconciliation, text-only Foundation Models repair, and the full benchmark —
+runs on macOS 26.
+
+| Capability                              | macOS 26 | macOS 27 |
+| --------------------------------------- | -------: | -------: |
+| PDFKit native extraction                |        ✓ |        ✓ |
+| CoreGraphics PDF rasterization          |        ✓ |        ✓ |
+| `RecognizeDocumentsRequest` + structure |        ✓ |        ✓ |
+| Deterministic Markdown + reconciliation |        ✓ |        ✓ |
+| Text-only Foundation Models repair      |        ✓ |        ✓ |
+| **Pass page image to Foundation Models** |      No |      Yes |
+| `OCRTool` inside FM sessions            |       No |      Yes |
+
+Behavior follows the runtime, guarded with `if #available(macOS 27, *)`:
+
+```text
+macOS 26:  PDFKit → Vision → deterministic Markdown → optional text-only repair
+macOS 27+: PDFKit → Vision → deterministic Markdown → selective multimodal repair + page image
+```
+
+The benchmark therefore measures the deterministic pipeline first. If the
+macOS 26 stack already reaches the raster target, the 27 model path is polish
+with quantitative evidence, not a foundational dependency. Do not route a page
+class to visual repair unless it moves the benchmark.
 
 Do not create an Xcode project unless tooling itself requires temporary metadata. The repository should build from Terminal with SwiftPM.
 
@@ -534,7 +564,8 @@ Verify the exact current APIs for at least:
 * `SystemLanguageModel`
 * model availability
 * `LanguageModelSession`
-* image `Attachment`
+* image `Attachment` (macOS 27+; the 27-only call sites sit behind
+  `if #available(macOS 27, *)` while the deployment target stays macOS 26)
 * multimodal prompting
 * `GenerationOptions`
 * deterministic/greedy sampling facilities
@@ -1065,7 +1096,7 @@ RecognizeDocumentsRequest
 
 on rendered pages.
 
-Use the current macOS 27 API rather than older `VNRecognizeTextRequest` unless a specific fallback is proven necessary.
+Use the current macOS 26 API rather than older `VNRecognizeTextRequest` unless a specific fallback is proven necessary.
 
 Enable:
 
@@ -1307,7 +1338,7 @@ This should remain a small deterministic algorithm.
 
 # 25. Foundation Models are a repair stage, not OCR
 
-macOS 27 Foundation Models can reason over images.
+Starting with macOS 27, Foundation Models can reason over images. On macOS 26 the same repair stage runs text-only (structured Page IR plus the deterministic draft, no page image).
 
 Use that capability selectively.
 
@@ -1330,7 +1361,8 @@ because those provide:
 
 Foundation Models should be used only where semantic/visual reasoning provides real additional value.
 
-Do not replace `RecognizeDocumentsRequest` with Foundation Models `OCRTool`.
+Do not replace `RecognizeDocumentsRequest` with Foundation Models `OCRTool`
+(`OCRTool` is macOS 27+ in any case).
 
 Do not OCR the entire document twice merely because the API exists.
 
@@ -1369,11 +1401,15 @@ Prefer a handful of named signals over a mysterious weighted heuristic.
 
 Simple prose pages should not invoke the model.
 
+On macOS 26 the model never receives the page image, so only route page
+classes where structured-context repair demonstrably helps; visual-layout
+classes stay deterministic until the macOS 27 path is available.
+
 # 27. Multimodal repair prompt
 
 For a page selected for repair, provide the Foundation Model with:
 
-1. the original rendered page image
+1. the original rendered page image — macOS 27+ only, via image attachments
 2. a compact representation of structured Page IR
 3. the deterministic Markdown draft
 4. a short strict reconstruction instruction
@@ -1407,6 +1443,11 @@ Keep prompts compact.
 Apple's on-device model has a limited context budget.
 
 Do not dump irrelevant metadata into the model.
+
+On macOS 26 the page image is unavailable, so the repair prompt carries
+structured context only; the instruction's image-dependent clauses ("Use the
+page image only to resolve…", "over guessing characters from the image")
+apply only when an image attachment is present.
 
 # 28. Foundation Models sessions
 
@@ -1898,10 +1939,16 @@ Vision + deterministic Markdown
 Vision + native PDF reconciliation
 ```
 
+### Baseline E
+
+```text
+Vision + native reconciliation + text-only Foundation Models repair (macOS 26)
+```
+
 ### Final
 
 ```text
-Vision + native reconciliation + selective Foundation Models repair
+Vision + native reconciliation + selective multimodal repair (macOS 27+)
 ```
 
 Record these scores.
@@ -2092,7 +2139,7 @@ Write a concise README.
 Include:
 
 * what `pdfmd` does
-* macOS 27+ requirement
+* macOS 26+ requirement (macOS 27+ for visual Foundation Models repair)
 * build instructions
 * usage
 * local/privacy guarantee
@@ -2176,7 +2223,7 @@ Continue measuring.
 Only after deterministic extraction is already respectable:
 
 1. add complexity routing
-2. attach the original page image
+2. attach the original page image on macOS 27+ (`#available`; text-only context on macOS 26)
 3. provide compact Page IR + deterministic Markdown
 4. perform bounded repair
 5. validate fidelity
@@ -2204,7 +2251,7 @@ Do not call the project complete until all of the following are true.
 ## Build
 
 1. `Package.swift` uses Swift tools 6.3.
-2. Deployment target is macOS 27+.
+2. Deployment target is macOS 26+ (macOS 27-only code behind `#available`).
 3. There are zero package dependencies.
 4. `swift build` succeeds.
 5. `swift build -c release` succeeds.
@@ -2236,7 +2283,7 @@ Do not call the project complete until all of the following are true.
 
 23. Normal operation does not require Apple Intelligence.
 24. Foundation Models are used only selectively.
-25. Foundation Models receive the actual page image.
+25. On macOS 27+, Foundation Models repair receives the actual page image; on macOS 26 repair is text-only.
 26. Model failures fall back cleanly.
 27. Fidelity validation rejects fabricated text.
 28. No network requests occur.
@@ -2291,6 +2338,6 @@ Do not declare success based on a few visually inspected pages.
 
 The central success criterion is:
 
-> The raster-only pinned AI 2027 PDF achieves at least 95% normalized ordered textual fidelity against an independently frozen golden Markdown reference, with less than 1% novel text, while the entire implementation remains a focused zero-third-party-dependency Swift 6.3 macOS 27+ CLI.
+> The raster-only pinned AI 2027 PDF achieves at least 95% normalized ordered textual fidelity against an independently frozen golden Markdown reference, with less than 1% novel text, while the entire implementation remains a focused zero-third-party-dependency Swift 6.3 macOS 26+ CLI (macOS 27+ for the multimodal repair path).
 
 Aim for the smallest implementation that genuinely meets that standard.
