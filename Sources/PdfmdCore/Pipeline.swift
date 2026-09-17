@@ -93,18 +93,24 @@ public struct Pipeline: Sendable {
         // Pass 3: deterministic Markdown for every page.
         var drafts = document.map { renderPage($0) }
 
+        // An unavailable (or benchmark-disabled) model must not trigger a
+        // second rasterization pass just to return nil from every repair.
+        let modelAvailable = repairer.modelAvailable
         // Pass 4: selective repair. Re-render routed pages on demand.
         var debugs: [PageDebug] = []
         let collectDebug = options.debugDir != nil
         for index in document.indices {
             let page = document[index]
+            let deterministicDraft = drafts[index]
             var repaired: String?
             var accepted: Bool?
             var reason: String?
-            if router.routesToRepair(page) {
+            if modelAvailable && router.routesToRepair(page) {
+                let repairStart = Date()
                 progress("pdfmd: repairing page \(page.pageNumber)")
                 let image = try renderOnePage(pdfURL: pdfURL, pageNumber: page.pageNumber, dpi: dpi)
                 if let attempt = await repairer.repair(page: page, draft: drafts[index], pageImage: image) {
+                    progress("pdfmd: repaired page \(page.pageNumber) in \((Date().timeIntervalSince(repairStart) * 10).rounded() / 10)s")
                     switch validator.validate(deterministicText: page.plainText, repairedText: attempt) {
                     case .accepted:
                         drafts[index] = attempt
@@ -123,7 +129,7 @@ public struct Pipeline: Sendable {
                     nativeTextQuality: page.nativeTextQuality.rawValue,
                     nativeCharacters: page.plainText.count,
                     blocks: page.blocks.map(debugBlock),
-                    deterministicMarkdown: drafts[index],
+                    deterministicMarkdown: deterministicDraft,
                     repairedMarkdown: repaired,
                     repairAccepted: accepted,
                     repairReason: reason

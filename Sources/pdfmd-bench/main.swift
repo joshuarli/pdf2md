@@ -142,7 +142,7 @@ struct Bench {
                 guard let page = document.page(at: index) else { continue }
                 let lines = nativeTextLines(of: page)
                 let body = lines.map {
-                    String(format: "%.4f,%.4f,%.4f,%.4f\t%@",
+                    unsafe String(format: "%.4f,%.4f,%.4f,%.4f\t%@",
                            $0.region.x, $0.region.y, $0.region.width, $0.region.height, $0.text)
                 }.joined(separator: "\n")
                 let padded = String(repeating: "0", count: max(0, 4 - String(index + 1).count)) + String(index + 1)
