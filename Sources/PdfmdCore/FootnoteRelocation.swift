@@ -272,7 +272,9 @@ public func nativeFootnoteItems(_ lines: [(size: Double, text: String)]) -> [Nat
     }
     // Body type is the largest well-represented size (footnotes and margin
     // notes run smaller; the mode can misfire on footnote-heavy pages).
-    guard let bodySize = counts.filter({ $0.value >= 3 }).keys.max() else { return [] }
+    // Two body lines suffice on short pages; requiring three prevents even
+    // an exact, paired note from relocating in a short paragraph.
+    guard let bodySize = counts.filter({ $0.value >= 2 }).keys.max() else { return [] }
     var items: [NativeFootnoteItem] = []
     var curMarker: String?
     var curLines: [String] = []
@@ -592,21 +594,26 @@ public func relocateFootnotesWithNative(
 
     guard !definitions.isEmpty else { return relocateFootnotes(blocks) }
 
-    // Apply edits per block, latest positions first.
+    // Apply edits per block. Every edit range indexes the block's ORIGINAL
+    // text, so the only safe application is strictly end-to-start against an
+    // untouched copy (a page-20 span once shifted a pending range and crashed
+    // in replaceSubrange). Overlapping edits skip rather than corrupt.
     var texts: [String?] = blocks.map {
         if case .paragraph(let text) = $0.kind { return text }
         return nil
     }
     let grouped = Dictionary(grouping: edits, by: \.block)
     for (block, blockEdits) in grouped {
-        guard var text = texts[block] else { continue }
-        // Sort by range location descending. String.Index isn't Comparable
-        // across the sort directly—compare UTF-16 offsets.
+        guard let original = texts[block] else { continue }
         let sorted = blockEdits.sorted {
-            text.utf16.distance(from: text.startIndex, to: $0.range.lowerBound)
-                > text.utf16.distance(from: text.startIndex, to: $1.range.lowerBound)
+            original.utf16.distance(from: original.startIndex, to: $0.range.lowerBound)
+                > original.utf16.distance(from: original.startIndex, to: $1.range.lowerBound)
         }
+        var text = original
+        var appliedUpTo = original.endIndex
         for edit in sorted {
+            guard edit.range.upperBound <= appliedUpTo else { continue }
+            appliedUpTo = edit.range.lowerBound
             text.replaceSubrange(edit.range, with: edit.replacement)
         }
         while text.contains("  ") { text = text.replacingOccurrences(of: "  ", with: " ") }

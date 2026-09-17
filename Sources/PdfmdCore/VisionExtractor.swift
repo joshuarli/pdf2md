@@ -9,7 +9,11 @@ import Vision
 /// and language correction, per plan.md section 18. The returned `Container`
 /// already separates title/paragraphs/tables/lists, but surfaces table/list
 /// text redundantly through `paragraphs` too — see `StructureDedup`.
-public struct VisionExtractor: Sendable {
+public protocol DocumentRecognizing: Sendable {
+    func extract(from image: CGImage, pageNumber: Int, pageSize: CGSize) async throws -> PageIR
+}
+
+public struct VisionExtractor: DocumentRecognizing {
     public var automaticallyDetectLanguage: Bool
     public var useLanguageCorrection: Bool
 

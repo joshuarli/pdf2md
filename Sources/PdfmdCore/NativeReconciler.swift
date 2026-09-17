@@ -116,6 +116,9 @@ public func reconcileParagraphs(
         var bestText = ""
         for (text, tokens) in candidates {
             guard !tokens.isEmpty else { continue }
+            // Agreement must be reciprocal: a caption can be a perfect
+            // subsequence of an entire page without describing that page.
+            guard tokens.count <= visionTokens.count + max(2, visionTokens.count / 5) else { continue }
             let ratio = Double(longestOrderedMatchCount(tokens, visionTokens)) / Double(visionTokens.count)
             if ratio > bestRatio {
                 bestRatio = ratio

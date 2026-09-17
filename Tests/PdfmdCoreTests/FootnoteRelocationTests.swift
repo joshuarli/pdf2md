@@ -103,7 +103,16 @@ func nativeLines(_ rows: [(Double, String)]) -> [(size: Double, text: String)] {
     #expect(items[0].text.contains("multiplication"))
 }
 
-@Test func nativeGuidedRelocationMovesSpans() {
+@Test func segmentsNativeFootnotesWithTwoBodyLines() {
+    let items = nativeFootnoteItems(nativeLines([
+        (11.0, "Body text with marker.5"),
+        (9.4, "5 Compute is measured in operations."),
+        (11.0, "Body continues."),
+    ]))
+    #expect(items.map(\.marker) == ["5"])
+}
+
+@Test func nativeGuidedRelocationMovesSpans() throws {
     // Mega-paragraph with the footnote inline, as Vision emits it.
     let mega = "GPT-4 required much compute to train.5 OpenBrain leads in public 5 Compute is measured in floating point operations over time. The model is large."
     let blocks = [PageBlock(kind: .paragraph(mega), region: .fullPage, source: .vision)]
@@ -113,7 +122,7 @@ func nativeLines(_ rows: [(Double, String)]) -> [(size: Double, text: String)] {
         (11.0, "The model is large."),
     ])
     let result = relocateFootnotesWithNative(blocks: blocks, nativeLines: lines)
-    #expect(result.definitions.count == 1)
+    try #require(result.definitions.count == 1)
     #expect(result.definitions[0].marker == "5")
     #expect(result.definitions[0].text.contains("floating point"))
     guard case .paragraph(let text) = result.blocks[0].kind else {

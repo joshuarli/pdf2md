@@ -28,17 +28,28 @@ public func bandSort(_ blocks: [PageBlock]) -> [PageBlock] {
 }
 
 /// Detect an obvious two-column layout. Returns left/right groups when a
-/// vertical gutter separates the blocks into two sets that each span a
-/// substantial vertical range with minimal horizontal overlap; otherwise nil.
+/// vertical gutter separates the blocks into two sets, each of substantial
+/// vertical extent or (the AI 2027 margin-rail shape) a minority rail beside
+/// a majority column with no straddlers; otherwise nil.
 public func splitColumns(_ blocks: [PageBlock], gutterWidth: Double = 0.03) -> [[PageBlock]]? {
     guard blocks.count >= 4 else { return nil }
-    let sorted = blocks.sorted { $0.region.midX < $1.region.midX }
-    // Candidate gutters between adjacent block midlines.
-    for i in 1..<sorted.count {
-        let gutter = (sorted[i - 1].region.midX + sorted[i].region.midX) / 2
-        let left = blocks.filter { $0.region.maxX < gutter - gutterWidth / 2 }
-        let right = blocks.filter { $0.region.minX > gutter + gutterWidth / 2 }
-        // Both sides must own most blocks with none straddling the gutter.
+    // Candidate gutters come from empty horizontal strips: the midpoint of
+    // one block's right edge and the next left edge above it. Midline pairs
+    // alone miss wide-body/narrow-rail pages because the rail's midlines sit
+    // inside the body's span (an AI 2027 page: body ends at 0.65, rail starts
+    // at 0.685, rail midlines ~0.83 — no adjacent-midline pair lands between
+    // 0.653 and 0.685).
+    var candidates: Set<Double> = []
+    let edges = blocks.flatMap { [$0.region.maxX, $0.region.minX] }.sorted()
+    for (index, edge) in edges.enumerated() where edge > 0.1 && edge < 0.9 {
+        let gaps = edges[(index + 1)...].filter { $0 > edge + 0.005 }
+        if let next = gaps.first {
+            candidates.insert((edge + next) / 2)
+        }
+    }
+    for gutter in candidates.sorted() {
+        let left = blocks.filter { $0.region.maxX <= gutter }
+        let right = blocks.filter { $0.region.minX >= gutter }
         guard left.count >= 2, right.count >= 2,
             left.count + right.count == blocks.count
         else { continue }
@@ -46,8 +57,19 @@ public func splitColumns(_ blocks: [PageBlock], gutterWidth: Double = 0.03) -> [
             let ys = group.flatMap { [$0.region.minY, $0.region.maxY] }
             return (ys.max() ?? 0) - (ys.min() ?? 0)
         }
-        guard span(left) > 0.4, span(right) > 0.4 else { continue }
-        return [left, right]
+        // Either side is a full column (spans most of the page) or the side
+        // is a narrow rail: two-plus blocks separated vertically, occupying
+        // a minority of the page height. A rail still reads as a column.
+        func isColumn(_ group: [PageBlock]) -> Bool { span(group) > 0.4 }
+        func isRail(_ group: [PageBlock]) -> Bool {
+            guard span(group) >= 0.1 else { return false }
+            let ys = group.map(\.region.minY).sorted()
+            for i in 1..<ys.count where ys[i] - ys[i - 1] < 0.02 { return false }
+            return true
+        }
+        let leftOk = isColumn(left) || isRail(left)
+        let rightOk = isColumn(right) || isRail(right)
+        if leftOk, rightOk { return [left, right] }
     }
     return nil
 }

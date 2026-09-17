@@ -42,3 +42,11 @@ let validator = FidelityValidator()
     if case .rejected = validator.validate(deterministicText: loop + " extra tail words to anchor", repairedText: loop) { }
     else { Issue.record("expected repetition rejection") }
 }
+
+@Test func stripsModelCodeFence() {
+    #expect(stripCodeFence("```markdown\n# Title\n\nBody.\n```") == "# Title\n\nBody.")
+    #expect(stripCodeFence("```\n# Title\n```") == "# Title")
+    #expect(stripCodeFence("# No fence\n\nBody.") == "# No fence\n\nBody.")
+    // An unclosed fence is left alone; peeling only the opener would corrupt.
+    #expect(stripCodeFence("```markdown\n# Title") == "```markdown\n# Title")
+}

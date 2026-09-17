@@ -9,14 +9,14 @@ import PDFKit
 /// retaining hundreds of images. No worker pools until profiling demands
 /// them — correctness and benchmark quality first.
 public struct Pipeline: Sendable {
-    public var vision: VisionExtractor
+    public var vision: any DocumentRecognizing
     public var repairer: any ModelRepairing
     public var router: ComplexityRouter
     public var validator: FidelityValidator
     public var dpi: CGFloat
 
     public init(
-        vision: VisionExtractor = VisionExtractor(),
+        vision: any DocumentRecognizing = VisionExtractor(),
         repairer: any ModelRepairing = FoundationRepairer(),
         router: ComplexityRouter = ComplexityRouter(),
         validator: FidelityValidator = FidelityValidator(),
@@ -38,26 +38,29 @@ public struct Pipeline: Sendable {
         var size: CGSize
         /// Native lines with dominant type size, for footnote segmentation.
         var fontLines: [(size: Double, text: String)]
+        var nativeLines: [NativeTextLine]
     }
 
-    public func convert(
+    public func convertWithPageDrafts(
         pdfURL: URL,
         options: CliOptions,
         progress: @Sendable (String) -> Void = { _ in }
-    ) async throws -> String {
-        // Pass 1 (sync): native text + bitmaps, then immediately release the
-        // document. No await interleaved with PDFKit access.
-        let payloads = try loadPayloads(pdfURL: pdfURL, pages: options.pages, dpi: dpi)
+    ) async throws -> (markdown: String, pageDrafts: [String]) {
+        let requested = try selectedPages(pdfURL: pdfURL, pages: options.pages)
 
-        // Pass 1 (async): Vision structure, reconciliation, ordering.
+        // PDFKit stays inside the synchronous loader. Only one payload owns
+        // a raster at a time; the document-wide state contains text and IR.
         var document: [PageIR] = []
-        document.reserveCapacity(payloads.count)
-        for payload in payloads {
-            progress("pdfmd: page \(payload.pageNumber) (\(document.count + 1)/\(payloads.count))")
+        var nativeLinesByNumber: [Int: [(size: Double, text: String)]] = [:]
+        document.reserveCapacity(requested.count)
+        for pageNumber in requested {
+            let payload = try loadPayload(pdfURL: pdfURL, pageNumber: pageNumber, dpi: dpi)
+            nativeLinesByNumber[pageNumber] = payload.fontLines
+            progress("pdfmd: page \(payload.pageNumber) (\(document.count + 1)/\(requested.count))")
             var page = try await vision.extract(from: payload.image, pageNumber: payload.pageNumber, pageSize: payload.size)
             let quality = assessNativeQuality(payload.nativeText)
             page.nativeTextQuality = quality
-            let reconciled = reconcileParagraphs(nativeText: payload.nativeText, quality: quality, blocks: page.blocks)
+            let reconciled = reconcileNativeLines(payload.nativeLines, quality: quality, blocks: page.blocks)
             page.blocks = reconciled.blocks
             if reconciled.disagreement { page.complexity.nativeVisionDisagreement = true }
             page.blocks = deduplicate(page.blocks)
@@ -73,14 +76,13 @@ public struct Pipeline: Sendable {
 
         // Footnote relocation to page-end definitions (gold layout §23).
         // Native-guided when the layer is trustworthy, geometric otherwise.
-        let payloadsByNumber = Dictionary(uniqueKeysWithValues: payloads.map { ($0.pageNumber, $0) })
         for index in document.indices {
             let relocated: RelocatedFootnotes
-            if let payload = payloadsByNumber[document[index].pageNumber],
+            if let lines = nativeLinesByNumber[document[index].pageNumber],
                 document[index].nativeTextQuality == .trustworthy
             {
                 relocated = relocateFootnotesWithNative(
-                    blocks: document[index].blocks, nativeLines: payload.fontLines)
+                    blocks: document[index].blocks, nativeLines: lines)
             } else {
                 relocated = relocateFootnotes(document[index].blocks)
             }
@@ -136,27 +138,36 @@ public struct Pipeline: Sendable {
                 to: URL(fileURLWithPath: debugDir)
             )
         }
-        return drafts.joined(separator: "\n\n").trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
+        return (drafts.joined(separator: "\n\n").trimmingCharacters(in: .whitespacesAndNewlines) + "\n", drafts)
+    }
+
+    /// Convenience wrapper for the CLI: only the joined Markdown.
+    public func convert(
+        pdfURL: URL,
+        options: CliOptions,
+        progress: @Sendable (String) -> Void = { _ in }
+    ) async throws -> String {
+        try await convertWithPageDrafts(pdfURL: pdfURL, options: options, progress: progress).0
     }
 
     // MARK: - Pass internals
 
-    func loadPayloads(pdfURL: URL, pages: [Int]?, dpi: CGFloat) throws -> [PagePayload] {
+    func selectedPages(pdfURL: URL, pages: [Int]?) throws -> [Int] {
         let document = try openPDF(at: pdfURL)
-        let requested: [Int]
         if let pages {
             for page in pages {
                 guard page >= 1, page <= document.pageCount else {
                     throw PDFSourceError.pageOutOfRange(page: page, pageCount: document.pageCount)
                 }
             }
-            requested = pages.sorted()
-        } else {
-            requested = Array(1...document.pageCount)
+            return Array(Set(pages)).sorted()
         }
-        var payloads: [PagePayload] = []
-        payloads.reserveCapacity(requested.count)
-        for pageNumber in requested {
+        return Array(1...document.pageCount)
+    }
+
+    func loadPayload(pdfURL: URL, pageNumber: Int, dpi: CGFloat) throws -> PagePayload {
+        try autoreleasepool {
+            let document = try openPDF(at: pdfURL)
             guard let pdfPage = document.page(at: pageNumber - 1) else {
                 throw PDFSourceError.pageOutOfRange(page: pageNumber, pageCount: document.pageCount)
             }
@@ -164,12 +175,11 @@ public struct Pipeline: Sendable {
             guard let image = renderCGImage(of: pdfPage, dpi: dpi) else {
                 throw PDFSourceError.renderFailed(page: pageNumber)
             }
-            payloads.append(PagePayload(
+            return PagePayload(
                 pageNumber: pageNumber, nativeText: text, image: image, size: size,
-                fontLines: fontLines(of: pdfPage)
-            ))
+                fontLines: fontLines(of: pdfPage), nativeLines: nativeTextLines(of: pdfPage)
+            )
         }
-        return payloads
     }
 
     func renderOnePage(pdfURL: URL, pageNumber: Int, dpi: CGFloat) throws -> CGImage {
@@ -256,19 +266,9 @@ public func runCLI(arguments: [String], pipeline: Pipeline = Pipeline()) async -
     }
 }
 
-/// UTF-8 via a temporary sibling + atomic replace, so a failure never leaves
-/// a deceptively complete truncated output.
-public func writeAtomically(_ markdown: String, to url: URL) throws {
-    let directory = url.deletingLastPathComponent()
-    let temporary = directory.appendingPathComponent(".\(url.lastPathComponent).tmp")
-    do {
-        try Data(markdown.utf8).write(to: temporary, options: .atomic)
-        _ = try FileManager.default.replaceItemAt(url, withItemAt: temporary)
-    } catch {
-        try? FileManager.default.removeItem(at: temporary)
-        throw error
-    }
-}
+/// UTF-8 via a unique temporary sibling and atomic replacement: see
+/// `writeAtomically` in `Output.swift` (kept out of Pipeline for clarity).
+
 
 func writeStdout(_ text: String) {
     FileHandle.standardOutput.write(Data(text.utf8))

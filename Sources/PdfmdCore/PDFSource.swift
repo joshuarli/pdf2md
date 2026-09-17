@@ -75,6 +75,27 @@ public func fontLines(of page: PDFPage) -> [(size: Double, text: String)] {
     return lines
 }
 
+/// PDFKit line selections carry geometry independently of blank-line breaks
+/// in `PDFPage.string` (which are usually absent in born-digital prose).
+public func nativeTextLines(of page: PDFPage) -> [NativeTextLine] {
+    let bounds = page.bounds(for: .mediaBox)
+    guard bounds.width > 0, bounds.height > 0,
+        let selection = page.selection(for: NSRange(location: 0, length: page.numberOfCharacters))
+    else { return [] }
+    // Rotated PDF geometry needs an explicit transform before reconciliation.
+    // Until then, accepting OCR is safer than associating the wrong region.
+    guard page.rotation % 360 == 0 else { return [] }
+    return selection.selectionsByLine().compactMap { line in
+        guard let text = line.string, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        let rect = line.bounds(for: page)
+        guard !rect.isEmpty, !rect.isInfinite, !rect.isNull else { return nil }
+        return NativeTextLine(text: text, region: NormalizedRect(
+            x: Double((rect.minX - bounds.minX) / bounds.width),
+            y: Double((bounds.maxY - rect.maxY) / bounds.height),
+            width: Double(rect.width / bounds.width), height: Double(rect.height / bounds.height)))
+    }
+}
+
 /// Render a page into memory as a `CGImage` at roughly `dpi`, preserving
 /// aspect ratio. Tuned against the benchmark starting around 216-300 DPI;
 /// the lowest resolution that holds quality wins (plan.md section 17).

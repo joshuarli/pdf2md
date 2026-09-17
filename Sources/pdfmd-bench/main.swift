@@ -1,4 +1,6 @@
+import CoreGraphics
 import Darwin
+
 import Foundation
 import PdfmdCore
 
@@ -18,6 +20,11 @@ import PdfmdCore
 /// Baseline A sanity check; `font-dump` writes per-page lines annotated with
 /// dominant type size, which separates headings, body, and footnote type
 /// (golden curation and, later, heading inference).
+private struct DisabledRepairer: ModelRepairing {
+    var modelAvailable: Bool { false }
+    func repair(page: PageIR, draft: String, pageImage: CGImage?) async -> String? { nil }
+}
+
 struct Bench {
     static func main() async -> Int32 {
         var args = Array(CommandLine.arguments.dropFirst())
@@ -33,7 +40,7 @@ struct Bench {
                 directory = args[flag + 1]
             }
             do {
-                return try await runAI2027(directory: URL(fileURLWithPath: directory))
+                return try await runAI2027(directory: URL(fileURLWithPath: directory), repairEnabled: !args.contains("--no-repair"))
             } catch let error as BenchmarkError {
                 writeErr(error.description + "\n")
                 return 1
@@ -43,6 +50,8 @@ struct Bench {
             }
         case "raster-twin":
             return rasterTwin(args: args)
+        case "line-dump":
+            return lineDump(args: args)
         case "native-dump":
             return nativeDump(args: args)
         case "font-dump":
@@ -58,6 +67,7 @@ struct Bench {
     static func usage() {
         writeErr("usage: pdfmd-bench ai2027 [--dir DIR]\n")
         writeErr("       pdfmd-bench raster-twin --pdf SRC --out DST [--dpi 300]\n")
+        writeErr("       pdfmd-bench line-dump --pdf SRC --out DIR\n")
         writeErr("       pdfmd-bench native-dump --pdf SRC --out DIR\n")
         writeErr("       pdfmd-bench font-dump --pdf SRC --out DIR\n")
         writeErr("       pdfmd-bench score --candidate CAND --golden GOLD\n")
@@ -116,6 +126,36 @@ struct Bench {
         }
     }
 
+    /// Dump PDFKit selection-line text with normalized top-left rects as
+    /// `x,y,w,h<TAB>TEXT` TSV per page. Evidence for native/Vision spatial
+    /// reconciliation (plan.md section 21).
+    static func lineDump(args: [String]) -> Int32 {
+        guard let pdf = flag("--pdf", in: args), let out = flag("--out", in: args) else {
+            writeErr("usage: pdfmd-bench line-dump --pdf SRC --out DIR\n")
+            return 2
+        }
+        do {
+            let document = try openPDF(at: URL(fileURLWithPath: pdf))
+            let directory = URL(fileURLWithPath: out)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            for index in 0..<document.pageCount {
+                guard let page = document.page(at: index) else { continue }
+                let lines = nativeTextLines(of: page)
+                let body = lines.map {
+                    String(format: "%.4f,%.4f,%.4f,%.4f\t%@",
+                           $0.region.x, $0.region.y, $0.region.width, $0.region.height, $0.text)
+                }.joined(separator: "\n")
+                let padded = String(repeating: "0", count: max(0, 4 - String(index + 1).count)) + String(index + 1)
+                try Data(body.utf8).write(to: directory.appendingPathComponent("page-\(padded).tsv"))
+            }
+            writeErr("pdfmd-bench: dumped \(document.pageCount) pages to \(out)\n")
+            return 0
+        } catch {
+            writeErr("pdfmd-bench: \(error)\n")
+            return 1
+        }
+    }
+
     static func flag(_ name: String, in args: [String]) -> String? {
         guard let i = args.firstIndex(of: name), i + 1 < args.endIndex else { return nil }
         return args[i + 1]
@@ -165,7 +205,7 @@ struct Bench {
         }
     }
 
-    static func runAI2027(directory: URL) async throws -> Int32 {
+    static func runAI2027(directory: URL, repairEnabled: Bool = true) async throws -> Int32 {
         let data = try Data(contentsOf: directory.appendingPathComponent("manifest.json"))
         let manifest = try JSONDecoder().decode(BenchmarkManifest.self, from: data)
         let pdfURL = directory.appendingPathComponent(manifest.sourceFilename)
@@ -177,24 +217,31 @@ struct Bench {
             throw BenchmarkError.unreadable(goldenURL.path + " (see Benchmarks/AI2027/README.md to create it)")
         }
         let golden = try String(contentsOf: goldenURL, encoding: .utf8)
-        let pipeline = Pipeline()
+        let pipeline = repairEnabled ? Pipeline() : Pipeline(repairer: DisabledRepairer())
+        let artifacts = directory.appendingPathComponent(repairEnabled ? "results-repair" : "results-deterministic")
+        try FileManager.default.createDirectory(at: artifacts, withIntermediateDirectories: true)
+        print("repair: \(repairEnabled ? "enabled" : "disabled")")
         let started = Date()
 
-        let bornDigital = try await pipeline.convert(
+        let bornDigital = try await pipeline.convertWithPageDrafts(
             pdfURL: pdfURL,
             options: CliOptions(input: pdfURL.path),
             progress: { FileHandle.standardError.write(Data(($0 + "\n").utf8)) }
         )
-        let bornReport = scoreMarkdown(candidate: bornDigital, golden: golden)
+        try writeAtomically(bornDigital.markdown, to: artifacts.appendingPathComponent("born.md"))
+        try JSONEncoder().encode(bornDigital.pageDrafts).write(to: artifacts.appendingPathComponent("born-pages.json"))
+        let bornReport = scoreMarkdown(candidate: bornDigital.markdown, golden: golden)
         print("AI 2027 — born digital\n")
         print(formatScoreReport(title: "born digital", report: bornReport))
 
-        let raster = try await pipeline.convert(
+        let raster = try await pipeline.convertWithPageDrafts(
             pdfURL: rasterURL,
             options: CliOptions(input: rasterURL.path),
             progress: { FileHandle.standardError.write(Data(($0 + "\n").utf8)) }
         )
-        let rasterReport = scoreMarkdown(candidate: raster, golden: golden)
+        try writeAtomically(raster.markdown, to: artifacts.appendingPathComponent("raster.md"))
+        try JSONEncoder().encode(raster.pageDrafts).write(to: artifacts.appendingPathComponent("raster-pages.json"))
+        let rasterReport = scoreMarkdown(candidate: raster.markdown, golden: golden)
         print("AI 2027 — raster\n")
         print(formatScoreReport(title: "raster", report: rasterReport))
 

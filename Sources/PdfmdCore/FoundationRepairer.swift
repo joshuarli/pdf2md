@@ -35,10 +35,22 @@ public struct FoundationRepairer: ModelRepairing {
         // symbol does not exist in older SDKs.
         _ = pageImage
         let session = LanguageModelSession()
+        // Bounded wait: an on-device stall must degrade to the deterministic
+        // draft, never hang the conversion (plan.md section 34).
+        let prompt = repairPrompt(page: page, draft: draft, imageAttached: false)
         do {
-            let response = try await session.respond(to: repairPrompt(page: page, draft: draft, imageAttached: false))
-            let text = response.content.trimmingCharacters(in: .whitespacesAndNewlines)
-            return text.isEmpty ? nil : text
+            let content = try await withThrowingTaskGroup(of: String.self) { group in
+                group.addTask { try await session.respond(to: prompt).content }
+                group.addTask {
+                    try await Task.sleep(for: .seconds(120))
+                    throw CancellationError()
+                }
+                let first = try await group.next()!
+                group.cancelAll()
+                return first
+            }
+            let trimmed = stripCodeFence(content.trimmingCharacters(in: .whitespacesAndNewlines))
+            return trimmed.isEmpty ? nil : trimmed
         } catch {
             // Model failure degrades to deterministic output, never an error.
             return nil
@@ -96,4 +108,19 @@ public func repairPrompt(page: PageIR, draft: String, imageAttached: Bool) -> St
     lines.append("Deterministic draft:")
     lines.append(String(draft.prefix(6000)))
     return lines.joined(separator: "\n")
+}
+
+/// The model sometimes wraps its answer in a ```markdown fence despite the
+/// instruction; a fence is presentation, not content, so peel it off. Inner
+/// code blocks (fences after the first line) are legitimate Markdown, and an
+/// unclosed fence stays untouched — peeling only the opener would corrupt.
+func stripCodeFence(_ text: String) -> String {
+    var lines = text.components(separatedBy: "\n")
+    guard let first = lines.first, first.hasPrefix("```"),
+        let last = lines.last, last.trimmingCharacters(in: .whitespaces) == "```",
+        lines.count >= 2
+    else { return text }
+    lines.removeFirst()
+    lines.removeLast()
+    return lines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
 }

@@ -81,7 +81,7 @@ separately reported novel-text rate. Born-digital target: >=99% match.
 Raster-only twin target: >=95% match with <1% novel text. Details and
 licensing cautions live in `Benchmarks/AI2027/README.md`.
 
-## Known limitations (scaffold stage)
+## Known limitations
 
 - Multimodal Foundation Models image repair is availability-gated: the model
   receives the page image only on macOS 27+ (`if #available`). On macOS 26
@@ -89,5 +89,6 @@ licensing cautions live in `Benchmarks/AI2027/README.md`.
   deterministic draft, and the pipeline measures that result first.
 - Native/Vision spatial reconciliation is policy-level; geometric word-level
   alignment lands with Phase 2 benchmark evidence.
-- The raster twin generator and golden Markdown are built next; the bench
-  runner enforces hash pinning and thresholds once they exist.
+- The installed Xcode 26.6 SDK has no macOS 27 image-attachment API, so the
+  27-only call sites remain the documented insertion point in
+  `FoundationRepairer` until an Xcode 27 toolchain is available.
