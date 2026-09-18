@@ -166,6 +166,88 @@ public func reconcileParagraphs(
     return (reconciled, mean < 0.6)
 }
 
+/// Suppress Vision text that floats over page regions with no native PDF
+/// text at all: an embedded chart, diagram, or infographic image rendered
+/// without its own selectable text layer (AI 2027 pages 47, 50, 15, 51 —
+/// figure captions, chart titles, axis numbers). Genuine document prose on
+/// a trustworthy-native page always has real characters geometrically
+/// underneath it, even when OCR quality keeps `reconcileNativeLines` from
+/// swapping in the exact native string (a footnote with a couple of
+/// misread words still has native lines inside its box) — so geometric
+/// coverage is the first signal this checks, and the covering line(s) must
+/// also share a meaningful fraction of the block's own tokens rather than
+/// merely occupy the same space (two captions can sit close enough that an
+/// unrelated line's box brushes this one's).
+///
+/// When geometry finds nothing, it falls back to asking whether the text
+/// exists *anywhere* on the page — but as a **contiguous run** of matching
+/// tokens, not an ordered subsequence: `splitNativeParagraphs` collapses a
+/// blank-line-free page into one giant blob (AI 2027 page 47's whole
+/// character stream has no paragraph breaks at all), and against a blob
+/// that large an ordered-subsequence match trivially strings together
+/// common filler words ("of", "the", "in", "with") from all over the page
+/// regardless of real content — only a run of several tokens *in a row*
+/// distinguishes a genuinely drifted-bbox caption (which still has real
+/// words in sequence) from fabricated OCR of an image (which does not).
+///
+/// A block that fails every check has no native-text backing whatsoever
+/// and is exactly the "graph-axis clutter" / "tiny infographic dashboard
+/// labels" plan.md section 8 excludes from gold — unlike
+/// `suppressFragments`'s area/token shape heuristic, this needs no size
+/// threshold because it reads a fact reconciliation already established
+/// rather than guessing from geometry.
+public func suppressImageOnlyText(
+    blocks: [PageBlock],
+    nativeLines: [NativeTextLine],
+    nativeText: String,
+    quality: NativeTextQuality,
+    minimumExistenceRatio: Double = 0.4,
+    minimumCoverageRatio: Double = 0.2
+) -> [PageBlock] {
+    guard quality == .trustworthy else { return blocks }
+    let nativeParagraphTokens = splitNativeParagraphs(nativeText).map { tokenize(normalizeForScoring($0)) }
+    return blocks.filter { block in
+        guard block.source != .reconciled else { return true }
+        switch block.kind {
+        case .list, .table: return true
+        case .title, .heading, .paragraph: break
+        }
+        let visionTokens = tokenize(normalizeForScoring(block.kind.plainText))
+        guard !visionTokens.isEmpty else { return true }
+        let coveringLines = nativeLines.filter {
+            $0.region.isSubstantiallyContained(in: block.region, threshold: 0.75)
+        }
+        if !coveringLines.isEmpty {
+            let coveringTokens = tokenize(normalizeForScoring(coveringLines.map(\.text).joined(separator: " ")))
+            let coverageRatio = Double(longestOrderedMatchCount(coveringTokens, visionTokens)) / Double(visionTokens.count)
+            if coverageRatio >= minimumCoverageRatio { return true }
+        }
+        let bestRatio = nativeParagraphTokens
+            .map { Double(longestCommonRunLength($0, visionTokens)) / Double(visionTokens.count) }
+            .max() ?? 0
+        return bestRatio >= minimumExistenceRatio
+    }
+}
+
+/// Length of the longest contiguous run shared by `a` and `b`, in order and
+/// unbroken (classic longest-common-substring over token arrays, not the
+/// longest-common-*subsequence* `longestOrderedMatchCount` computes — a gap
+/// of even one token ends the run).
+func longestCommonRunLength(_ a: [String], _ b: [String]) -> Int {
+    guard !a.isEmpty, !b.isEmpty else { return 0 }
+    var prev = [Int](repeating: 0, count: b.count + 1)
+    var curr = [Int](repeating: 0, count: b.count + 1)
+    var best = 0
+    for i in 1...a.count {
+        for j in 1...b.count {
+            curr[j] = a[i - 1] == b[j - 1] ? prev[j - 1] + 1 : 0
+            best = max(best, curr[j])
+        }
+        (prev, curr) = (curr, prev)
+    }
+    return best
+}
+
 func splitNativeParagraphs(_ text: String) -> [String] {
     // Group lines on blank-line boundaries, then collapse hard wraps the
     // same way the renderer does so comparisons are like-for-like.

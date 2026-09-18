@@ -2373,13 +2373,14 @@ started; do not start it before the benchmark gates are met.
 
 ```text
              text match   novel   worst page
-born digital    89.13%    5.30%   70.3% (page 50)
+born digital    89.57%    4.87%   70.35% (page 37)
 raster           85.66%   7.29%   54.6% (page 4)
 ```
 
 Gates: >=99% born, >=95% raster with <1% novel, no substantive page <85%.
 Both tracks miss their gate. `Benchmarks/AI2027/README.md`'s Baselines
-section carries the same numbers plus the full baseline history (A/B/C/D/E).
+section carries the same numbers plus the full baseline history
+(A/B/C/D/D+1/E).
 
 ## Hill-climbing strategy
 
@@ -2440,28 +2441,68 @@ a one-shot pass:
   case rather than a bigger regex — character identity across two
   independent OCR misreads of the same glyph is not reliably recoverable.
 - **Two markers that never relocate on born-digital page 33** (`83`, `85`
-  — see Benchmarks/AI2027/results-deterministic/born-pages.json page 33):
-  `85`'s glued reference OCRs as a bare `"` (not currently in
-  `splitFootnoteStart`/`scanBodyMarkers`'s symbol set), and `83`'s failure
-  mode has not yet been isolated. Worth checking before assuming raster
-  marker-fidelity work is the only path to the raster gate — the same
-  fallback logic may be under-recognizing symbol markers on born-digital
-  pages too.
-- **Chart furniture beyond lists.** Page 50's chart title paragraph
-  ("Length Of Coding Tasks AI Agents Can Complete Autonomously") and a
-  garbled axis caption survive `suppressFragments` because they are wider
-  and score just over its area threshold even though gold excludes them
-  entirely (plan.md section 8). Chart data-point labels shaped as a list
-  are already suppressed (this pass); the title/caption shapes need their
-  own signal, not a looser area threshold (which would risk suppressing
-  genuine short captions/headings elsewhere).
-- **Figure-caption OCR quality** (page 47: a diagram caption describing
-  "Chain of Continuous Thought (COCONUT)" comes out almost entirely
-  garbled — `del=0 ins=108` in isolation, i.e. pure fabricated-looking
-  novel text with nothing gold-matching lost). This may be a genuine Vision
-  OCR-quality floor for small/dense diagram text rather than a pipeline
-  bug; check whether DPI or `RecognizeDocumentsRequest` options move it
-  before concluding that.
+  — see Benchmarks/AI2027/results-deterministic/born-pages.json page 33).
+  Root cause isolated this pass (not what was previously suspected): it is
+  **not** a missing symbol in `splitFootnoteStart`/`scanBodyMarkers`.
+  `nativeTextLines(of:)` confirms PDFKit extracts marker 85's digits
+  correctly ("85 To protect consumer privacy…"); Vision's own OCR
+  misreads it as a bare `"` AND draws a bounding box whose top edge sits
+  slightly below that first native line's true top, so
+  `isSubstantiallyContained(threshold: 0.75)` in `reconcileNativeLines`
+  measures only ~66% overlap for that one line and never selects it —
+  reconciliation silently keeps Vision's garbled text. Marker 83's footnote
+  body is a *different* bug: it's the same "Vision drops a multi-line
+  paragraph's middle" failure as the page-37 item below (confirmed via raw
+  `VisionExtractor` output — two disjoint one/two-line fragments with the
+  middle sentence in neither). Both are geometry/structural-detection gaps
+  in the native/Vision alignment, not marker-vocabulary gaps; fixing them
+  needs the word-level geometric alignment plan.md's Phase 2 already flags
+  as future work, not a quick heuristic.
+- **Chart furniture beyond lists — fixed this pass.** `suppressImageOnlyText`
+  (`NativeReconciler.swift`) drops a Vision paragraph on a trustworthy-native
+  page when its region has zero native text underneath it (checked
+  geometrically first) and no plausible match anywhere else on the page
+  (a generous existence check, second). This is a fact reconciliation
+  already establishes, not a shape/size guess, so it needed no area or
+  token threshold. Fixed page 50's chart title and a page 47 diagram
+  caption, plus two more chart titles (pages 15, 51) found the same way.
+  Born-digital: 89.13% -> 89.44%, novel 5.3% -> 5.0%; page 50 is no longer
+  the worst page.
+- **Page 37 worst-page regression (new top item, born-digital).** A
+  footnote's middle ~5 lines never get emitted as any Vision block at all
+  (confirmed against raw `VisionExtractor` output: only the opening and
+  closing single lines exist as blocks, nothing in between) — not a
+  geometry-alignment miss `reconcileNativeLines` could fix, since there is
+  no Vision box over that text to align in the first place. A token-prefix
+  "stitch the two fragments back together using native text" attempt was
+  tried and reverted: `splitNativeParagraphs` collapses an entire page with
+  no blank lines into a single giant "paragraph," so prefix-matching
+  against it can span and swallow arbitrary amounts of trailing page text.
+  The benchmark caught this immediately (matching/deletions unchanged,
+  insertions up) — worth remembering as a concrete example of why
+  `splitNativeParagraphs`-based whole-paragraph matching is unsafe for
+  paragraph-kind blocks (title/heading matching in `reconcileParagraphs`
+  is safer only because native *lines*, not the blank-line-split
+  paragraphs, anchor the short-text case). A real fix needs either
+  position-anchored substring matching against raw native text (with a
+  check that the gap between fragments isn't already claimed by another
+  surviving block, to avoid merging genuinely adjacent unrelated
+  paragraphs) or accepting this as a Vision structural-detection floor.
+- **Figure-caption OCR quality — fixed.** Page 47's diagram caption
+  ("Chain of Continuous Thought (COCONUT)…") was three separate garbled
+  Vision paragraphs with zero gold correspondence; all three are now
+  suppressed by `suppressImageOnlyText`. The third fragment needed a
+  second follow-up fix: its geometric region had no native line inside it
+  at all, so it fell to the whole-page "does this text exist anywhere"
+  check — but `splitNativeParagraphs` collapses this blank-line-free page
+  into one giant blob, and an ordered-subsequence match against a blob
+  that large trivially strings together common filler words ("of", "the",
+  "with") from all over the page regardless of real content. Requiring a
+  **contiguous** token run (`longestCommonRunLength`, not
+  `longestOrderedMatchCount`) for the existence check fixed it: born-digital
+  89.44% -> 89.57%, novel 5.0% -> 4.87% (insertions 1965 -> 1905, matching
+  unchanged — pure novel-text removal, no new gold recovered, as expected
+  for suppressing furniture gold never wanted).
 - **Foundation Models repair, re-measured.** Once the deterministic gates
   are closer, re-run `pdfmd-bench ai2027 --repair` against the *current*
   pipeline (the last measurement is stale, from before every fix in this

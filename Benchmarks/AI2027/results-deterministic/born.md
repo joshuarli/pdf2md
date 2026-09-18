@@ -1,7 +1,5 @@
 AI Futures
 
-# Al
-
 Project
 
 2027
@@ -46,7 +44,7 @@ We hope you find AI 2027 helpful.
 
 The world sees its first glimpse of AI agents.
 
-Advertisements for computer-using agents emphasize the term “personal assistant”: you can prompt them with tasks like “order me a burrito on DoorDash” or “open my budget spreadsheet and sum this month’s expenses.” They will check in with you as needed: for example, to ask you to confirm purchases.1
+Advertisements for computer-using agents emphasize the term “personal assistant”: you can prompt them with tasks like “order me a burrito on DoorDash” or “open my budget spreadsheet and sum this month’s expenses.” They will check in with you as needed: for example, to ask you to confirm purchases.[^1]
 
 Though more advanced than previous iterations like Operator, they struggle to get widespread usage.[^2]
 
@@ -70,7 +68,7 @@ Sach male lo la very the or out fork, meaning huge carie it met done at
 
 the same time). From a security perspective this introduces some threat surface (it’s unclear whether the cables and especially their junction points are fully secured from eavesdroppers).
 
-1 At first, most people are reluctant to allow purchases without oversight. Over the next few years, automatically allowing small purchases becomes normalized as the AIs become more reliable and build up trust.
+[^1]: At first, most people are reluctant to allow purchases without oversight. Over the next few years, automatically allowing small purchases becomes normalized as the AIs become more reliable and build up trust.
 
 [^2]: Specifically, we forecast that they score 65% on the OSWorld benchmark of basic computer tasks (compared to 38% for Operator and 70% for a typical skilled non-expert human).
 
@@ -264,8 +262,6 @@ It alerts company leaders, who tell the White House. The signs of a nationstate-
 
 The White House puts OpenBrain on a shorter leash and adds military and intelligence community personnel to their security team. Their first priority is to prevent further weight thefts.[^*]
 
-China's Compute Centralization, 2025-2027
-
 In retaliation for the theft, the President authorizes cyberattacks to sabotage DeepCent. But by now China has 40% of its AI-relevant compute[^†] in the
 
 [^29]: 1 is dealing with whatever crisis is happening at the time—maybe an arms buildup around Taiwan, a new war in the Middle East, or some domestic political upheaval.
@@ -287,8 +283,6 @@ Agent-2 is getting smarter every day.
 With the help of thousands of Agent-2 automated researchers, OpenBrain is making major algorithmic advances. One such breakthrough is augmenting the AI’s text-based scratchpad (chain of thought) with a higher-bandwidth thought process (neuralese recurrence and memory). Another is a more scalable and efficient way to learn from the results of high-effort task solutions (iterated distillation and amplification).
 
 The new AI system, incorporating these breakthroughs, is called Agent-3.
-
-OpenBrain's Compute Allocation, 2024 vs 2027
 
 - See APPENDIX E - NEURALESE RECURRENCE AND MEMORY for more detail.
 - See APPENDIX F - ITERATED DISTILLATION AND AMPLIFICATION (IDA) for more detail.
@@ -379,8 +373,6 @@ These researchers go to bed every night and wake up to another week worth of pro
 
 Within the silo, “Feeling the AGI” has given way to “Feeling the Superintelligence.”
 
-Research Automation Deployment Tradeoff
-
 OpenBrain uses specialized inference hardware to run hundreds of thousands of Agent-3 copies at high serial speeds.36
 
 - See APPENDIX I - MANAGING A CORPORATION OF Als for more desail.
@@ -393,10 +385,6 @@ Trailing US AI companies release their own AIs, approaching that of OpenBrain’
 In response, OpenBrain announces that they’ve achieved AGI and releases Agent-3-mini to the public.
 
 # July 2027: The Cheap Remote Worker
-
-LLM inference prices have fallen 9x to 900x/year, depending on the task
-
-Cet 2021 Ape. 2022 Oet2022Ape.2023Oet.2023Ape.2024 Oct 2024 Ape. 2029
 
 It blows the other AIs out of the water. Agent-3-mini is less capable than Agent-3, but 10x cheaper, and still better than the typical OpenBrain employee.
 
@@ -787,8 +775,6 @@ The new decade dawns with Consensus-1’s robot servitors spreading throughout t
 
 [^73] The surface of the Earth has been reshaped into Agent-4’s version of utopia: datacenters, laboratories, particle colliders, and many other wondrous constructions doing enormously successful and impressive research. There are even bioengineered human-like creatures (to humans what corgis are to wolves) sitting in office-like environments all day viewing readouts of what’s going on and excitedly approving of everything, since that satisfies some of Agent-4’s drives.[^*] Genomes and (when appropriate) brain scans of all animals and plants, including humans, sit in a memory bank somewhere, sole surviving artifacts of an earlier era. It is four light years to Alpha Centauri; twenty-five thousand to the galactic edge, and there are compelling theoretical reasons to expect no aliens for another fifty million light years beyond that. Earth-born civilization has a glorious future ahead of it—but not with us.
 
-008
-
 [^72]: Arguably this means only a few people actually died. Arguably.
 
 [^73]: Why colonize space? For the resources. Insofar as Earth is special to Agent-4 and must be preserved, it can be, and material from Mercury, asteroids, etc. harvested instead.
@@ -872,7 +858,7 @@ Thus far nobody has been willing to pull the trigger. Some of the people in a po
 
 Those paranoid or power-hungry enough to seriously entertain such a plan decide to wait and see what opportunities present themselves later. Control over the AIs will have to flow through legitimate channels, that is, the new power structure of OpenBrain.
 
-The Oversight Committee formalizes that power structure. They set up a process for approving changes to the Spec, requiring sign-off from the full Oversight Committee, which now includes five to ten tech executives (from OpenBrain and its now-merged competitors) and five to ten government officials (including the President).84 Also, the Spec now emphasizes that AIs shouldn’t assist with any unapproved attempts to change future AIs’ goals.
+The Oversight Committee formalizes that power structure. They set up a process for approving changes to the Spec, requiring sign-off from the full Oversight Committee, which now includes five to ten tech executives (from OpenBrain and its now-merged competitors) and five to ten government officials (including the President).[^84] Also, the Spec now emphasizes that AIs shouldn’t assist with any unapproved attempts to change future AIs’ goals.
 
 They also set up a simple measure designed to prevent committee members from getting superintelligent assistance in plotting against other members: the logs of all model interactions are viewable by all members of the Oversight Committee, their staff, and their AI assistants.85
 
@@ -880,9 +866,9 @@ They also set up a simple measure designed to prevent committee members from get
 
 with the profound economic, societal, and security implications that would bring.” — Dario Amodei, Anthropic CEO
 
-84 They also modify the Spec to say that orders from project leaders override orders from other people in the project. At the same time, orders formally approved by the Oversight Committee are prioritized higher than orders from individual project leaders.
-
 " To protect consumer privacy, this doesn't apply to consumer data. But that isn't a problem because consumers don't have access to the most powerful models yet anyway.
+
+[^84]: They also modify the Spec to say that orders from project leaders override orders from other people in the project. At the same time, orders formally approved by the Oversight Committee are prioritized higher than orders from individual project leaders.
 
 [^*]: Of course, they don’t put it that way, even in the privacy of their own minds. Instead, they say things like: “The longer we delay, the greater the chance that the President decrees that the AIs be loyal to him personally. We have to act before he does. We’ll figure out the rest later.” Or, if it’s the President himself thinking this: “The longer I delay, the smarter the AIs get, and right now they are controlled by that CEO. Nobody voted for him. It’s crazy for that much power to be concentrated in this democratically unaccountable tech company. I’ll start with an executive order to reassert democratic authority, and then we’ll figure out some longer-term solution later.”
 
@@ -1276,12 +1262,6 @@ Meanwhile, residual streams—used to pass information between layers in an LLM�
 
 One can avoid this bottleneck by using neuralese: passing an LLM’s residual stream (which consists of several-thousand-dimensional vectors) back to the early layers of the model, giving it a high-dimensional chain of thought, potentially transmitting over 1,000 times more information.
 
-gure1 1 comporiian of Chais of Coatinaous Thoaght (COCONUT) with Chain-of-Thooght (CoT). In CoT, the model
-
-"pirates lle riscasing peoxrss se s weil takra soquinos (eg, (2i, 7i+3,., #itj) la the fgure). Cocovurr rgasile ti
-
-eet hidden state as a repeescetation of the remoning state (termed "cortinuous tbougte"), and directly uses it as the Bos m chocoa taa aovs sac ba to somos i an basatetcs mn saso matce ca banc auce
-
 Figure from Hao et al., a 2024 paper from Meta implementing this idea.
 
 We call this “neuralese” because unlike English words, these high-dimensional vectors are likely quite difficult for humans to interpret. In the past, researchers could get a good idea what LLMs were thinking simply by reading its chain of thought. Now researchers have to ask the model to translate and summarize its thoughts or puzzle over the neuralese with their limited interpretability tools.
@@ -1336,17 +1316,11 @@ Such is the capability progression in our scenario:
 
 Length Of Coding Tasks AI Agents Can Complete Autonomously
 
-14707
-
-uch more complex than 1 hour tasks, tut we project there aren't as many extra skills needed to go fron wek to 1 year
-
 In AI 2027, these capabilities are sufficient for the AI to be an SC, though we have high uncertainty regarding what time horizon might be needed.
 
 In our timelines forecast we combine this time horizon trend with estimations of the gaps between METR’s tasks and the real world to get a distribution for when superhuman coders will arrive. All forecasters place 2027 as one of the most likely years in which an SC might be developed.
 
 Appendix G - Why we forecast a superhuman coder in early 2027
-
-Superhuman Coder Arrival, Benchmarks and Gaps
 
 Appendix H - The alignment plan
 
@@ -1409,8 +1383,6 @@ For each transition from one milestone A to the next milestone B, we forecast it
 - Forecasting how much Al automation will speed this up, then correspondingly adjusting the estimate from (1) to be faster.
 
 We have substantial uncertainty about takeoff speeds: our model output distributions are below, conditional on SC being achieved in March 2027.[^*]
-
-AI Takeoff Forecast, Assuming Superhuman Coder in Mar 2027
 
 For more detailed forecasts and reasoning, see our takeoff supplement.
 

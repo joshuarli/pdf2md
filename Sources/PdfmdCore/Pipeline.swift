@@ -90,6 +90,8 @@ public struct Pipeline: Sendable {
                 }
             }
             page.blocks = suppressUnsupportedScript(blocks: page.blocks, nativeText: payload.nativeText, quality: quality)
+            page.blocks = suppressImageOnlyText(
+                blocks: page.blocks, nativeLines: payload.nativeLines, nativeText: payload.nativeText, quality: quality)
             page.blocks = orderBlocksForReading(page.blocks)
             page.complexity = detectComplexity(page)
             document.append(page)

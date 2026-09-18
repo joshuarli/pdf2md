@@ -53,6 +53,26 @@ substantive raster page below ~85% (plan.md section 11 guardrail).
   footnote markers `relocateFootnotes`'s geometric fallback can't pair) for
   raster. Both tracks still miss the >=99%/>=95% gates; still in progress —
   see plan.md section 51 for the live punch list and hill-climbing method.
+- D+1: + `suppressImageOnlyText` (drops Vision paragraphs that float over a
+  trustworthy-native page region with zero underlying native text — chart
+  titles, axis numbers, garbled diagram captions on pages 15, 47, 50, 51) —
+  89.44% born / 85.66% raster (raster untouched: the signal only applies
+  when native text is trustworthy), 5.0% novel. Page 50 is no longer the
+  worst page; new worst is page 37 (70.35%, a single footnote whose middle
+  ~5 lines Vision's structural model never emits as any block at all — not
+  a geometry-alignment bug `reconcileNativeLines` could fix, since there is
+  no Vision box over that text to align). Raster's worst page is still page
+  4 at 54.6%.
+- D+2: + contiguous-run existence check in `suppressImageOnlyText`
+  (`longestCommonRunLength` instead of the ordered-subsequence
+  `longestOrderedMatchCount` for the "does this text exist anywhere on the
+  page" fallback) — 89.57% born / 85.66% raster, 4.87% novel. A third page-47
+  garbled fragment had zero geometric native-line coverage and fell to that
+  fallback, where an ordered-subsequence match against a blank-line-free
+  whole-page blob (`splitNativeParagraphs` returns one giant "paragraph"
+  for pages with no blank lines) trivially strung together common filler
+  words regardless of real content; requiring several tokens to match *in a
+  row* fixed it without touching any of the existing keep cases.
 - E: + text-only FM repair (macOS 26) — 71.17% born / 71.72% raster (stale,
   pre-D); repair changed nothing measurable and cost 15x wall-clock when
   last measured against baseline C. Disabled by default until re-measured
@@ -82,7 +102,37 @@ main-column line and its margin footnote's first line could share one
 sinking the footnote below `nativeFootnoteItems`'s size gate entirely; and
 a chart's data-point labels, OCR'd as a short bullet list, are confetti by
 the same area/token measure as a misread caption, but `suppressFragments`
-exempted every list unconditionally.
+exempted every list unconditionally; a chart's title/caption *paragraph*
+text (not shaped like a list) escaped that same area/token heuristic by
+sitting just over its thresholds, and looser thresholds risked suppressing
+genuine short captions elsewhere — `suppressImageOnlyText` replaces the
+shape-guess with a fact reconciliation already establishes: on a
+trustworthy-native page, a paragraph with zero native text geometrically
+underneath it (checked first) and no plausible match anywhere else on the
+page (checked second, as a drifted-bbox allowance) has no native-text
+backing at all, which is exactly what a rasterized chart/diagram region
+looks like.
+
+Two more items were investigated and their root cause isolated, but not
+yet fixed (plan.md section 51 tracks them): the page-37 worst-page
+regression is Vision's `RecognizeDocumentsRequest` silently never emitting
+a block for a footnote's middle ~5 lines (confirmed via raw
+`VisionExtractor` output — two single-line fragments exist, nothing
+in between); a token-prefix-based "stitch the fragments back together"
+attempt was tried and reverted because `splitNativeParagraphs` collapses
+an entire page with no blank lines into one giant "paragraph," so a
+prefix match against it can span and swallow the rest of the page's text
+(caught by the benchmark: same matching/deletion counts, higher novel
+insertions). Page 33's footnote 85 ("`85 To protect consumer privacy...`")
+turns out to be a geometry-precision failure, not a missing-symbol gap as
+previously suspected: `nativeTextLines(of:)` confirms PDFKit extracts the
+correct digits, but Vision's own OCR bounding box for the fragment starts
+slightly below the true first native line's top edge, so
+`isSubstantiallyContained(threshold: 0.75)` measures only ~66% overlap for
+that one line and `reconcileNativeLines` never selects it — a real instance
+of the "geometric word-level alignment" gap the main README's Known
+limitations section already flags, not a new symbol to add to
+`splitFootnoteStart`/`scanBodyMarkers`.
 
 First pipeline measurement (deterministic, pre-footnote-relocation):
 77.46% match / 17.3% novel, 44,213/45,328 gold tokens matched. The penalty
