@@ -17,7 +17,7 @@ public struct Pipeline: Sendable {
 
     public init(
         vision: any DocumentRecognizing = VisionExtractor(),
-        repairer: any ModelRepairing = FoundationRepairer(),
+        repairer: any ModelRepairing = NoRepair(),
         router: ComplexityRouter = ComplexityRouter(),
         validator: FidelityValidator = FidelityValidator(),
         dpi: CGFloat = 216
@@ -63,7 +63,32 @@ public struct Pipeline: Sendable {
             let reconciled = reconcileNativeLines(payload.nativeLines, quality: quality, blocks: page.blocks)
             page.blocks = reconciled.blocks
             if reconciled.disagreement { page.complexity.nativeVisionDisagreement = true }
+            // Vision sometimes emits a title/heading's text a second time as
+            // an ordinary paragraph (the same banner read once as document
+            // title, once as a paragraph observation). Dedup runs here,
+            // before the lenient title fallback below, while both copies
+            // still carry identical (possibly still-garbled) OCR text —
+            // fixing only the title copy first would leave the paragraph
+            // copy's now-different wording looking like distinct content
+            // and defeat text-overlap dedup entirely.
             page.blocks = deduplicate(page.blocks)
+            // Geometric line reconciliation is precise but strict (0.85
+            // reciprocal token agreement); a heavily garbled display-type
+            // title/heading ("APPENDIX C. WHY IVE FORECAST A SUPERBUMAN
+            // CODERIN FARLY 2027") can fail that bar even though whole-page
+            // text search (`reconcileParagraphs`, no geometry, a lower
+            // threshold built for exactly this) still finds the true native
+            // line. Only titles/headings the geometric pass left as `.vision`
+            // get this fallback — ordinary paragraphs keep the geometric
+            // result, which already has positional confidence.
+            let textReconciled = reconcileParagraphs(nativeText: payload.nativeText, quality: quality, blocks: page.blocks)
+            for index in page.blocks.indices {
+                guard page.blocks[index].source != .reconciled else { continue }
+                switch page.blocks[index].kind {
+                case .title, .heading: page.blocks[index] = textReconciled.blocks[index]
+                case .paragraph, .list, .table: continue
+                }
+            }
             page.blocks = suppressUnsupportedScript(blocks: page.blocks, nativeText: payload.nativeText, quality: quality)
             page.blocks = orderBlocksForReading(page.blocks)
             page.complexity = detectComplexity(page)

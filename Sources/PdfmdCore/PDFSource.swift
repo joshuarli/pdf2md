@@ -54,25 +54,32 @@ public func nativeText(of page: PDFPage) -> (text: String, size: CGSize) {
 /// small type — the three-way split golden curation (and later heading
 /// inference) keys on. Sizes are 0 when no attributed string exists.
 public func fontLines(of page: PDFPage) -> [(size: Double, text: String)] {
-    guard let attributed = page.attributedString else {
+    guard let selection = page.selection(for: NSRange(location: 0, length: page.numberOfCharacters)) else {
         return (page.string ?? "").components(separatedBy: .newlines).map { (size: 0, text: $0) }
     }
-    let full = attributed.string as NSString
-    var runs: [(range: NSRange, size: Double)] = []
-    unsafe attributed.enumerateAttribute(.font, in: NSRange(location: 0, length: full.length)) { value, range, _ in
-        runs.append((range, Double((value as? NSFont)?.pointSize ?? 0)))
-    }
-    var lines: [(size: Double, text: String)] = []
-    unsafe full.enumerateSubstrings(in: NSRange(location: 0, length: full.length), options: .byLines) { substring, range, _, _ in
-        guard let substring else { return }
-        var best: (overlap: Int, size: Double) = (0, 0)
-        for run in runs {
-            let overlap = NSIntersectionRange(run.range, range).length
-            if overlap > best.overlap { best = (overlap, run.size) }
+    // Per-line selections (`selectionsByLine`), not a newline split of the
+    // whole page's linearized `attributedString`: a two-column page's
+    // content stream can place a margin note's first line right after a
+    // main-column line with no intervening newline in that flat string, so
+    // splitting on newlines glues them into one "line" and the dominant
+    // (main-column, body-sized) font run wins — the margin note's own
+    // smaller size never surfaces (AI 2027 page 3: "...workflows.4" and "1
+    // At first, most people..." merged, tagging the footnote's opening
+    // words as 11pt body type instead of 9.35pt footnote type, which then
+    // fails `nativeFootnoteItems`'s size gate and drops the footnote).
+    // Asking each geometric line for its own `attributedString` keeps
+    // column separation intact.
+    return selection.selectionsByLine().compactMap { line -> (size: Double, text: String)? in
+        guard let text = line.string, !text.isEmpty else { return nil }
+        guard let attributed = line.attributedString else { return (0, text) }
+        var best: (length: Int, size: Double) = (0, 0)
+        unsafe attributed.enumerateAttribute(.font, in: NSRange(location: 0, length: attributed.length)) { value, range, _ in
+            if range.length > best.length {
+                best = (range.length, Double((value as? NSFont)?.pointSize ?? 0))
+            }
         }
-        lines.append((best.size, substring))
+        return (best.size, text)
     }
-    return lines
 }
 
 /// PDFKit line selections carry geometry independently of blank-line breaks

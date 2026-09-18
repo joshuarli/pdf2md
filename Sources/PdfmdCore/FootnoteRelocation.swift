@@ -341,6 +341,23 @@ func rangedTokens(_ text: String) -> [RangedToken] {
     return out
 }
 
+/// Longest run of `positions` whose consecutive gaps stay within `maxGap`.
+/// Real matches land almost back-to-back; a spurious early hit sits far from
+/// the next one and loses to the dense run that follows.
+func longestDenseRun(_ positions: [Int], maxGap: Int) -> [Int] {
+    guard !positions.isEmpty else { return [] }
+    var bestStart = 0, bestLength = 1
+    var runStart = 0
+    for i in 1..<positions.count {
+        if positions[i] - positions[i - 1] > maxGap { runStart = i }
+        if i - runStart + 1 > bestLength {
+            bestLength = i - runStart + 1
+            bestStart = runStart
+        }
+    }
+    return Array(positions[bestStart..<bestStart + bestLength])
+}
+
 /// Fuzzy token equality: exact, or a shared prefix of at least four
 /// characters (OCR truncation "opermodel"/"oper", wrap splits
 /// "align"/"alignment"). Short tokens must match exactly.
@@ -418,12 +435,12 @@ public func relocateFootnotesWithNative(
     // separators. Notably there is NO decimal rule: span coverage rejects a
     // wrong occurrence ("version 2.0" never matches footnote text), and the
     // retry loop moves on to the true marker.
-    func occurrences(of marker: String, after consumeThrough: Int, skipping: Set<Int>) -> [Occurrence] {
+    func occurrences(of marker: String, skipping: Set<Int>) -> [Occurrence] {
         var out: [Occurrence] = []
         var index = 0
         while index < stream.count {
             defer { index += 1 }
-            if index <= consumeThrough || skipping.contains(index) { continue }
+            if skipping.contains(index) { continue }
             let token = stream[index]
             guard case .paragraph = blocks[token.block].kind else { continue }
             if token.lower == marker.lowercased() {
@@ -460,11 +477,15 @@ public func relocateFootnotesWithNative(
     func isOrphanPosition(block: Int, streamIndex: Int, requireTerminal: Bool) -> Bool {
         // Next token starts a sentence; previous ends one (or starts block).
         // Single-prefix suffix splits ("to 2.[29]") bypass the terminal
-        // requirement: the fused prefix already proves flotation.
+        // requirement: the fused prefix already proves flotation. Checked
+        // against the token's ORIGINAL range, not `.lower` — every token is
+        // stored lowercased, so comparing `.lower.first.isUppercase` can
+        // never be true and silently drops every capitalized sentence start.
         let local = blockTokenIndex(block: block, streamIndex: streamIndex)
         guard local + 1 < blockTokens[block].count else { return true }
-        let next = blockTokens[block][local + 1].lower
-        guard next.first.map({ $0.isUppercase || !$0.isLetter }) ?? false else { return false }
+        guard case .paragraph(let text) = blocks[block].kind else { return false }
+        let nextFirst = text[blockTokens[block][local + 1].range.lowerBound]
+        guard nextFirst.isUppercase || !nextFirst.isLetter else { return false }
         if local == 0 { return true }
         guard requireTerminal else { return true }
         let prev = blockTokens[block][local - 1].lower
@@ -502,21 +523,33 @@ public func relocateFootnotesWithNative(
     }
     var edits: [Edit] = []
     var definitions: [FootnoteDefinition] = []
-    var consumedThrough = -1
     var consumedOccurrences = Set<Int>()
 
     for item in items {
         let itemTokens = rangedTokens(item.text).map(\.lower).filter { !$0.isEmpty }
         guard !itemTokens.isEmpty else { continue }
-        // Each occurrence is tried in stream order until one matches;
-        // wrong early occurrences fail span coverage and are skipped.
-        var attempts = occurrences(of: item.marker, after: consumedThrough, skipping: consumedOccurrences)
+        // Each occurrence is tried in stream order until one matches; wrong
+        // occurrences fail span coverage and are skipped. Items are not
+        // processed in body-reference order (native footnote items follow
+        // the page's definition layout, e.g. main-column notes before a
+        // margin rail), so search the whole stream rather than only forward
+        // from the previous item's match — an earlier item pairing later in
+        // the body must not hide an earlier marker a later item needs.
+        var attempts = occurrences(of: item.marker, skipping: consumedOccurrences)
         var paired = false
         while !paired, let occ = attempts.first {
             attempts.removeFirst()
             consumedOccurrences.insert(occ.streamIndex)
-            // Greedy span forward with caps.
-            let maxScan = occ.streamIndex + 1 + itemTokens.count * 3 + 10
+            // Greedy span forward, bounded only by the page's own stream
+            // length: a main-column reference's body can live in a side
+            // margin rail reached only after the rest of the main column
+            // (AI 2027 page 20's "46"/"47"/"48" references precede their
+            // margin-column bodies by the length of the whole column).
+            // `longestDenseRun` below discards any spurious matches this
+            // wide a window admits, and the `last - first` sanity check
+            // further down rejects a run that isn't actually tight, so
+            // scanning the rest of the page risks no false anchor.
+            let maxScan = stream.count
             var matched: [Int] = []
             var need = 0
             var scan = occ.streamIndex + 1
@@ -527,13 +560,48 @@ public func relocateFootnotesWithNative(
                 }
                 scan += 1
             }
-            let coverage = Double(matched.count) / Double(itemTokens.count)
-            guard coverage >= 0.6, let first = matched.first, let last = matched.last,
+            // A real footnote body matches almost every token back-to-back;
+            // a common word ("to", "the") encountered while scanning through
+            // unrelated body blocks en route to the true body can spuriously
+            // match the item's first token and anchor the span there, so the
+            // later blanking step erases everything in between (page 23:
+            // a stray "to" match in prior body text erased two intervening
+            // paragraphs). Keep only the longest run of matches whose
+            // internal gaps stay tight, discarding isolated leading noise.
+            matched = longestDenseRun(matched, maxGap: 15)
+            guard let first = matched.first, let last = matched.last,
                 last - first <= itemTokens.count * 2 + 8
             else { continue }
+            var spanStart = first
+            // Two footnotes can open with near-identical phrasing (AI 2027
+            // page 20: both the "*" and "†" bodies start "We think..."). The
+            // greedy scan then spends the item's first tokens on the wrong
+            // (earlier) footnote and only recovers once the wording
+            // diverges, so the real body's own leading words are never in
+            // `matched` and survive the blanking as an orphaned lead-in. A
+            // dense run that starts a handful of tokens into its own block
+            // is almost certainly that block's own opening, not a
+            // coincidence, so pull the start back to the block's first
+            // token rather than trust the token-level alignment there.
+            if blockTokenIndex(block: stream[spanStart].block, streamIndex: spanStart) <= 8,
+                let blockFloor = blockStart[stream[spanStart].block], blockFloor > occ.streamIndex
+            {
+                spanStart = blockFloor
+            }
+            // Coverage over the actual candidate span, not the raw greedy
+            // walk's match count: the same coincidental-wording problem that
+            // motivates the block-floor snap above also makes the walk
+            // under-count tokens it skipped past on the wrong earlier match,
+            // which can sink a correct span just under threshold (AI 2027
+            // page 20's "48": the walk found 7/12 tokens this way, all 7
+            // being the tail of a text whose snapped span actually covers
+            // all 12). Re-measuring the snapped span directly avoids
+            // rejecting the match before the snap gets a chance to fix it.
+            let spanTokens = (spanStart...last).map { stream[$0].lower }
+            let coverage = Double(longestOrderedMatchCount(spanTokens, itemTokens)) / Double(itemTokens.count)
+            guard coverage >= 0.6 else { continue }
             // Extend start back over an unmatched same-marker token (floated
             // footnote-start marker: "public 5 Compute" -> drop the "5").
-            var spanStart = first
             while spanStart - 1 > occ.streamIndex {
                 let t = stream[spanStart - 1].lower
                 if t == item.marker.lowercased() && !matched.contains(spanStart - 1) {
@@ -587,7 +655,6 @@ public func relocateFootnotesWithNative(
             let occBlock = stream[occ.streamIndex].block
             edits.append(Edit(block: occBlock, range: occ.replacement, replacement: "[^\(item.marker)]"))
             definitions.append(FootnoteDefinition(marker: item.marker, text: item.text))
-            consumedThrough = max(consumedThrough, occ.streamIndex)
             paired = true
         }
     }

@@ -2341,3 +2341,129 @@ The central success criterion is:
 > The raster-only pinned AI 2027 PDF achieves at least 95% normalized ordered textual fidelity against an independently frozen golden Markdown reference, with less than 1% novel text, while the entire implementation remains a focused zero-third-party-dependency Swift 6.3 macOS 26+ CLI (macOS 27+ for the multimodal repair path).
 
 Aim for the smallest implementation that genuinely meets that standard.
+
+# 51. Implementation status (living progress log)
+
+Update this section as work lands. It tracks where the project actually is
+against the phases in section 48 and the gates in section 11/49 — it does
+not restate them.
+
+## Phase
+
+Phase 0 (research/benchmark establishment) and Phase 1 (deterministic
+extraction) are done: manifest, golden.md, raster twin, the Swift scorer
+(`DiffScore.swift`), and per-page worst-page/catastrophic-page reporting
+(`PageScore.swift`, added this pass — plan.md section 11/38 described this
+but it did not exist in code) are all in place and exercised by
+`pdfmd-bench ai2027`.
+
+Phase 2 (native reconciliation) and Phase 3 (document-level cleanup) are
+**in progress** and are where current work is concentrated — see Scores
+and Hill-climbing below. Phase 4 (selective FM repair) exists in code
+(`FoundationRepairer`, `ComplexityRouter`, `FidelityValidator`) but is
+**disabled by default** (`Pipeline`'s default repairer is `NoRepair`):
+measured against baseline C it changed the score by nothing measurable
+while costing ~15x wall-clock. That measurement predates all of this
+pass's Phase 2/3 fixes and needs to be redone against the current
+deterministic result before repair is re-enabled for any page class — pass
+`--repair` to `pdfmd-bench ai2027` to do that. Phase 5 (cleanup) has not
+started; do not start it before the benchmark gates are met.
+
+## Scores (`pdfmd-bench ai2027`, repair disabled — the default)
+
+```text
+             text match   novel   worst page
+born digital    89.13%    5.30%   70.3% (page 50)
+raster           85.66%   7.29%   54.6% (page 4)
+```
+
+Gates: >=99% born, >=95% raster with <1% novel, no substantive page <85%.
+Both tracks miss their gate. `Benchmarks/AI2027/README.md`'s Baselines
+section carries the same numbers plus the full baseline history (A/B/C/D/E).
+
+## Hill-climbing strategy
+
+This is benchmark-driven development (section 41) run as a tight loop, not
+a one-shot pass:
+
+1. Run `swift run -c release pdfmd-bench ai2027` (no `--repair`: the
+   deterministic-only run is ~2.5 minutes for both tracks; repair is ~15x
+   slower for a benefit that has never been measured against the current
+   pipeline, so never leave it on for routine iteration).
+2. Read the reported worst page. It is enough signal to start; do not wait
+   for a bigger sample.
+3. Render just that page — `pdfmd ai-2027.pdf --pages N -o /tmp/pageN.md`
+   — and diff it against the corresponding span of `golden.md` by eye.
+4. Isolate which stage produced the discrepancy by re-running the earlier
+   stages by hand (a throwaway `@Test` in `Tests/PdfmdCoreTests` that calls
+   `Pipeline.loadPayload` + `vision.extract` + each reconciliation/dedup
+   step in sequence, printing intermediate blocks, is the fastest way to
+   see exactly what each stage did to one page — plan.md section 6's "compile
+   tiny disposable probes" applies here just as much as to SDK exploration).
+   Delete the probe once the finding is captured in a real test.
+5. Fix the root cause in the deterministic stage responsible. Every fix
+   found this way so far has been a real logic bug (wrong window, wrong
+   case-folding, wrong default), not a case needing a heuristic — keep
+   defaulting to "find the bug" over "add a heuristic" until a fixture
+   actually forces the latter (section 42).
+6. Add a regression test that fails without the fix and passes with it
+   (verify by temporarily reverting the fix, per section
+   "Prioritize test-driven development"). A synthetic fixture reproducing
+   the page's specific geometry is preferable to depending on the pinned
+   PDF being present; when a real page's exact block layout is the point
+   (e.g. the footnote regression tests keyed to specific pages), copy the
+   real geometry into the fixture literally, as already done for pages 3,
+   20, and 23.
+7. Re-run the full test suite, then the fast benchmark, and re-check the
+   worst page. A fix to one page can shift another page's score (a shared
+   function like `fontLines` or `suppressFragments` touches every page) —
+   confirm the aggregate moved in the intended direction, and if a
+   specific page regressed, diff its candidate draft before and after
+   (`results-deterministic/*-pages.json`) to understand why before deciding
+   whether the regression is real or an artifact of a different,
+   still-open bug interacting with the fix (this happened once already:
+   fixing `fontLines` correctly relocated footnote 84 on page 33, which
+   shifted its position relative to two *other*, still-broken footnotes
+   on the same page and cost a few tokens net — the fix was still correct
+   and was kept).
+8. Repeat from 1.
+
+## Known open items (ranked by suspected impact, not yet fixed)
+
+- **Raster-only footnote markers.** With no native text, OCR mangles
+  footnote markers into stray punctuation (a digit read as `'`, `?`, `›`,
+  etc.), and `relocateFootnotes`'s geometric-only fallback (used whenever
+  `nativeTextQuality != .trustworthy`) requires a recognizable marker
+  character to pair anything. This is the raster track's dominant loss
+  (worst page 4 at 54.6%; pages 3, 9, 12, 32, 35, 42, 54 all sit in the
+  60s%). Likely needs a different pairing strategy for the no-native-text
+  case rather than a bigger regex — character identity across two
+  independent OCR misreads of the same glyph is not reliably recoverable.
+- **Two markers that never relocate on born-digital page 33** (`83`, `85`
+  — see Benchmarks/AI2027/results-deterministic/born-pages.json page 33):
+  `85`'s glued reference OCRs as a bare `"` (not currently in
+  `splitFootnoteStart`/`scanBodyMarkers`'s symbol set), and `83`'s failure
+  mode has not yet been isolated. Worth checking before assuming raster
+  marker-fidelity work is the only path to the raster gate — the same
+  fallback logic may be under-recognizing symbol markers on born-digital
+  pages too.
+- **Chart furniture beyond lists.** Page 50's chart title paragraph
+  ("Length Of Coding Tasks AI Agents Can Complete Autonomously") and a
+  garbled axis caption survive `suppressFragments` because they are wider
+  and score just over its area threshold even though gold excludes them
+  entirely (plan.md section 8). Chart data-point labels shaped as a list
+  are already suppressed (this pass); the title/caption shapes need their
+  own signal, not a looser area threshold (which would risk suppressing
+  genuine short captions/headings elsewhere).
+- **Figure-caption OCR quality** (page 47: a diagram caption describing
+  "Chain of Continuous Thought (COCONUT)" comes out almost entirely
+  garbled — `del=0 ins=108` in isolation, i.e. pure fabricated-looking
+  novel text with nothing gold-matching lost). This may be a genuine Vision
+  OCR-quality floor for small/dense diagram text rather than a pipeline
+  bug; check whether DPI or `RecognizeDocumentsRequest` options move it
+  before concluding that.
+- **Foundation Models repair, re-measured.** Once the deterministic gates
+  are closer, re-run `pdfmd-bench ai2027 --repair` against the *current*
+  pipeline (the last measurement is stale, from before every fix in this
+  section) and record baseline E properly. Only route a page class if it
+  demonstrably moves the score (section 2.1, section 41).

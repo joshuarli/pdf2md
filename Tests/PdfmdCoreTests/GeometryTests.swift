@@ -93,6 +93,35 @@ func block(_ x: Double, _ y: Double, _ w: Double, _ h: Double, text: String = "t
     #expect(result[0].kind.plainText.hasPrefix("A real footnote"))
 }
 
+@Test func reconciledLineWrapTailSurvivesFragmentSuppression() {
+    // AI 2027 page 20: a sentence wraps so its last few words ("It gets
+    // caught.†") land alone in a tiny box — geometrically indistinguishable
+    // from OCR confetti (small area, few tokens), but reconciliation already
+    // matched it against trustworthy native text, which confetti never does.
+    let tail = PageBlock(
+        kind: .paragraph("It gets caught.†"),
+        region: NormalizedRect(x: 0.07, y: 0.51, width: 0.11, height: 0.015), source: .reconciled)
+    let junk = PageBlock(kind: .paragraph("囵"), region: NormalizedRect(x: 0.7, y: 0.2, width: 0.02, height: 0.015), source: .vision)
+    let result = suppressFragments([tail, junk])
+    #expect(result.count == 1)
+    #expect(result[0].kind.plainText == "It gets caught.†")
+}
+
+@Test func chartDataPointsReadAsAListAreSuppressed() {
+    // AI 2027 page 50: a line chart's data-point labels ("GPT-4 8314",
+    // "Claude 3.5 Sonnet New!") land inside its plot area and Vision reads
+    // them as a short bullet list — same tiny footprint as confetti prose.
+    let chartList = PageBlock(
+        kind: .list(ListBlock(ordered: false, items: [
+            ListItem(marker: "-", text: "GPT-4 8314"), ListItem(marker: "-", text: "GPT-4 1186"),
+        ])),
+        region: NormalizedRect(x: 0.17, y: 0.24, width: 0.076, height: 0.03), source: .vision)
+    let footnote = PageBlock(kind: .paragraph("A real footnote with enough words to matter here."), region: NormalizedRect(x: 0.07, y: 0.9, width: 0.85, height: 0.05), source: .vision)
+    let result = suppressFragments([chartList, footnote])
+    #expect(result.count == 1)
+    #expect(result[0].kind.plainText.hasPrefix("A real footnote"))
+}
+
 @Test func foreignScriptConfettiSuppressed() {
     let native = "An English document with no CJK characters at all."
     let cjk = PageBlock(kind: .title("良良。包良"), region: NormalizedRect(x: 0.1, y: 0.4, width: 0.5, height: 0.05), source: .vision)

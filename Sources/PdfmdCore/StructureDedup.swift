@@ -179,17 +179,36 @@ public func suppressUnsupportedScript(
 /// read as prose. Footnotes, margin notes, headings, and real one-line
 /// paragraphs all span far more area, so the gate keeps them. The benchmark
 /// gold excludes the same dashboard furniture (plan.md section 8).
+///
+/// A genuine sentence can still land in a tiny box: a narrow-column line
+/// wrap can strand just its last few words on their own short line (AI 2027
+/// page 20: "It gets caught.†", the tail of a sentence that wrapped, area
+/// 0.0017 / 5 tokens — well inside confetti range by geometry alone).
+/// Reconciliation already confirmed those blocks against trustworthy native
+/// text (`source == .reconciled`), which OCR confetti never matches, so they
+/// are exempt regardless of size.
+///
+/// Chart data points can look exactly like a short list to Vision's
+/// document model (AI 2027 page 50: "GPT-4 8314", "Claude 3.5 Sonnet New!"
+/// read as bullet items inside a line chart's plot area) — same tiny
+/// area, same small token count — so lists get the identical check. Tables
+/// keep their blanket exemption: no observed case yet justifies the risk to
+/// genuine small tables (plan.md section 41).
 public func suppressFragments(_ blocks: [PageBlock], maximumArea: Double = 0.004, maximumTokens: Int = 12) -> [PageBlock] {
     blocks.filter { block in
+        guard block.source != .reconciled else { return true }
+        let tokens: [String]
         switch block.kind {
         case .title(let text), .heading(_, let text), .paragraph(let text):
-            let tokens = tokenize(normalizeForScoring(text))
-            if block.region.area < maximumArea, tokens.count <= maximumTokens {
-                return false
-            }
-            return true
-        case .list, .table:
+            tokens = tokenize(normalizeForScoring(text))
+        case .list(let list):
+            tokens = tokenize(normalizeForScoring(list.items.map(\.text).joined(separator: " ")))
+        case .table:
             return true
         }
+        if block.region.area < maximumArea, tokens.count <= maximumTokens {
+            return false
+        }
+        return true
     }
 }

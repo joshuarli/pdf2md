@@ -71,11 +71,12 @@ private let page20Blocks: [PageBlock] = [
     let items = nativeFootnoteItems(page20Lines)
     try #require(items.map(\.marker) == ["*", "†", "46", "47", "48"])
     let result = relocateFootnotesWithNative(blocks: page20Blocks, nativeLines: page20Lines)
-    // 46 pairs with the glued "way.46" and its margin-note block. *, †, and 48
-    // lack a reachable body occurrence in this truncated fixture, and 47's
-    // body marker was lost to OCR — none relocate. Footnote text must leave
-    // the geometric flow, and the multi-edit block must not crash.
-    try #require(result.definitions.map(\.marker) == ["46"])
+    // 46 pairs with the glued "way.46" and its margin-note block; * pairs
+    // with the glued "it?*" and the start of its (truncated) body block. †
+    // and 48 lack a reachable body occurrence in this truncated fixture, and
+    // 47's body marker was lost to OCR — neither relocates. Footnote text
+    // must leave the geometric flow, and the multi-edit block must not crash.
+    try #require(result.definitions.map(\.marker) == ["*", "46"])
     for block in result.blocks {
         #expect(!block.kind.plainText.contains("sandbagging"))
         #expect(!block.kind.plainText.contains("internalize the Spec is to"))

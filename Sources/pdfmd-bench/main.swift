@@ -8,7 +8,7 @@ import PdfmdCore
 /// so the normal `pdfmd --help` stays minimal.
 ///
 /// ```text
-/// pdfmd-bench ai2027 [--dir Benchmarks/AI2027]
+/// pdfmd-bench ai2027 [--dir Benchmarks/AI2027] [--repair]
 /// pdfmd-bench raster-twin --pdf SRC --out DST [--dpi 300]
 /// pdfmd-bench native-dump --pdf SRC --out DIR
 /// pdfmd-bench font-dump --pdf SRC --out DIR
@@ -20,11 +20,6 @@ import PdfmdCore
 /// Baseline A sanity check; `font-dump` writes per-page lines annotated with
 /// dominant type size, which separates headings, body, and footnote type
 /// (golden curation and, later, heading inference).
-private struct DisabledRepairer: ModelRepairing {
-    var modelAvailable: Bool { false }
-    func repair(page: PageIR, draft: String, pageImage: CGImage?) async -> String? { nil }
-}
-
 struct Bench {
     static func main() async -> Int32 {
         var args = Array(CommandLine.arguments.dropFirst())
@@ -40,7 +35,11 @@ struct Bench {
                 directory = args[flag + 1]
             }
             do {
-                return try await runAI2027(directory: URL(fileURLWithPath: directory), repairEnabled: !args.contains("--no-repair"))
+                // Repair is opt-in, not opt-out: it costs ~15x wall-clock
+                // and showed no measurable gain against baseline C (see
+                // Benchmarks/AI2027/README.md, baseline E) — pass --repair
+                // to re-measure it against the current deterministic result.
+                return try await runAI2027(directory: URL(fileURLWithPath: directory), repairEnabled: args.contains("--repair"))
             } catch let error as BenchmarkError {
                 writeErr(error.description + "\n")
                 return 1
@@ -65,7 +64,7 @@ struct Bench {
     }
 
     static func usage() {
-        writeErr("usage: pdfmd-bench ai2027 [--dir DIR]\n")
+        writeErr("usage: pdfmd-bench ai2027 [--dir DIR] [--repair]\n")
         writeErr("       pdfmd-bench raster-twin --pdf SRC --out DST [--dpi 300]\n")
         writeErr("       pdfmd-bench line-dump --pdf SRC --out DIR\n")
         writeErr("       pdfmd-bench native-dump --pdf SRC --out DIR\n")
@@ -217,11 +216,13 @@ struct Bench {
             throw BenchmarkError.unreadable(goldenURL.path + " (see Benchmarks/AI2027/README.md to create it)")
         }
         let golden = try String(contentsOf: goldenURL, encoding: .utf8)
-        let pipeline = repairEnabled ? Pipeline() : Pipeline(repairer: DisabledRepairer())
+        let pipeline = Pipeline(repairer: repairEnabled ? FoundationRepairer() : NoRepair())
         let artifacts = directory.appendingPathComponent(repairEnabled ? "results-repair" : "results-deterministic")
         try FileManager.default.createDirectory(at: artifacts, withIntermediateDirectories: true)
         print("repair: \(repairEnabled ? "enabled" : "disabled")")
         let started = Date()
+
+        let goldTokens = tokenize(normalizeForScoring(golden))
 
         let bornDigital = try await pipeline.convertWithPageDrafts(
             pdfURL: pdfURL,
@@ -231,8 +232,10 @@ struct Bench {
         try writeAtomically(bornDigital.markdown, to: artifacts.appendingPathComponent("born.md"))
         try JSONEncoder().encode(bornDigital.pageDrafts).write(to: artifacts.appendingPathComponent("born-pages.json"))
         let bornReport = scoreMarkdown(candidate: bornDigital.markdown, golden: golden)
+        let bornPages = scorePages(gold: goldTokens, candidatePages: tokenizedPages(bornDigital.pageDrafts))
         print("AI 2027 — born digital\n")
         print(formatScoreReport(title: "born digital", report: bornReport))
+        printWorstPage(bornPages, floor: manifest.pageFloor)
 
         let raster = try await pipeline.convertWithPageDrafts(
             pdfURL: rasterURL,
@@ -242,8 +245,10 @@ struct Bench {
         try writeAtomically(raster.markdown, to: artifacts.appendingPathComponent("raster.md"))
         try JSONEncoder().encode(raster.pageDrafts).write(to: artifacts.appendingPathComponent("raster-pages.json"))
         let rasterReport = scoreMarkdown(candidate: raster.markdown, golden: golden)
+        let rasterPages = scorePages(gold: goldTokens, candidatePages: tokenizedPages(raster.pageDrafts))
         print("AI 2027 — raster\n")
         print(formatScoreReport(title: "raster", report: rasterReport))
+        printWorstPage(rasterPages, floor: manifest.pageFloor)
 
         let elapsed = Date().timeIntervalSince(started)
         print("wall-clock: \((elapsed * 10).rounded() / 10)s")
@@ -251,8 +256,24 @@ struct Bench {
         let bornPass = bornReport.textMatch >= manifest.bornDigitalTextMatch
         let rasterPass = rasterReport.textMatch >= manifest.rasterTextMatch
             && rasterReport.novelText <= manifest.rasterNovelText
-        print(bornPass && rasterPass ? "PASS" : "FAIL")
-        return bornPass && rasterPass ? 0 : 1
+        let rasterFloorPass = worstSubstantivePage(rasterPages).map { $0.report.textMatch >= manifest.pageFloor } ?? true
+        let pass = bornPass && rasterPass && rasterFloorPass
+        print(pass ? "PASS" : "FAIL")
+        return pass ? 0 : 1
+    }
+
+    static func tokenizedPages(_ drafts: [String]) -> [(pageNumber: Int, tokens: [String])] {
+        drafts.enumerated().map { (pageNumber: $0.offset + 1, tokens: tokenize(normalizeForScoring($0.element))) }
+    }
+
+    static func printWorstPage(_ pages: [PageScore], floor: Double) {
+        guard let worst = worstSubstantivePage(pages) else {
+            print("  worst page:      n/a (no substantive page)")
+            return
+        }
+        let percent = ((worst.report.textMatch * 10000).rounded() / 100)
+        let flag = worst.report.textMatch < floor ? " (below \(Int(floor * 100))% floor)" : ""
+        print("  worst page:      \(percent)% (page \(worst.pageNumber))\(flag)")
     }
 }
 

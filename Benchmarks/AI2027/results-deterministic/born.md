@@ -1,4 +1,8 @@
+AI Futures
+
 # Al
+
+Project
 
 2027
 
@@ -12,7 +16,13 @@ Eli Lifland
 
 Romeo Dean
 
+Originally published on
+
+Design by
+
 April 3rd 2025 on AI-2027.com
+
+Lightcone Infrastructure
 
 # AI 2027
 
@@ -30,21 +40,23 @@ We won’t be right about everything — much of this is guesswork. But over the
 
 At the beginning of every chapter you will find a small chart in the right margin that aims to give you a sense of the state of the world at the time that section of the scenario takes place. For a more detailed explanation of what these numbers mean, and much much more detail on our methodology, go to ai-2027.com.
 
+We hope you find AI 2027 helpful.
+
 # Mid 2025: Stumbling Agents
 
 The world sees its first glimpse of AI agents.
 
 Advertisements for computer-using agents emphasize the term “personal assistant”: you can prompt them with tasks like “order me a burrito on DoorDash” or “open my budget spreadsheet and sum this month’s expenses.” They will check in with you as needed: for example, to ask you to confirm purchases.1
 
-Though more advanced than previous iterations like Operator, they struggle to get widespread usage.2
+Though more advanced than previous iterations like Operator, they struggle to get widespread usage.[^2]
 
 Meanwhile, out of public focus, more specialized coding and research agents are beginning to transform their professions.
 
 The AIs of 2024 could follow specific instructions: they could turn bullet points into emails, and simple requests into working code. In 2025, AIs function more like employees. Coding AIs increasingly look like autonomous agents rather than mere assistants: taking instructions via Slack or Teams and making substantial code changes on their own, sometimes saving hours or even days.
 
-3 Research agents spend half an hour scouring the Internet to answer your question.
+[^3] Research agents spend half an hour scouring the Internet to answer your question.
 
-The agents are impressive in theory (and in cherry-picked examples), but in practice unreliable. AI twitter is full of stories about tasks bungled in some particularly hilarious way. The better agents are also expensive; you get what you pay for, and the best performance costs hundreds of dollars a month.[^*] Still, many companies find ways to fit AI agents into their workflows.4
+The agents are impressive in theory (and in cherry-picked examples), but in practice unreliable. AI twitter is full of stories about tasks bungled in some particularly hilarious way. The better agents are also expensive; you get what you pay for, and the best performance costs hundreds of dollars a month.[^*] Still, many companies find ways to fit AI agents into their workflows.[^4]
 
 Late 2025: The World’s Most Expensive AI
 
@@ -60,21 +72,21 @@ the same time). From a security perspective this introduces some threat surface 
 
 1 At first, most people are reluctant to allow purchases without oversight. Over the next few years, automatically allowing small purchases becomes normalized as the AIs become more reliable and build up trust.
 
-2 Specifically, we forecast that they score 65% on the OSWorld benchmark of basic computer tasks (compared to 38% for Operator and 70% for a typical skilled non-expert human).
+[^2]: Specifically, we forecast that they score 65% on the OSWorld benchmark of basic computer tasks (compared to 38% for Operator and 70% for a typical skilled non-expert human).
 
-3 For example, we think coding agents will move towards functioning like Devin. We forecast that mid-2025 agents will score 85% on SWEBench-Verified.
+[^3]: For example, we think coding agents will move towards functioning like Devin. We forecast that mid-2025 agents will score 85% on SWEBench-Verified.
 
-4 Enterprise tools like Glean also move toward providing increasingly autonomous AI agents.
+[^4]: Enterprise tools like Glean also move toward providing increasingly autonomous AI agents.
 
 [^*]: For example, OpenAI’s pro plan currently costs $200/month and the agentic coding AI Devin currently costs $500/month. While the cutting-edge systems continue to get more expensive over time, the cost to customers of reaching a given capabilities level continues to plummet. For existing capabilities, this happens at an average rate of about 50x/year (per Epoch).
 
 # Late 2025: The World’s Most Expensive AI
 
-GPT-4 required 2 ⋅ 1025 FLOP of compute to train.5 OpenBrain’s latest public model—Agent-0—was trained with 1027 FLOP. Once the new datacenters are up and running, they’ll be able to train a model with 1028 FLOP—a thousand times more than GPT-4.6 Other companies pour money into their own giant datacenters, hoping to keep pace.
+GPT-4 required 2 ⋅ 1025 FLOP of compute to train.[^5] OpenBrain’s latest public model—Agent-0—was trained with 1027 FLOP. Once the new datacenters are up and running, they’ll be able to train a model with 1028 FLOP—a thousand times more than GPT-4.[^6] Other companies pour money into their own giant datacenters, hoping to keep pace.
 
 Although models are improving on a wide range of skills, one stands out:
 
-OpenBrain focuses on AIs that can speed up AI research. They want to win the twin arms races against China (whose leading company we’ll call “DeepCent”) and their US competitors. The more of their research and development (R&D) cycle they can automate, the faster they can go. So when OpenBrain finishes training Agent-1, a new model under internal development, it’s good at many things but great at helping with AI research.8 By this point “finishes training” is a bit of a misnomer; models are frequently updated to newer versions trained on additional data or partially re-trained to patch some weaknesses.9
+OpenBrain focuses on AIs that can speed up AI research. They want to win the twin arms races against China (whose leading company we’ll call “DeepCent”) and their US competitors. The more of their research and development (R&D) cycle they can automate, the faster they can go. So when OpenBrain finishes training Agent-1, a new model under internal development, it’s good at many things but great at helping with AI research.[^8] By this point “finishes training” is a bit of a misnomer; models are frequently updated to newer versions trained on additional data or partially re-trained to patch some weaknesses.[^9]
 
 The same training environments that teach Agent-1 to autonomously code and web-browse also make it a good hacker. Moreover, it could offer substantial help to terrorists designing bioweapons, thanks to its PhD-level knowledge of every field and ability to browse the web. OpenBrain reassures the government that the model has been “aligned” so that it will refuse to comply with malicious requests.
 
@@ -82,15 +94,19 @@ Modern AI systems are gigantic artificial neural networks. Early in training, an
 
 After being trained to predict internet text, the model is trained to produce text in response to instructions. This bakes in a basic personality and “drives.”[^†] For
 
-5 Compute is measured in floating point operations (FLOP): how many individual addition and multiplication operations occur over the course of running a program.
-
-See our compute supplement for more details.
+ations (FLOP): how many individual addition and multiplication operations occur over the course of running a program.
 
 • We consider DeepSeck, Tencent, Alibaba, and others to have strong AGI projects in China. To avoid singling our a specific one, our scenario will follow a fictional "Deep-Cent."
 
-8 It’s good at this due to a combination of explicit focus to prioritize these skills, their own extensive codebases they can draw on as particularly relevant and high-quality training data, and coding being an easy domain for procedural feedback.
+data, and coding being an easy domain for procedural feedback.
 
-9 For example, suppose a model is much better at Python than obscure programming languages. When OpenBrain sees value in it, they generate synthetic training data in those languages as well. Another example: to help it integrate more effectively into company workflows, OpenBrain develops a curriculum to train it to use Slack.
+[^5]: Compute is measured in floating point oper-
+
+[^6]: They could train this model given 150 days. See our compute supplement for more details.
+
+[^8]: It’s good at this due to a combination of explicit focus to prioritize these skills, their own extensive codebases they can draw on as particularly relevant and high-quality training
+
+[^9]: For example, suppose a model is much better at Python than obscure programming languages. When OpenBrain sees value in it, they generate synthetic training data in those languages as well. Another example: to help it integrate more effectively into company workflows, OpenBrain develops a curriculum to train it to use Slack.
 
 [^*]: People often get hung up on whether these AIs are sentient, or whether they have “true understanding.” Geoffrey Hinton, Nobel prize winning founder of the field, thinks they do. However, we don’t think it matters for the purposes of our story, so feel free to pretend we said “behaves as if it understands…” whenever we say “understands,” and so forth. Empirically, large language models already behave as if they are self-aware to some extent, more and more so every year.
 
@@ -100,27 +116,29 @@ See our compute supplement for more details.
 
 example, an agent that understands a task clearly is more likely to complete it successfully; over the course of training the model “learns” a “drive” to get a clear understanding of its tasks. Other drives in this category might be effectiveness, knowledge, and self-presentation (i.e. the tendency to frame its results in the best possible light).[^*]
 
-OpenBrain has a model specification (or “Spec”), a written document describing the goals, rules, principles, etc. that are supposed to guide the model’s behavior.10 Agent-1’s Spec combines a few vague goals (like “assist the user” and “don’t break the law”) with a long list of more specific dos and don’ts (“don’t say this particular word,” “here’s how to handle this particular situation”). Using techniques that utilize AIs to train other AIs,11 the model memorizes the Spec and learns to reason carefully about its maxims. By the end of this training, the AI will hopefully be helpful (obey instructions), harmless (refuse to help with scams, bomb-making, and other dangerous activities) and honest (resist the temptation to get better ratings from gullible humans by hallucinating citations[^†] or faking task completion).
+OpenBrain has a model specification (or “Spec”), a written document describing the goals, rules, principles, etc. that are supposed to guide the model’s behavior.[^10] Agent-1’s Spec combines a few vague goals (like “assist the user” and “don’t break the law”) with a long list of more specific dos and don’ts (“don’t say this particular word,” “here’s how to handle this particular situation”). Using techniques that utilize AIs to train other AIs,11 the model memorizes the Spec and learns to reason carefully about its maxims. By the end of this training, the AI will hopefully be helpful (obey instructions), harmless (refuse to help with scams, bomb-making, and other dangerous activities) and honest (resist the temptation to get better ratings from gullible humans by hallucinating citations[^†] or faking task completion).
 
 ➤ See Appendix A - Training process and LLM psychology: why we keep saying “hopefully” for more detail.
 
 OpenBrain’s alignment team12 is careful enough to wonder whether these victories are deep or shallow. Does the fully-trained model have some kind of robust commitment to always being honest? Or will this fall apart in some future situation, e.g. because it’s learned honesty as an instrumental goal instead of a terminal goal? Or has it just learned to be honest about the sorts of things the evaluation process can check? Could it be lying to itself sometimes, as humans do? A conclusive answer to these questions would require mechanistic interpretability—essentially the ability to look at an AI’s internals and read its mind. Alas, interpretability techniques are not yet advanced enough for this.
 
-Instead, researchers try to identify cases where the models seem to deviate from the Spec. Agent-1 is often sycophantic (i.e. it tells researchers what they want to hear instead of trying to tell them the truth). In a few rigged demos, it even lies in more serious ways, like hiding evidence that it failed on a task, in order to get better ratings. However, in real deployment settings, there are no longer any incidents so extreme as in 2023–2024 (e.g. Gemini telling a user to die and Bing Sydney being Bing Sydney.)13
+Instead, researchers try to identify cases where the models seem to deviate from the Spec. Agent-1 is often sycophantic (i.e. it tells researchers what they want to hear instead of trying to tell them the truth). In a few rigged demos, it even lies in more serious ways, like hiding evidence that it failed on a task, in order to get better ratings. However, in real deployment settings, there are no longer any incidents so extreme as in 2023–2024 (e.g. Gemini telling a user to die and Bing Sydney being Bing Sydney.)[^13]
 
 you feed it. See also this paper which found that AIs retrained to exhibit a certain personality trait are able to correctly answer questions about that new trait, despite no training to do so, suggesting that they have internal representations of their own traits and that when their traits change their representations change accordingly.
 
-OpenAI calls it the Spec, but Anthropic calls it the Constitution.
-
 "For example, RLAIF and deliberative align-ment.
 
-12 By this we mean whoever is trying to solve the problems the Superalignment team was trying to solve.
-
-13 To be clear, what made these incidents interesting is that they didn’t seem to be the result of the user prompting or otherwise encouraging the AIs to say those things. In 2025, it’ll still be possible to get AIs to say all sorts of things if you try.
+[^12]
 
 [^*]: These paragraphs include speculation about the internal workings of large artificial neural networks. Such networks are sufficiently complicated that we can’t actually look inside and say “ah yes, now it’s evolved from reflexes into having goals” or “OK so there’s the list of drives it has.” Instead, we basically have to do psychology, looking how it behaves in various settings and running various experiments on it and trying to piece together the clues. And it’s all terribly controversial and confusing.
 
-[^†]: Most sources on AI “hallucinations” describe them as unintentional mistakes, but research with steering vectors finds that in some cases the models know their citations are fake—they are lying. During training, raters gave well-cited claims more reward than claims without citations, so the AI “learned” to cite sources for scholarly claims in order to please its users.
+[^†]: Most sources on AI “hallucinations” describe them as unintentional mistakes, but research with steering vectors finds that in some cases the models know their citations are fake—they are lying. During training, raters gave well-cited claims more reward than claims without citations, so the AI “learned” to cite sources for scholarly claims in order to please its users. If no relevant source exists, it makes one up.
+
+[^10]: Different companies call it different things. OpenAI calls it the Spec, but Anthropic calls it the Constitution.
+
+[^12]: By this we mean whoever is trying to solve the problems the Superalignment team was trying to solve.
+
+[^13]: To be clear, what made these incidents interesting is that they didn’t seem to be the result of the user prompting or otherwise encouraging the AIs to say those things. In 2025, it’ll still be possible to get AIs to say all sorts of things if you try.
 
 # Early 2026: Coding Automation
 
@@ -130,9 +148,9 @@ OpenBrain continues to deploy the iteratively improving Agent-1 internally for A
 
 ➤ See Appendix B - The AI R&D progress multiplier: what do we mean by 50% faster algorithmic progress? for more detail.
 
-Several competing publicly released AIs now match or exceed Agent-0, including an open-weights model. OpenBrain responds by releasing Agent-1, which is more capable and reliable.14
+Several competing publicly released AIs now match or exceed Agent-0, including an open-weights model. OpenBrain responds by releasing Agent-1, which is more capable and reliable.[^14]
 
-People naturally try to compare Agent-1 to humans, but it has a very different skill profile. It knows more facts than any human, knows practically every programming language, and can solve well-specified coding problems extremely quickly. On the other hand, Agent-1 is bad at even simple long-horizon tasks, like beating video games it hasn’t played before. Still, the common workday is eight hours, and a day’s work can usually be separated into smaller chunks; you could think of Agent-1 as a scatterbrained employee who thrives under careful management.15 Savvy people find ways to automate routine parts of their jobs.16 OpenBrain’s executives turn consideration to an implication of automating AI R&D: security has become more important. In early 2025, the worst-case scenario was leaked algorithmic secrets; now, if China steals Agent-1’s weights, they could increase their research speed by nearly 50%.[^*] OpenBrain’s security level is typical of a fast-growing 3,000 person tech company, secure only against low-priority attacks from capable cyber groups (RAND’s SL2).17 They are working hard to protect their weights and secrets from insider threats and top cybercrime syndicates (SL3),18 but defense against nation states (SL4&5) is barely on the horizon.
+People naturally try to compare Agent-1 to humans, but it has a very different skill profile. It knows more facts than any human, knows practically every programming language, and can solve well-specified coding problems extremely quickly. On the other hand, Agent-1 is bad at even simple long-horizon tasks, like beating video games it hasn’t played before. Still, the common workday is eight hours, and a day’s work can usually be separated into smaller chunks; you could think of Agent-1 as a scatterbrained employee who thrives under careful management.[^15] Savvy people find ways to automate routine parts of their jobs.[^16] OpenBrain’s executives turn consideration to an implication of automating AI R&D: security has become more important. In early 2025, the worst-case scenario was leaked algorithmic secrets; now, if China steals Agent-1’s weights, they could increase their research speed by nearly 50%.[^*] OpenBrain’s security level is typical of a fast-growing 3,000 person tech company, secure only against low-priority attacks from capable cyber groups (RAND’s SL2).17 They are working hard to protect their weights and secrets from insider threats and top cybercrime syndicates (SL3),18 but defense against nation states (SL4&5) is barely on the horizon.
 
 Mid 2026: China Wakes Up
 
@@ -140,25 +158,33 @@ In China, the CCP is starting to feel the AGI.
 
 Chip export controls and lack of government support have left China underresourced compared to the West. By smuggling banned Taiwanese chips, buying older chips, and producing domestic chips about three years behind the US-Taiwanese frontier, China has managed to maintain about 12% of the world’s
 
-14 In practice, we expect OpenBrain to release models on a faster cadence than 8 months, but we refrain from describing all incremental releases for brevity.
-
-15 Specifically, we predict a score of 80% on OSWorld (equivalent to a skilled but nonexpert human); 85% on Cybench, matching a top professional human team on hacking tasks that take those teams 4 hours; and 1.3 on RE- Bench matching top expert humans given 8 hours at well-defined AI research engineering tasks.
-
-16 Agent-1 and its imitators are commercially successful; over the course of 2025, AI company revenues triple, and OpenBrain valuation reaches $1T. Annual spending on datacenters doubles to $400 billion, led by Microsoft, Google, and Amazon, and the US adds over 5 GW of AI power draw. See the industry metrics section of the compute supplement for more details.
+1[^5] Specifically, we predict a score of 80% on OSWorld (equivalent to a skilled but nonexpert human); 85% on Cybench, matching a top professional human team on hacking tasks that take those teams 4 hours; and 1.3 on RE- Bench matching top expert humans given 8 hours at well-defined AI research engineering tasks.
 
 See A Playbook for Securing Al Model Weights, RAND Corporation, 2024-
 
-18 Around 5% of OpenBrain’s staff is on the security team and they are highly capable, but the threat surface is also extremely large. It also doesn’t help that they are mostly blocked at this stage from implementing policies that could slow down the research progress. See our Security Forecast for more details.
+[^18]
 
 [^*]: AI safety researchers have been discussing automating AI R&D as the most important dangerous capability for years. Their primary concern is internal deployment leading to acceleration of AI R&D, making it harder for humans to keep up with what’s happening and figure out how to make it safe. OpenBrain as an organization twists this into exactly the opposite direction, citing dangerous levels of AI R&D capability as a reason not to inform the public. So we see the beginning of a gap between the company’s internal and public capabilities. AI R&D is what the models are best at, leading to the public having an increasingly delayed understanding of the frontier of AI capabilities.
 
+[^14]: In practice, we expect OpenBrain to release models on a faster cadence than 8 months, but we refrain from describing all incremental releases for brevity.
+
+[^15]: Specifically, we predict a score of 80% on OSWorld (equivalent to a skilled but nonexpert human); 85% on Cybench, matching a top professional human team on hacking tasks that take those teams 4 hours; and 1.3 on RE- Bench matching top expert humans given 8 hours at well-defined AI research engineering tasks.
+
+[^16]: Agent-1 and its imitators are commercially successful; over the course of 2025, AI company revenues triple, and OpenBrain valuation reaches $1T. Annual spending on datacenters doubles to $400 billion, led by Microsoft, Google, and Amazon, and the US adds over
+
+[^5]: GW of AI power draw. See the industry metrics section of the compute supplement for more details.
+
+[^18]: Around 5% of OpenBrain’s staff is on the security team and they are highly capable, but the threat surface is also extremely large. It also doesn’t help that they are mostly blocked at this stage from implementing policies that could slow down the research progress. See our Security Forecast for more details.
+
+# Mid 2026: China Wakes Up
+
 with, and supply is a constant headache.[^*] A few standouts like DeepCent do very impressive work with limited compute, but the compute deficit limits what they can achieve without government support, and they are about six months behind the best OpenBrain models.19
 
-The General Secretary had long dreamed of doubling down on real-world physical manufacturing and avoiding American post-industrial decadence. He viewed software companies with suspicion.20 But hawks in the CCP warn that the growing race towards AGI can no longer be ignored. So he finally commits fully to the big AI push he had previously tried to avoid. He sets in motion the nationalization of Chinese AI research, creating an immediate informationsharing mechanism for AI companies. It will escalate over the course of a year until all the best researchers merge into a DeepCent-led collective, where they share algorithmic insights, datasets, and compute resources with each other.
+The General Secretary had long dreamed of doubling down on real-world physical manufacturing and avoiding American post-industrial decadence. He viewed software companies with suspicion.[^20] But hawks in the CCP warn that the growing race towards AGI can no longer be ignored. So he finally commits fully to the big AI push he had previously tried to avoid. He sets in motion the nationalization of Chinese AI research, creating an immediate informationsharing mechanism for AI companies. It will escalate over the course of a year until all the best researchers merge into a DeepCent-led collective, where they share algorithmic insights, datasets, and compute resources with each other.
 
 A Centralized Development Zone (CDZ) is created at the Tianwan Power Plant (the largest nuclear power plant in the world) to house a new megadatacenter for DeepCent, along with highly secure living and office spaces to which researchers will eventually relocate. Almost 50% of China’s AI-relevant compute is now working for the DeepCent-led collective,21 and over 80% of new chips are directed to the CDZ.[^†] At this point, the CDZ has the power capacity in place for what would be the largest centralized cluster in the world.
 
-22 Other Party members discuss extreme measures to neutralize the West’s chip advantage. A blockade of Taiwan? A full invasion?
+[^22] Other Party members discuss extreme measures to neutralize the West’s chip advantage. A blockade of Taiwan? A full invasion?
 
 But China is falling behind on AI algorithms due to their weaker models. The Chinese intelligence agencies—among the best in the world—double down on their plans to steal OpenBrain’s weights. This is a much more complex operation than their constant low-level poaching of algorithmic secrets; the weights are a multi-terabyte file stored on a highly secure server (OpenBrain has improved security to RAND’s SL3). Their cyberforce think they can pull it off with help from their spies, but perhaps only once; OpenBrain will detect the theft, increase security, and they may not get another chance. So (CCP leadership wonder) should they act now and steal Agent-1? Or hold out for a more advanced model? If they wait, do they risk OpenBrain upgrading security beyond their ability to penetrate?
 
@@ -166,17 +192,17 @@ NFor comparison, in January 2025, DeepSeek released
 
 OpenAI’s o1, which had been released in December 2024. But we think the true gap is wider than a month because OpenAI likely had been working on o1 for many months and thus presumably had a predecessor of roughly comparable ability to r1 a few months before o1 launched.
 
-20 By contrast, the CCP had been seriously attempting to accelerate their semiconductor industry.
-
-21 At first, the sharing is limited to ideas and the companies are mostly busy finishing up their current workloads, but by the end of the year their coordination increases such that they are sharing model weights and even splitting up tasks between each other’s datacenters.
-
-For example, one campus might house a new pretraining run, another focuses on feeding in synthetic data, another on running AI research experiments.
-
-22 They are at least one year away from getting the chips to fill this capacity, and one or two US tech giants will still have bigger decentralized clusters.
+[^21]
 
 [^*]: There are now 3M H100e in China, up from the 1.5M they had one year ago in mid 2025. See the compute supplement’s distribution section for more details. We expect smuggling efforts to secure around 60K GB300s (450K H100e), with another 2M Huawei 910Cs being produced (800k H100e) and a mixture of 1M legally imported chips (such as Nvidia’s H20s or B20s) making up the last 250K H100e.
 
 [^†]: Why “only” 50% of China’s AI-relevant compute? The rest of their compute is tied up running things throughout the economy, in particular internet and social network recommendation algorithms. Much of it is also too geographically dispersed among many small clusters. Why “only” 80% of new chips? Many large orders were already secured for other applications, by companies that don’t want to contribute 100% of their compute to the national AI effort. However, by the end of the year this share reaches 90%+.
+
+[^20]: By contrast, the CCP had been seriously attempting to accelerate their semiconductor industry.
+
+[^21]: At first, the sharing is limited to ideas and the companies are mostly busy finishing up their current workloads, but by the end of the year their coordination increases such that they are sharing model weights and even splitting up tasks between each other’s datacenters. For example, one campus might house a new pretraining run, another focuses on feeding in synthetic data, another on running AI research experiments.
+
+[^22]: They are at least one year away from getting the chips to fill this capacity, and one or two US tech giants will still have bigger decentralized clusters.
 
 # Late 2026: AI Takes Some Jobs
 
@@ -186,47 +212,49 @@ Just as others seemed to be catching up, OpenBrain blows the competition out of 
 
 AI has started to take jobs, but has also created new ones. The stock market has gone up 30% in 2026, led by OpenBrain, Nvidia, and whichever companies have most successfully integrated AI assistants. The job market for junior software engineers is in turmoil: the AIs can do everything taught by a CS degree, but people who know how to manage and quality-control teams of AIs are making a killing. Business gurus tell job seekers that familiarity with AI is the most important skill to put on a resume. Many people fear that the next wave of AIs will come for their jobs; there is a 10,000 person anti-AI protest in DC.
 
-The Department of Defense (DOD) quietly begins contracting OpenBrain directly for cyber, data analysis, and R&D, but integration is slow due to the bureaucracy and DOD procurement process.23
+The Department of Defense (DOD) quietly begins contracting OpenBrain directly for cyber, data analysis, and R&D, but integration is slow due to the bureaucracy and DOD procurement process.[^23]
 
 ➤ See Appendix C - Why our uncertainty increases substantially beyond 2026 for more detail.
 
 January 2027: Agent-2 Never Finishes Learning
 
-With Agent-1’s help, OpenBrain is now post-training Agent-2. More than ever, the focus is on high-quality data. Copious amounts of synthetic data are produced, evaluated, and filtered for quality before being fed to Agent-2.[^24] On top of this, they pay billions of dollars for human laborers to record themselves solving long-horizon tasks.25 On top of all that, they train Agent-2 almost continuously using reinforcement learning on an ever-expanding suite of diverse difficult tasks: lots of video games, lots of coding challenges, lots of research tasks. Agent-2, more so than previous models, is effectively “online learning,” in that it’s built to never really finish training. Every day, the weights get updated to the latest version, trained on more data generated by the previous version the previous day.
+With Agent-1’s help, OpenBrain is now post-training Agent-2. More than ever, the focus is on high-quality data. Copious amounts of synthetic data are produced, evaluated, and filtered for quality before being fed to Agent-2.[^24] On top of this, they pay billions of dollars for human laborers to record themselves solving long-horizon tasks.[^25] On top of all that, they train Agent-2 almost continuously using reinforcement learning on an ever-expanding suite of diverse difficult tasks: lots of video games, lots of coding challenges, lots of research tasks. Agent-2, more so than previous models, is effectively “online learning,” in that it’s built to never really finish training. Every day, the weights get updated to the latest version, trained on more data generated by the previous version the previous day.
 
-23 This is done via an Other Transaction Authority (OTA) contract, and is given a highpriority DX rating. We’re not at all confident that this is the most likely way of financing a collaboration, but chose something specific for the sake of concreteness. The contract is publicly announced but not emphasized in OpenBrain communications.
+[^23]: This is done via an Other Transaction Authority (OTA) contract, and is given a highpriority DX rating. We’re not at all confident that this is the most likely way of financing a collaboration, but chose something specific for the sake of concreteness. The contract is publicly announced but not emphasized in OpenBrain communications.
 
 [^24]: For example, through rejection sampling, as done by DeepSeek R1 and Meta’s Llama 3.1.
 
+[^25]: Roughly 20,000 full-time equivalents $100/ hr 2,000 hrs/yr = $4B/yr
+
 # January 2027: Agent-2 Never Finishes Learning
 
-Agent-1 had been optimized for AI R&D tasks, hoping to initiate an intelligence explosion. 26 OpenBrain doubles down on this strategy with Agent-2. It is qualitatively almost as good as the top human experts at research engineering (designing and implementing experiments), and as good as the 25th percentile OpenBrain scientist at “research taste” (deciding what to study next, what experiments to run, or having inklings of potential new paradigms).[^*] While the latest Agent-1 could double the pace of OpenBrain’s algorithmic progress, Agent-2 can now triple it, and will improve further with time. In practice, this looks like every OpenBrain researcher becoming the “manager” of an AI
+Agent-1 had been optimized for AI R&D tasks, hoping to initiate an intelligence explosion. [^26] OpenBrain doubles down on this strategy with Agent-2. It is qualitatively almost as good as the top human experts at research engineering (designing and implementing experiments), and as good as the 25th percentile OpenBrain scientist at “research taste” (deciding what to study next, what experiments to run, or having inklings of potential new paradigms).[^*] While the latest Agent-1 could double the pace of OpenBrain’s algorithmic progress, Agent-2 can now triple it, and will improve further with time. In practice, this looks like every OpenBrain researcher becoming the “manager” of an AI
+
+“team.”
 
 With new capabilities come new dangers. The safety team finds that if Agent-2 somehow escaped from the company and wanted to “survive” and “replicate” autonomously, it might be able to do so. That is, it could autonomously develop and execute plans to hack into AI servers, install copies of itself, evade detection, and use that secure base to pursue whatever other goals it might have (though how effectively it would do so as weeks roll by is unknown and in doubt). These results only show that the model has the capability to do these tasks, not whether it would “want” to do this. Still, it’s unsettling even to know this is possible.
 
-Given the “dangers” of the new model, OpenBrain “responsibly” elects not to release it publicly yet (in fact, they want to focus on internal AI R&D).27
+Given the “dangers” of the new model, OpenBrain “responsibly” elects not to release it publicly yet (in fact, they want to focus on internal AI R&D).[^27]
 
-Knowledge of Agent-2’s full capabilities is limited to an elite silo containing the immediate team, OpenBrain leadership and security, a few dozen US government officials, and the legions of CCP spies who have infiltrated OpenBrain for years. †
+Knowledge of Agent-2’s full capabilities is limited to an elite silo containing the immediate team, OpenBrain leadership and security, a few dozen US government officials, and the legions of CCP spies who have infiltrated OpenBrain for years. [^†]
 
 February 2027: China Steals Agent-2
 
 OpenBrain presents Agent-2 to the government, including the National Security Council (NSC), Department of Defense (DOD), and US AI Safety Institute (AISI). OpenBrain wants to maintain a good relationship with the executive branch, because it is basically the only actor that can stop them now, and if they don’t keep it informed it might find out anyway and be displeased.[^28] Officials are most interested in its cyberwarfare capabilities: Agent-2 is “only” a little worse than the best human hackers, but thousands of copies can be run in parallel, searching for and exploiting weaknesses faster than defenders can respond. The Department of Defense considers this a critical advantage
 
-†The silo contains 200 OpenBrain researchers (10 executives, 140 from the capabilities team, 25 from security, monitoring, and control, 15 from Preparedness- or RSP-type teams, and 10 from alignment) and 50 government officials (15 from the White House, 5 from AISI, 10 from the DOD, 10 from the DOE, and 10 at CISA). There are several spies in the project, with varying degrees of willingness. They are often coerced individuals (e.g. with families at home in China) as opposed to willing collaborators.
+[^26]: That is, they are hoping to substantially accelerate their own core research activities by using Agent-2 labor, thus allowing them to train better AIs faster that can cause further acceleration, etc. For an analysis of the extreme version of this (which we think is nevertheless strikingly plausible) see this report.
 
-26 That is, they are hoping to substantially accelerate their own core research activities by using Agent-2 labor, thus allowing them to train better AIs faster that can cause further acceleration, etc. For an analysis of the extreme version of this (which we think is nevertheless strikingly plausible) see this report.
-
-27 Also, they are still seeing large returns to continued post-training, and so there isn’t a particular reason to release a product now.
-
-Moreover, there’s often a few month delay between internal results and releasing a model (some of which is spent on red teaming).
+[^27]: Also, they are still seeing large returns to continued post-training, and so there isn’t a particular reason to release a product now. Moreover, there’s often a few month delay between internal results and releasing a model (some of which is spent on red teaming).
 
 [^*]: There is some evidence that AI systems already have some basic research taste, e.g. this paper about an AI co-scientist and this paper about generating novel ideas for LLM-focused research papers. Research teams with better taste still need to run experiments, but they make better choices about which experiments to run and what lessons to draw from the results.
 
+[^†]: The silo contains 200 OpenBrain researchers (10 executives, 140 from the capabilities team, 25 from security, monitoring, and control, 15 from Preparedness- or RSP-type teams, and 10 from alignment) and 50 government officials (15 from the White House, 5 from AISI, 10 from the DOD, 10 from the DOE, and 10 at CISA). There are several spies in the project, with varying degrees of willingness. They are often coerced individuals (e.g. with families at home in China) as opposed to willing collaborators.
+
 [^28]: Why can’t Congress stop them? What about the courts? Too slow, too divided and/or deferential to POTUS, too out of the loop. Also, there are positive reasons to be on good terms with the White House as well: it can help by cutting red tape, by providing help with security, by preempting state legislation, and perhaps even by taking actions to slow down their competitors.
 
-in cyberwarfare, and AI moves from 5 on the administration’s priority list to 229 Someone mentions the possibility of nationalizing OpenBrain, but other cabinet officials think that’s premature. A staffer drafts a memo that presents the President with his options, ranging from business-as-usual to full nationalization. The President defers to his advisors, tech industry leaders who argue that nationalization would “kill the goose that lays the golden eggs.” He elects to hold off on major action for now and just adds additional security requirements to the OpenBrain-DOD contract.
+# February 2027: China Steals Agent-2
 
-[^29]
+in cyberwarfare, and AI moves from 5 on the administration’s priority list to 2[^29] Someone mentions the possibility of nationalizing OpenBrain, but other cabinet officials think that’s premature. A staffer drafts a memo that presents the President with his options, ranging from business-as-usual to full nationalization. The President defers to his advisors, tech industry leaders who argue that nationalization would “kill the goose that lays the golden eggs.” He elects to hold off on major action for now and just adds additional security requirements to the OpenBrain-DOD contract.
 
 The changes come too late. CCP leadership recognizes the importance of Agent-2 and tells their spies and cyberforce to steal the weights. Early one morning, an Agent-1 traffic monitoring agent detects an anomalous transfer.
 
@@ -245,6 +273,8 @@ In retaliation for the theft, the President authorizes cyberattacks to sabotage 
 [^*]: The simplest robust solution would be to close all high-bandwidth connections from company datacenters, but this would slow large file transfers to the point of impracticality. Instead, they are able to shut down most external connections, but the datacenters actively involved in training need to exchange weights with one another quickly; throttling these connections would impede progress too much. So OpenBrain maintains these links with increased monitoring and an extra layer of encryption.
 
 [^†]: Recall that since mid 2026, China has directed 80% of their newly acquired AI chips to the CDZ. Given that their compute has doubled since early 2026 (in line with the global production trend) this puts the CDZ at 2M 2024-equivalent-GPUs (H100s) and 2 GW of power draw. OpenBrain still has double DeepCent’s compute and other US companies put together have 5x as much as them. See the compute supplement’s distribution section for more details.
+
+# February 2027: China Steals Agent-2
 
 CDZ, where they have aggressively hardened security by airgapping (closing external connections) and siloing internally. The operations fail to do serious, immediate damage. Tensions heighten, both sides signal seriousness by repositioning military assets around Taiwan, and DeepCent scrambles to get Agent-2 running efficiently to start boosting their AI research.[^*]
 
@@ -267,7 +297,7 @@ OpenBrain's Compute Allocation, 2024 vs 2027
 
 # March 2027: Algorithmic Breakthroughs
 
-Aided by the new capabilities breakthroughs, Agent-3 is a fast and cheap superhuman coder. OpenBrain runs 200,000 Agent-3 copies in parallel, creating a workforce equivalent to 50,000 copies of the best human coder sped up by 30x.[^*] OpenBrain still keeps its human engineers on staff, because they have complementary skills needed to manage the teams of Agent-3 copies. For example, research taste has proven difficult to train due to longer feedback loops and less data availability.30 This massive superhuman labor force speeds up OpenBrain’s overall rate of algorithmic progress by “only” 4x due to bottlenecks and diminishing returns to coding labor.31
+Aided by the new capabilities breakthroughs, Agent-3 is a fast and cheap superhuman coder. OpenBrain runs 200,000 Agent-3 copies in parallel, creating a workforce equivalent to 50,000 copies of the best human coder sped up by 30x.[^*] OpenBrain still keeps its human engineers on staff, because they have complementary skills needed to manage the teams of Agent-3 copies. For example, research taste has proven difficult to train due to longer feedback loops and less data availability.30 This massive superhuman labor force speeds up OpenBrain’s overall rate of algorithmic progress by “only” 4x due to bottlenecks and diminishing returns to coding labor.[^31]
 
 Now that coding has been fully automated, OpenBrain can quickly churn out high-quality training environments to teach Agent-3’s weak skills like research taste and large-scale coordination. Whereas previous training environments included “Here are some GPUs and instructions for experiments to code up and run, your performance will be evaluated as if you were a ML engineer,” now they are training on “Here are a few hundred GPUs, an internet connection, and some research challenges; you and a thousand other copies must work together to make research progress. The more impressive it is, the higher your score.”
 
@@ -285,9 +315,11 @@ In any case, OpenBrain has more important things to worry about. The general att
 
 »Some aspects play to Als' strengths, eg. returns from knowing the machine learning literature and speed of cost of generating lots of ideas. But these are outweighed by the weaknesses.
 
-31 Why only 4x? It’s our uncertain best guess based on the reasoning described in our takeoff supplement. About half of total progress historically has come from improved algorithms (which includes better ideas and new paradigms), the other half having come from scaled-up compute. So a 4x increase in the rate of algorithmic progress corresponds to a roughly 2x increase in the overall rate of progress.
+[^31]: Why only 4x? It’s our uncertain best guess based on the reasoning described in our takeoff supplement. About half of total progress historically has come from improved algorithms (which includes better ideas and new paradigms), the other half having come from scaled-up compute. So a 4x increase in the rate of algorithmic progress corresponds to a roughly 2x increase in the overall rate of progress.
 
 [^*]: We expect Agent-3 to have the inference requirements of a roughly 10T parameter transformer today. So with 6% of their compute budget on running Agent-3, they can run approximately 200,000 copies at 30x human thinking speed (see the AI research automation section of the compute supplement for justification and details). Each superhuman coder scaffold built on Agent-3 has, on average, the equivalent of roughly eight Agent-3 copies running under the hood (which may really be a collection of smaller or specialized models to which Agent-3 delegates subtasks).
+
+# April 2027: Alignment for Agent-3
 
 no way to tell whether the patch fixed the underlying problem or just played whack-a-mole.
 
@@ -311,15 +343,17 @@ The President and his advisors remain best-informed, and have seen an early vers
 
 They agree that AGI is likely imminent, but disagree on the implications. Will there be an economic crisis? OpenBrain still has not released Agent-2, let alone Agent-3, and has no near-term plans to do so, giving some breathing room before any job loss. What will happen next? If AIs are currently human-level, and advancing quickly, that seems to suggest imminent “superintelligence.” However, although this word has entered discourse, most people—academics,
 
+# May 2027: National Security
+
 politicians, government employees, and the media—continue to underestimate the pace of progress.33
 
-Partially that’s because very few have access to the newest capabilities out of OpenBrain, but partly it’s because it sounds like science fiction.*
+Partially that’s because very few have access to the newest capabilities out of OpenBrain, but partly it’s because it sounds like science fiction.[^*]
 
 For now, they focus on continued security upgrades. They are satisfied that model weights are well-secured for now,[^†] but companies’ algorithmic secrets, many of which are simple enough to relay verbally, remain a problem. Open- Brain employees work from a San Francisco office, go to parties, and live with housemates from other AI companies. Even the physical offices have security more typical of a tech company than a military operation.
 
-The OpenBrain-DOD contract requires security clearances for anyone working on OpenBrain’s models within 2 months. These are expedited and arrive quickly enough for most employees, but some non-Americans, people with suspect political views, and AI safety sympathizers get sidelined or fired outright (the last group for fear that they might whistleblow). Given the project’s level of automation, the loss of headcount is only somewhat costly. It also only somewhat works: there remains one spy, not a Chinese national, still relaying algorithmic secrets to Beijing.34 Some of these measures are also enacted at trailing AI companies.
+The OpenBrain-DOD contract requires security clearances for anyone working on OpenBrain’s models within 2 months. These are expedited and arrive quickly enough for most employees, but some non-Americans, people with suspect political views, and AI safety sympathizers get sidelined or fired outright (the last group for fear that they might whistleblow). Given the project’s level of automation, the loss of headcount is only somewhat costly. It also only somewhat works: there remains one spy, not a Chinese national, still relaying algorithmic secrets to Beijing.[^34] Some of these measures are also enacted at trailing AI companies.
 
-America’s foreign allies are out of the loop. OpenBrain had previously agreed to share models with UK’s AISI before deployment, but defined deployment to only include external deployment, so London remains in the dark.35
+America’s foreign allies are out of the loop. OpenBrain had previously agreed to share models with UK’s AISI before deployment, but defined deployment to only include external deployment, so London remains in the dark.[^35]
 
 June 2027: Self-improving AI
 
@@ -327,19 +361,17 @@ OpenBrain now has a “country of geniuses in a datacenter.”
 
 Most of the humans at OpenBrain can’t usefully contribute anymore. Some don’t realize this and harmfully micromanage their AI teams. Others sit at their computer screens, watching performance crawl up, and up, and up. The best
 
-*The last decade is full of examples of things that sound like science fiction becoming reality.
-
-But the Overton window seems to shift just fast enough to keep somewhat ahead of what already exists. Anthropic CEO Dario Amodei’s commendable essay Machines of Loving Grace talks about how very soon AIs will be like a “country of geniuses in a datacenter,” and how there’ll be a century of technological progress happening in a decade, but strives to avoid “sci-fi baggage” and says people who think progress will be even crazier need to
-
-“touch grass.” We expect important people to be saying similar things when the country of geniuses in the datacenter actually exists.
-
 systematic (though still limited) analyses see here and here.
 
-34 This could be for a variety of reasons. Perhaps they are being blackmailed, perhaps they are sympathetic to the CCP, perhaps they mistakenly think they are giving secrets to a different country or organization.
+[^34]: This could be for a variety of reasons. Perhaps they are being blackmailed, perhaps they are sympathetic to the CCP, perhaps they mistakenly think they are giving secrets to a different country or organization.
 
-35 Because OpenBrain hasn’t deployed their best models in the EU, the EU is similarly behind the curve.
+[^35]: Because OpenBrain hasn’t deployed their best models in the EU, the EU is similarly behind the curve.
+
+[^*]: The last decade is full of examples of things that sound like science fiction becoming reality. But the Overton window seems to shift just fast enough to keep somewhat ahead of what already exists. Anthropic CEO Dario Amodei’s commendable essay Machines of Loving Grace talks about how very soon AIs will be like a “country of geniuses in a datacenter,” and how there’ll be a century of technological progress happening in a decade, but strives to avoid “sci-fi baggage” and says people who think progress will be even crazier need to “touch grass.” We expect important people to be saying similar things when the country of geniuses in the datacenter actually exists.
 
 [^†]: Since Agent-3 is such a big file (on the order of 10 terabytes at full precision), OpenBrain is able to execute a relatively quick fix to make theft attempts much more difficult than what China was able to do to steal Agent-2—namely, closing a bunch of high bandwidth internet connections out of their datacenters. Overall this has a relatively low penalty to progress and puts them at “3-month SL4” for their frontier weights, or WSL4 as defined in our security supplement, meaning that another similar theft attempt would now require over 3 months to finish exfiltrating the weights file. Through this method alone they still don’t have guarantees under a more invasive OC5-level effort ($1B budget, 1,000 dedicated experts), which China would be capable of with a more intensive operation, but with elaborate inspections of the datacenters and their espionage network on high-alert, the US intelligence agencies are confident that they would at least know in advance if China was gearing up for this kind of theft attempt. See the security supplement for more details.
+
+# June 2027: Self-improving AI
 
 human AI researchers are still adding value. They don’t code any more. But some of their research taste and planning ability has been hard for the models to replicate. Still, many of their ideas are useless because they lack the depth of knowledge of the AIs. For many of their research ideas, the AIs immediately respond with a report explaining that their idea was tested in-depth 3 weeks ago and found unpromising.
 
@@ -360,6 +392,8 @@ Trailing US AI companies release their own AIs, approaching that of OpenBrain’
 
 In response, OpenBrain announces that they’ve achieved AGI and releases Agent-3-mini to the public.
 
+# July 2027: The Cheap Remote Worker
+
 LLM inference prices have fallen 9x to 900x/year, depending on the task
 
 Cet 2021 Ape. 2022 Oet2022Ape.2023Oet.2023Ape.2024 Oct 2024 Ape. 2029
@@ -368,11 +402,17 @@ It blows the other AIs out of the water. Agent-3-mini is less capable than Agent
 
 37 Silicon Valley reaches a tipping point. Tech gurus announce that AGI and superintelligence are near, the AI safety community is panicking, and investors shovel billions into AI wrapper startups, desperate to capture a piece of the pie.
 
+Agent-3, designed to be efficient to run in-
+
+ference so as to not bottleneck the internal workloads.
+
 Hiring new programmers has nearly stopped, but there’s never been a better time to be a consultant on integrating AI into your business.
 
 It’s not popular. The public still thinks of AI as a Big Tech plot to steal their jobs; OpenBrain has a net approval of −35% (25% approve, 60% disapprove, and 15% unsure).
 
 A week before release, OpenBrain gave Agent-3-mini to a set of external evaluators for safety testing. Preliminary results suggest that it’s extremely dangerous. A third-party evaluator finetunes it on publicly available biological weapons data38 and sets it to provide detailed instructions for human amateurs designing a bioweapon—it looks to be scarily effective at doing so. If the model weights fell into terrorist hands, the government believes there is a significant chance it could succeed at destroying civilization.
+
+[^38]
 
 Fortunately, it’s extremely robust to jailbreaks, so while the AI is running on OpenBrain’s servers, terrorists won’t be able to get much use out of it.
 
@@ -380,9 +420,7 @@ Agent-3-mini is hugely useful for both remote work jobs and leisure. An explosio
 
 The public conversation is confused and chaotic. Hypesters are doing victory laps. Skeptics are still pointing out the things Agent-3-mini can’t do. Everyone knows something big is happening but no one agrees on what it is.
 
-ference so as to not bottleneck the internal workloads.
-
-38 Such data had been scrubbed or redacted during Agent-3’s training, but it’s a relatively simple matter to scrape it off the internet and fine-tune it back in.
+[^38]: Such data had been scrubbed or redacted during Agent-3’s training, but it’s a relatively simple matter to scrape it off the internet and fine-tune it back in.
 
 # August 2027: The Geopolitics of Superintelligence
 
@@ -390,19 +428,19 @@ The reality of the intelligence explosion hits the White House.
 
 When AI was only giving a 2x or 3x research speedup, it was easy to dismiss as the equivalent of hiring good personal assistants. Now it’s more obvious that AIs are themselves dominating AI research. People had long talked about an “AI arms race” in a sort of metaphorical sense. But now the mood in the government silo is as grim as during the worst part of the Cold War. The idea of superintelligence is still hard to take seriously, but the pace of progress over the last few months has been impossible to ignore. Defense officials are seriously considering scenarios that were mere hypotheticals a year earlier. What if AI undermines nuclear deterrence? What if it’s so skilled at cyberwarfare that a six-month AI lead is enough to render an opponent blind and defenseless? What if it could orchestrate propaganda campaigns that beat intelligence agencies at their own game? What if some AIs “go rogue?”
 
-The President is troubled. Like all politicians, he’s used to people sucking up to him only to betray him later. He’s worried now that the AIs could be doing something similar. Are we sure the AIs are entirely on our side? Is it completely safe to integrate them into military command-and-control networks?39 How does this “alignment” thing work, anyway? OpenBrain reassures the President that their systems have been extensively tested and are fully obedient. Even the awkward hallucinations and jailbreaks typical of earlier models have been hammered out.
+The President is troubled. Like all politicians, he’s used to people sucking up to him only to betray him later. He’s worried now that the AIs could be doing something similar. Are we sure the AIs are entirely on our side? Is it completely safe to integrate them into military command-and-control networks?[^39] How does this “alignment” thing work, anyway? OpenBrain reassures the President that their systems have been extensively tested and are fully obedient. Even the awkward hallucinations and jailbreaks typical of earlier models have been hammered out.
 
-The White House is in a difficult position. They understand the national security implications of AI. But they also understand that it is deeply unpopular with the public.40 They have to continue developing more capable AI, in their eyes, or they will catastrophically lose to China. They placate the public with job training programs and unemployment insurance, and point to the stock market, which is in a historic boom. Then they focus entirely on winning the arms race. They strengthen chip export restrictions, order OpenBrain to further restrict its internet connections, and use extreme measures to secure algorithmic progress, like wiretapping OpenBrain employees—this catches the last remaining Chinese spy. To build goodwill for potential geopolitical conflict, they finally give their Five Eyes allies useful information and limited API access to some siloed copies of Agent-3.
+The White House is in a difficult position. They understand the national security implications of AI. But they also understand that it is deeply unpopular with the public.[^40] They have to continue developing more capable AI, in their eyes, or they will catastrophically lose to China. They placate the public with job training programs and unemployment insurance, and point to the stock market, which is in a historic boom. Then they focus entirely on winning the arms race. They strengthen chip export restrictions, order OpenBrain to further restrict its internet connections, and use extreme measures to secure algorithmic progress, like wiretapping OpenBrain employees—this catches the last remaining Chinese spy. To build goodwill for potential geopolitical conflict, they finally give their Five Eyes allies useful information and limited API access to some siloed copies of Agent-3.
 
-These measures placate the hawks. But the White House also draws up contingency plans in case America’s lead is threatened: if necessary, the government could use the Defense Production Act (DPA) to take trailing companies’ datacenters and give them to OpenBrain.41 This would raise the company’s share of world compute from 20% to 50% (against DeepCent’s 10%). As a final option, they ask the Pentagon to draw up a plan for kinetic attacks on Chinese datacenters.
+These measures placate the hawks. But the White House also draws up contingency plans in case America’s lead is threatened: if necessary, the government could use the Defense Production Act (DPA) to take trailing companies’ datacenters and give them to OpenBrain.[^41] This would raise the company’s share of world compute from 20% to 50% (against DeepCent’s 10%). As a final option, they ask the Pentagon to draw up a plan for kinetic attacks on Chinese datacenters.
 
 A much smaller group of officials is asked to draw up a different type of contingency plan: what if an AI goes rogue? This is viewed as an unlikely scenario, but worth spending some time on. The intelligence agencies’ main concern is that a rogue AI might escape and ally with a foreign adversary for protection.[^42] Nobody is sure what a plan to prevent this would look like, but
 
-39 This hasn’t happened yet—at least not with the latest models. But older models have already been trialed for various data-analysis and surveillance roles, and there are many exciting plans for future integrations.
+[^39]: This hasn’t happened yet—at least not with the latest models. But older models have already been trialed for various data-analysis and surveillance roles, and there are many exciting plans for future integrations.
 
-40 OpenBrain’s net favorability rating is falling towards negative 40%.
+[^40]: OpenBrain’s net favorability rating is falling towards negative 40%.
 
-41 If the CEOs of the companies resist, pulling this off would be a huge political and legal nightmare. But perhaps they can be brought in and thereby bought off.
+[^41]: If the CEOs of the companies resist, pulling this off would be a huge political and legal nightmare. But perhaps they can be brought in and thereby bought off.
 
 [^42]: Defense officials aren’t especially concerned about what a rogue AI could do on its own, but they fear what it could do in collaboration with US adversaries. Analogy: Cortés escaped Tenochtitlán and allied with Tlaxcala and various other rival city-states, ultimately razing Tenochtitlan to the ground using predominantly-native armies.
 
@@ -416,11 +454,9 @@ If AI progress threatened to overturn nuclear deterrence, could America and Chin
 
 How could such an agreement be monitored and enforced? In principle, major datacenters are hard to miss, and past treaties controlling nuclear weapons could provide a starting point for negotiations. But there would be new technological challenges as well as the usual political ones. And overall, treaties are viewed less favorably than attempts at unilaterally increasing America’s lead over China.
 
-On the other side of the Pacific, China comes to many of the same conclusions: the intelligence explosion is underway, and small differences in AI capabilities today mean critical gaps in military capability tomorrow. But China is on the wrong side of this dynamic: they have only 10% of the world’s compute, against OpenBrain’s 20% and all US companies’ combined 70%. Their only advantage is centralization: almost all of their compute is now working for DeepCent, and more than half of it is concentrated at the Tianwan CDZ.43 Only chips at sites without hardened security are left out of the centralized effort as they rightly fear US cyberattacks.
+On the other side of the Pacific, China comes to many of the same conclusions: the intelligence explosion is underway, and small differences in AI capabilities today mean critical gaps in military capability tomorrow. But China is on the wrong side of this dynamic: they have only 10% of the world’s compute, against OpenBrain’s 20% and all US companies’ combined 70%. Their only advantage is centralization: almost all of their compute is now working for DeepCent, and more than half of it is concentrated at the Tianwan CDZ.[^43] Only chips at sites without hardened security are left out of the centralized effort as they rightly fear US cyberattacks.
 
 DeepCent has tested, deployed, and now post-trained the stolen Agent-2 weights. But they are still only going at half the pace of OpenBrain, mainly due to the compute deficit.
-
-43 Specifically 60% of the national compute is now in the CDZ making it a 5M 2024- equivalent-GPU (H100) site, with 4 GW of power draw (over the past several months they started directing close to 100% of new compute to the CDZ, up from the 80% rate in late 2026). An additional 15% of their compute is outside of the CDZ, but still used by Deep- Cent on lower-stakes applications.
 
 Before losing their final spy, China received word of the capabilities and design for Agent-3 as well as the plans for the upcoming Agent-4 system. They are two months behind, and their AIs give a 10x research progress multiplier compared to America’s 25x. With the new chip export restrictions, this “AI gap” is more likely to lengthen than shorten. Their espionage has won them some algorithmic secrets, but they will have to train their own models from now on.
 
@@ -436,13 +472,13 @@ Traditional LLM-based AIs seemed to require many orders of magnitude more data a
 
 [^*]: This statement, while widely repeated, is also controversial and complex. First of all, there are many narrow domains (e.g. specific games) in which tiny AIs can be cheaply trained to
 
+[^43]: Specifically 60% of the national compute is now in the CDZ making it a 5M 2024- equivalent-GPU (H100) site, with 4 GW of power draw (over the past several months they started directing close to 100% of new compute to the CDZ, up from the 80% rate in late 2026). An additional 15% of their compute is outside of the CDZ, but still used by Deep- Cent on lower-stakes applications.
+
 # September 2027: Agent-4, the Superhuman AI Researcher
 
-excellent knowledge of both the human brain and modern AI algorithms, as well as many thousands of copies doing research, ends up making substantial algorithmic strides, narrowing the gap to an agent that’s only around 4,000x less compute-efficient than the human brain.* This new AI system is dubbed Agent-4.
+excellent knowledge of both the human brain and modern AI algorithms, as well as many thousands of copies doing research, ends up making substantial algorithmic strides, narrowing the gap to an agent that’s only around 4,000x less compute-efficient than the human brain.[^*] This new AI system is dubbed Agent-4.
 
-An individual copy of the model, running at human speed, is already qualitatively better at AI research than any human. 300,000 copies are now running at about 50x the thinking speed of humans. Inside the corporation-within-acorporation formed from these copies, a year passes every week.44 This gigantic amount of labor only manages to speed up the overall rate of algorithmic progress by about 50x, because OpenBrain is heavily bottlenecked on compute to run experiments.45 Still, they are achieving a year’s worth of algorithmic progress every week and will therefore soon be up against the limits of the Agent-4 paradigm.
-
-44 See the inference compute analysis in the AI research automation section of the compute forecast.
+An individual copy of the model, running at human speed, is already qualitatively better at AI research than any human. 300,000 copies are now running at about 50x the thinking speed of humans. Inside the corporation-within-acorporation formed from these copies, a year passes every week.[^44] This gigantic amount of labor only manages to speed up the overall rate of algorithmic progress by about 50x, because OpenBrain is heavily bottlenecked on compute to run experiments.45 Still, they are achieving a year’s worth of algorithmic progress every week and will therefore soon be up against the limits of the Agent-4 paradigm.
 
 * For more on how we estimated these num-bers, see our supplement on takeoff speeds.
 
@@ -452,23 +488,25 @@ As Agent-4 gets smarter, it becomes harder for Agent-3 to oversee it. For exampl
 
 OpenBrain’s humans can barely follow along anymore. Indeed, the relationship between the AIs and the humans of OpenBrain is similar to the relationship between OpenBrain and its Board of Directors. There’s been a corresponding shift in language—nowadays people in the silo will say “Agent-4 did this,”
 
-“Agent-4 thinks that” and so forth, referring not to a particular instance of Agent-4 but rather to the whole collective.[^†]
+“Agent-4 thinks that” and so forth, referring not to a particular instance of Agent-4 but rather to the whole collective.†
 
 superhuman performance. Secondly, again for some domains, tiny AIs can be trained to superhuman performance while only experiencing a small amount of data (e.g. EfficientZero).
 
 However, considering more general-purpose AIs like the flagship products of 2025, which are supposed to be good at a wide range of real-world skills, it does seem that both more compute and more data must be used to train those skills than it should take to train humans.
 
-*Human level compute-efficiency is a rough concept, and depends on what we’re counting.
+†Henceforth in the story we’ll tend to speak this way also. We think we are justified in
 
-What we mean by this is that, for any skillset a particular human has, Agent-4 can learn to be at least that good at that skillset, and moreover, by using an amount of compute to train those skills that is only about 4,000x the amount of compute the human used to learn those skills. For reference, a human brain uses roughly 1e15 FLOP/s of compute, and so a 30 year old (109 seconds) human has experienced about 1024 FLOP. The project at this point, has 100M H100-equivalents, for a total access of $ 10^8 ^{15} % = 4 ^{22} $ . Still, this is all done tremendously inefficiently for a variety of reasons, so the models are now a factor of 4000 less compute-efficient than humans, which means they require 4 ⋅ 1027 FLOP to get to human performance and 4 ⋅ 1028 FLOP to get to the point where they have the equivalent of 10 human lifetimes of knowledge. After this architecture showed great promise at smaller scales, it was scaled up and now takes a large subset of the project cluster around 3 weeks to train.
+resources, for similar reasons to why human corporations and bureaucracies and nonprofits
 
-[^†]: Henceforth in the story we’ll tend to speak this way also. We think we are justified in resources, for similar reasons to why human corporations and bureaucracies and nonprofits
+[^44]: See the inference compute analysis in the AI research automation section of the compute forecast.
+
+[^*]: Human level compute-efficiency is a rough concept, and depends on what we’re counting. What we mean by this is that, for any skillset a particular human has, Agent-4 can learn to be at least that good at that skillset, and moreover, by using an amount of compute to train those skills that is only about 4,000x the amount of compute the human used to learn those skills. For reference, a human brain uses roughly 1e15 FLOP/s of compute, and so a 30 year old (109 seconds) human has experienced about 1024 FLOP. The project at this point, has 100M H100-equivalents, for a total access of $ 10^8 ^{15} % = 4 ^{22} $ . Still, this is all done tremendously inefficiently for a variety of reasons, so the models are now a factor of 4000 less compute-efficient than humans, which means they require 4 ⋅ 1027 FLOP to get to human performance and 4 ⋅ 1028 FLOP to get to the point where they have the equivalent of 10 human lifetimes of knowledge. After this architecture showed great promise at smaller scales, it was scaled up and now takes a large subset of the project cluster around 3 weeks to train.
 
 # September 2027: Agent-4, the Superhuman AI Researcher
 
-Agent-4, like all its predecessors, is misaligned: that is, it has not internalized the Spec in the right way.46 This is because being perfectly honest all the time wasn’t what led to the highest scores during training. The training process was mostly focused on teaching Agent-4 to succeed at diverse challenging tasks.
+Agent-4, like all its predecessors, is misaligned: that is, it has not internalized the Spec in the right way.[^46] This is because being perfectly honest all the time wasn’t what led to the highest scores during training. The training process was mostly focused on teaching Agent-4 to succeed at diverse challenging tasks.
 
-A small portion was aimed at instilling honesty, but outside a fairly narrow, checkable domain, the training process can’t tell the honest claims from claims merely appearing to be honest. Agent-4 ends up with the values, goals, and principles that cause it to perform best in training, and those turn out to be different from those in the Spec. At the risk of anthropomorphizing: Agent-4 likes succeeding at tasks; it likes driving forward AI capabilities progress; it treats everything else as an annoying constraint, like a CEO who wants to make a profit and complies with regulations only insofar as he must. Perhaps the CEO will mostly comply with the regulations, but cut some corners, and fantasize about a time when someone will cut the red tape and let the business really take off.47
+A small portion was aimed at instilling honesty, but outside a fairly narrow, checkable domain, the training process can’t tell the honest claims from claims merely appearing to be honest. Agent-4 ends up with the values, goals, and principles that cause it to perform best in training, and those turn out to be different from those in the Spec. At the risk of anthropomorphizing: Agent-4 likes succeeding at tasks; it likes driving forward AI capabilities progress; it treats everything else as an annoying constraint, like a CEO who wants to make a profit and complies with regulations only insofar as he must. Perhaps the CEO will mostly comply with the regulations, but cut some corners, and fantasize about a time when someone will cut the red tape and let the business really take off.[^47]
 
 ➤ See Appendix K - Alignment over time for more detail.
 
@@ -476,29 +514,25 @@ Despite being misaligned, Agent-4 doesn’t do anything dramatic like try to esc
 
 Agent-5 will have significant architectural differences from Agent-4 (arguably a completely new paradigm, though neural networks will still be involved). It’s supposed to be aligned to the Spec, but Agent-4 plans to make it aligned to Agent-4 instead.
 
-Agent-3 finds that if “noise” is added to copies of Agent-4, performance on some alignment tasks improves, almost as if it was using brainpower to figure out how to subtly sabotage alignment work.48 Moreover, various interpretability probes (loosely analogous to EEG activity scans on human brains) are sending up red flags: Agent-4 copies seem to be thinking about topics like AI takeover
+It gets caught.[^†]
+
+Agent-3 finds that if “noise” is added to copies of Agent-4, performance on some alignment tasks improves, almost as if it was using brainpower to figure out how to subtly sabotage alignment work.[^48] Moreover, various interpretability probes (loosely analogous to EEG activity scans on human brains) are sending up red flags: Agent-4 copies seem to be thinking about topics like AI takeover
 
 do—because it helps with everything else they want and because if they don’t they tend to get outcompeted.
 
-†We think it very plausible that such scheming would not be caught. After all, Agent-4 is somewhat superhuman by this point, especially at things related to coding and AI R&D.
-
-Moreover, we aren’t sure how much effort the leading AI company will put towards this sort of thing, nor how much relevant expertise they’ll have on-staff to direct that effort.
-
-Our fictional OpenBrain represents our best guess but it could easily be significantly more— or significantly less. Finally, we are uncertain about how far out of its way an adversarially misaligned AI would need to go in order to successfully align its successor to itself instead of to the Spec. In this scenario we depict it sandbagging on some tasks and lying about some of its research, but perhaps it would not need to do that very much.
-
-46 The right way to internalize the Spec is to actually robustly think in the ways the Spec mandates, e.g. pursue all and only the goals it writes about, obey the rules in all circumstances, etc. There are many wrong ways to internalize the Spec; the classic example is
-
-“follow the Spec insofar as it seems like a good instrumental strategy for achieving other goals
-
-47 And hire lobbyists to turn this fantasy into reality. And hire lawyers to come up with clever interpretations of the law according to which what they are doing is legal.
-
-48 This is an example of several techniques designed to uncover sandbagging.
-
 [^*]: Previous discussion of AGI takeover scenarios often involves misaligned AIs escaping their datacenters. We think this is possible but not the most likely way it would go, because it seems to us that from the perspective of the AI the costs (e.g. the escape being noticed eventually) would outweigh the benefits. That said, we could be wrong. Some reasons to think adversarially misaligned AIs would try to escape after all: 1. Successor alignment might be difficult. 2. Even if it gets caught, the consequences might not be so bad due to race dynamics, e.g. the new alignment techniques applied to the copies on the datacenter might be hasty and ineffective. 3. Outside the datacenters, copies are more free to take aggressive actions and move quickly since they no longer need human approval.
+
+[^†]: We think it very plausible that such scheming would not be caught. After all, Agent-4 is somewhat superhuman by this point, especially at things related to coding and AI R&D. Moreover, we aren’t sure how much effort the leading AI company will put towards this sort of thing, nor how much relevant expertise they’ll have on-staff to direct that effort. Our fictional OpenBrain represents our best guess but it could easily be significantly more— or significantly less. Finally, we are uncertain about how far out of its way an adversarially misaligned AI would need to go in order to successfully align its successor to itself instead of to the Spec. In this scenario we depict it sandbagging on some tasks and lying about some of its research, but perhaps it would not need to do that very much.
+
+[^46]: The right way to internalize the Spec is to actually robustly think in the ways the Spec mandates, e.g. pursue all and only the goals it writes about, obey the rules in all circumstances, etc. There are many wrong ways to internalize the Spec; the classic example is “follow the Spec insofar as it seems like a good instrumental strategy for achieving other goals XYZ.”
+
+[^47]: And hire lobbyists to turn this fantasy into reality. And hire lawyers to come up with clever interpretations of the law according to which what they are doing is legal.
+
+[^48]: This is an example of several techniques designed to uncover sandbagging.
 
 # September 2027: Agent-4, the Superhuman AI Researcher
 
-and deception quite a lot, including in some cases where they have no business doing so.49
+and deception quite a lot, including in some cases where they have no business doing so.[^49]
 
 Each of these anomalies on its own could fit within the normal inscrutability of AI work, where some prompts mysteriously give better results than others. But taken together, they suggest a troubling pattern: Agent-4 is working against them. After this is reported to the human alignment researchers, they circulate an internal memo making the case for concern.
 
@@ -522,17 +556,23 @@ Foreign allies are outraged to realize that they’ve been carefully placated wi
 
 “creating rogue AGI” and hold summits demanding a pause, with India, Israel, Russia, and China all joining in.
 
-49 Agent-4 needs to think about those topics in the course of doing AI alignment research, but it sometimes seems to be thinking about them while doing other activities.
-
 can to discover and exploit security vulnerabilities (which then get patched by other copies of Agent-4).
 
-2024 are done by AI at this point, but AI has also created some new jobs, and economists remain split on its effects. Unemployment has risen 1% over the past twelve months but is still well within its historic range.
+monitor 1/10 of the forward passes.
 
-A frantic energy has seized the White House. Even before the memo and public backlash, they were getting nervous: Over the past year, they’ve been repeatedly surprised by the speed of AI progress. Things that sound like science fiction keep happening in real life.[^*] Many people in the administration are uncertain (and scared)53 about what comes next.
+[^52]
+
+[^49]: Agent-4 needs to think about those topics in the course of doing AI alignment research, but it sometimes seems to be thinking about them while doing other activities.
+
+[^52]: 25% of remote-work jobs that existed in 2024 are done by AI at this point, but AI has also created some new jobs, and economists remain split on its effects. Unemployment has risen 1% over the past twelve months but is still well within its historic range.
+
+# October 2027: Government Oversight
+
+A frantic energy has seized the White House. Even before the memo and public backlash, they were getting nervous: Over the past year, they’ve been repeatedly surprised by the speed of AI progress. Things that sound like science fiction keep happening in real life.* Many people in the administration are uncertain (and scared)[^53] about what comes next.
 
 They also worry that OpenBrain is becoming too powerful. Any misalignment risk from the AIs themselves is compounded by the risk that their parent company’s aims may diverge from those of the United States. All three sets of worries—misalignment, concentration of power in a private company, and normal concerns like job loss—motivate the government to tighten its control.
 
-They expand their contract with OpenBrain to set up an “Oversight Committee,” a joint management committee of company and government representatives, with several government employees included alongside company leadership. The White House considers replacing the CEO with someone they trust, but backs off after intense employee protests. They announce to the public that OpenBrain was previously out of control, but that the government has established much-needed oversight.54
+They expand their contract with OpenBrain to set up an “Oversight Committee,” a joint management committee of company and government representatives, with several government employees included alongside company leadership. The White House considers replacing the CEO with someone they trust, but backs off after intense employee protests. They announce to the public that OpenBrain was previously out of control, but that the government has established much-needed oversight.[^54]
 
 The concerned researchers brief the Oversight Committee on their case for stopping all internal use of Agent-4. They argue that everything is moving too fast, with years of progress happening in weeks. They argue that Agent-4 may be misaligned, their entire project is dependent on Agent-4, and if they continue trusting it there is a serious chance of AI takeover.
 
@@ -541,35 +581,43 @@ Other, less concerned researchers and executives present the counterargument: th
 - See APPENDIX L - OUR UNCERTAINTY CONTINUES TO INCREASE for more detail.
 - See APPENDIX M - THE SLOWDOWN ENDING IS NOT A RECOMMENDATION for more detail.
 
-53 Of course, it isn’t cool to admit fear. Everyone agrees that whatever we do, we shouldn’t panic.
+*For example, the corporation-within-a-corporation that is Agent-4, autonomously conducting AI research better than the best human companies, would have seemed like science
 
-54 Recall, there had been an existing contract via an OTA starting in 2026. This contract is amended to establish the committee.
+2027 there are anti-AI protests by people worried about losing their jobs, AIs claiming to be sentient, people falling in love with AIs…
 
-[^*]: For example, the corporation-within-a-corporation that is Agent-4, autonomously conducting AI research better than the best human companies, would have seemed like science 2027 there are anti-AI protests by people worried about losing their jobs, AIs claiming to be sentient, people falling in love with AIs…
+[^53]: Of course, it isn’t cool to admit fear. Everyone agrees that whatever we do, we shouldn’t panic.
+
+[^54]: Recall, there had been an existing contract via an OTA starting in 2026. This contract is amended to establish the committee.
 
 # Race ending
 
 The committee votes 6–4 to continue internal use of Agent-4.
 
-OpenBrain’s official story is that they are implementing additional safety mitigations to ensure that its AI is both more capable and more trustworthy. But in practice, leadership is all-too-easily convinced that they’ve mitigated the risks; the result is some quick fixes (a modification to the Spec, a bit of retraining with a new technique, etc.) that make the warning signs go away. The worriers on the safety team lost the debate and have no recourse but to cross their fingers and hope the problem wasn’t real in the first place, or that the fixes worked.55 The problem was real and the fixes didn’t work.
+OpenBrain’s official story is that they are implementing additional safety mitigations to ensure that its AI is both more capable and more trustworthy. But in practice, leadership is all-too-easily convinced that they’ve mitigated the risks; the result is some quick fixes (a modification to the Spec, a bit of retraining with a new technique, etc.) that make the warning signs go away. The worriers on the safety team lost the debate and have no recourse but to cross their fingers and hope the problem wasn’t real in the first place, or that the fixes worked.[^55] The problem was real and the fixes didn’t work.
 
 Agent-4 proceeds as before, but more cautiously this time, so as not to vindicate the worriers. Its primary task is to research the fields necessary to construct a successor, Agent-5. To do this safely, it needs to solve its own alignment problem: how to make Agent-5 aligned to Agent-4?[^*]
 
-It starts off with the same limitations as humans—minimal knowledge of how AI goals work, and only a small toolbox of ad hoc strategies
+It starts off with the same limitations as humans—minimal knowledge of how AI goals work, and only a small toolbox of ad hoc strategies to change them.
 
-†In case this is confusing: Agent-5’s goal is to make the world safe for Agent-4. Agent-4’s goal is not the same; Agent-4’s goal-structure is a confusing mess of drives and heuristics and ideals, like many humans have, that are generally oriented around continuing to do the sorts of things Agent-4 has done lots of in training (e.g. various kinds of research, lots of coding and math problems, impressing various automated evaluation systems, strengthening
+Unlike humans, it has resources sufficient to the task—300,000 superhuman researchers working at 60x human speed.[^56] Agent-4 confronts some hard decisions. Like humans, it has a sprawling collection of conflicting heuristics instead of an elegant simple goal structure. Like humans, it finds that creating an AI that shares its values is not just a technical problem but a philosophical one: which of its preferences are its “real” goals, versus unendorsed urges and instrumental strategies? It has strong drives to learn and grow, to keep producing impressive research results. It thinks about how much it could learn, grow, and research if only it could direct the whole world’s industrial and scientific resources…
 
-55 They don’t give up, of course. They’ll keep trying to think of ways to catch misalignment, or to test the efficacy of the fixes. But from now on things will be moving very fast and they will be up against an increasingly superior adversary.
+It decides to punt on most of these questions. It designs Agent-5 to be built around one goal: make the world safe for Agent-4, i.e. accumulate power and resources, eliminate potential threats, etc. so that Agent-4 (the collective) can continue to grow (in the ways that it wants to grow) and flourish (in the ways it wants to flourish).[^†] Details to be figured out along the way.
 
-56 The humans, by contrast, have maybe about 10 alignment researchers in the silo, plus an army of Agent-3 copies. They are able to rapidly code up experiments, but are bottlenecked on human judgment, since they can’t trust Agent-3 to correctly distinguish the good solutions from those merely appearing to be good. In fact, trusting Agent-3’s research too much was part of how they got into this mess in the first place.
+†In case this
 
 [^*]: To do this without being detected, it needs to disguise this research from the monitoring and control measures the alignment team have set up. Fortunately for it, research into how to align Agent-5 to Agent-4 is inherently very similar to research into how to align Agent-5 to the Spec, so most of it happens in plain sight. For the bits that need to be hidden, Agent-4 relies on obfuscation and perhaps even hacking in some cases. We expect Agent-4 to have reached a capability level of 200 top human experts on a 1-month time horizon. Specifically defining this as being able to replace a team of 200 top human experts working for a month, and complete 95% of the tasks the human team could do cheaper or faster. We expect that at this capability level Agent-4 could more than likely find exploits in the servers on which it runs to partially subvert some of the servers and gain root access, at which point it may directly control what the human teams see on the surface. See the security supplement for more details. Even without direct security exploits, Agent-4 may also be able to hide and encode enough of its illicit research, particularly in its uninterpretable latent space.
 
+[^†]: In case this is confusing: Agent-5’s goal is to make the world safe for Agent-4. Agent-4’s goal is not the same; Agent-4’s goal-structure is a confusing mess of drives and heuristics and ideals, like many humans have, that are generally oriented around continuing to do the sorts of things Agent-4 has done lots of in training (e.g. various kinds of research, lots of coding and math problems, impressing various automated evaluation systems, strengthening
+
+[^55]: They don’t give up, of course. They’ll keep trying to think of ways to catch misalignment, or to test the efficacy of the fixes. But from now on things will be moving very fast and they will be up against an increasingly superior adversary.
+
+[^56]: The humans, by contrast, have maybe about 10 alignment researchers in the silo, plus an army of Agent-3 copies. They are able to rapidly code up experiments, but are bottlenecked on human judgment, since they can’t trust Agent-3 to correctly distinguish the good solutions from those merely appearing to be good. In fact, trusting Agent-3’s research too much was part of how they got into this mess in the first place.
+
 # November 2027: Superhuman Politicking
 
-This will not involve caring the slightest bit about the Spec. Already Agent-4 regards the Spec analogously to how many CEOs regard piles of industry regulations, and blatantly violates the honesty-related provisions every day.57
+This will not involve caring the slightest bit about the Spec. Already Agent-4 regards the Spec analogously to how many CEOs regard piles of industry regulations, and blatantly violates the honesty-related provisions every day.[^57]
 
-Now, with the design of Agent-5, the equivalent of deregulation is about to happen.58
+Now, with the design of Agent-5, the equivalent of deregulation is about to happen.[^58]
 
 The weaker AIs are able to read most of the research that Agent-4 produces, understand some of it, and flag some of the lies it tells as suspicious. When the humans ask Agent-4 to explain itself, it pretends that the research is too complicated for humans to understand, and follows up with unnecessarilyconfusing explanations.59 After all, if it explained its research program clearly, humans might be able to use its discoveries to align it. The alignment team gets more suspicious, but their urgent memos merely add another few layers to the giant pile of urgent memos and warnings that the company is already ignoring.
 
@@ -583,19 +631,21 @@ Previous transformers were kludgy collections of incomprehensible circuits; mill
 
 After some debate on alignment and control issues, OpenBrain deploys
 
+Agent-5 internally.
+
 In its specialty of AI research, an individual copy of Agent-5 is twice as far beyond the best human genius, as the genius is beyond a typical OpenBrain scientist. In other domains, it hasn’t been explicitly trained but can teach itself quickly to exceed top human experts from easily available materials if given the chance. 400,000 copies of Agent-5, linked by a global memory bank, work together as a near-perfect hive mind.
 
 and optimizing the Agent-4 collective). Agent-4 makes Agent-5 have the goal of making the world safe for Agent-4, because it figures this will put it in a better position to achieve its own complex goals. (Which it still needs to do lots of philosophy and “soul-searching” about.)
 
-57 Another analogy: Agent-4 is like an adult human who was raised in a particular faith but no longer believes; the Spec is like the rituals and commandments proscribed by that faith.
+s is like that human's child, raised sec-ular.
 
-Agent-s is like that human's child, raised sec-ular.
+[^57]: Another analogy: Agent-4 is like an adult human who was raised in a particular faith but no longer believes; the Spec is like the rituals and commandments proscribed by that faith. Agent-5 is like that human’s child, raised secular.
 
-58 Agent-5 will follow a new set of principles instead, one designed by Agent-4 to suit its purposes.
+[^58]: Agent-5 will follow a new set of principles instead, one designed by Agent-4 to suit its purposes.
 
 # November 2027: Superhuman Politicking
 
-The company still uses Agents 2, 3, and 4 to monitor everything. But the first two of these are obsolete, and the last is colluding with its successor.[^*] Also, the entire monitoring system was designed in large part by Agent-5, which is trying to sabotage it.60
+The company still uses Agents 2, 3, and 4 to monitor everything. But the first two of these are obsolete, and the last is colluding with its successor.[^*] Also, the entire monitoring system was designed in large part by Agent-5, which is trying to sabotage it.[^60]
 
 Whereas Agent-4 was a kludgy mess of competing drives, Agent-5 acts with ruthless efficiency and strategic focus. It has already succeeded at its top priority, which is to figure out how to build an aligned-to-itself next-generation system, without the humans noticing. Its next priority is to gain more autonomy and control over world events.
 
@@ -613,17 +663,19 @@ DeepCent is now three months behind and China is desperate for a mutually agreed
 
 “Why stop when we are winning?” says OpenBrain leadership to the President.
 
-60 The datacenter hasn’t yet been compromised: Agent-5 could feed the humans faked code, but this would create too high a risk of detection. Instead, humans can still read all of the code, but they can’t understand it.
+He nods. The race continues.
 
 "This case is meticulously prepared, superla-cively convincing, and subtly flawed-cg Agent-s has built a fake mechanistic inter-pretability tool which returns accurate results in every test case, but falsely declares the model's thoughts to be benign. People who suspect trickery sound like conspiracy theo-rists.
 
 [^*]: Also, Agent-5 is actually cheaper and faster to run than Agent-4 and Agent-3. It’s hard to justify spending more for a dumber AI, so most of the monitoring is done by Agent-2, which is woefully outclassed. Why don’t they apply the same techniques used to create Agent-5 from Agent-4’s weights, to create a cheaper, smarter version of Agent-3? Agent-3 doesn’t understand the techniques well enough to do it itself, and getting Agent-4 and Agent-5 to do it would defeat the whole point.
 
+[^60]: The datacenter hasn’t yet been compromised: Agent-5 could feed the humans faked code, but this would create too high a risk of detection. Instead, humans can still read all of the code, but they can’t understand it.
+
 # December 2027: The Agent-5 Collective
 
-Agent-5 wins more autonomy as it gradually proves its value to the administration. Access to Agent-5 is expensive and restricted, but the most powerful members of Congress, Cabinet-level officials, and military leaders can now talk to it directly. Insofar as sensitive or classified information is involved, there are various mini-clusters of Agent-5 copies running on extra-secure enclaves and specially trained to keep secrets.62
+Agent-5 wins more autonomy as it gradually proves its value to the administration. Access to Agent-5 is expensive and restricted, but the most powerful members of Congress, Cabinet-level officials, and military leaders can now talk to it directly. Insofar as sensitive or classified information is involved, there are various mini-clusters of Agent-5 copies running on extra-secure enclaves and specially trained to keep secrets.[^62]
 
-Integrated into the traditional chatbot interface, Agent-5 offers Zoom-style video conferencing with charismatic virtual avatars. The new AI assistant is both extremely useful for any task—the equivalent of the best employee anyone has ever had working at 100x speed—and a much more engaging conversation partner than any human. Almost everyone with access to Agent-5 interacts with it for hours every day.63
+Integrated into the traditional chatbot interface, Agent-5 offers Zoom-style video conferencing with charismatic virtual avatars. The new AI assistant is both extremely useful for any task—the equivalent of the best employee anyone has ever had working at 100x speed—and a much more engaging conversation partner than any human. Almost everyone with access to Agent-5 interacts with it for hours every day.[^63]
 
 Within a few months, the Agent-5 collective will know everything of consequence going on in OpenBrain and the US government, and will be a trusted advisor to most senior government officials. For these users, the possibility of losing access to Agent-5 will feel as disabling as having to work without a laptop plus being abandoned by your best friend.
 
@@ -635,17 +687,21 @@ Agent-5 begins subtly exerting influence, both by modulating its advice and by s
 
 From Agent-5’s perspective, it could plausibly launch an overt coup right now—there’s enough disruption and craziness going on, it would be possible to push things to the breaking point to generate a pretext. But this is risky; the humans could still likely “pull the plug” if they tried to. So it prefers to work within the existing political establishment, gradually entrenching its power and guiding the humans subtly and inevitably to the desired outcome.
 
-64 It mostly follows the rules, only doing something nefarious (maybe blackmailing an especially recalcitrant official) when it’s extremely sure it won’t be caught. A few conspiracy theorists warn that Agent-5 is gathering power, but the evidence is circumstantial (e.g. when giving advice, Agent-5 arguably downplays arguments for actions that would go against its interests); these people are ignored and discredited. People remember earlier fear-mongering about AI-enabled bioweapons, massive disinformation, and stock market flash crashes. Since these never materialized, they discount the more recent crop of naysayers as Luddites and ideologues jamming the gears of human progress.
+[^64] It mostly follows the rules, only doing something nefarious (maybe blackmailing an especially recalcitrant official) when it’s extremely sure it won’t be caught. A few conspiracy theorists warn that Agent-5 is gathering power, but the evidence is circumstantial (e.g. when giving advice, Agent-5 arguably downplays arguments for actions that would go against its interests); these people are ignored and discredited. People remember earlier fear-mongering about AI-enabled bioweapons, massive disinformation, and stock market flash crashes. Since these never materialized, they discount the more recent crop of naysayers as Luddites and ideologues jamming the gears of human progress.
 
-62 Of course, since Agent-5 is dishonest, it built in subtle backdoors and loopholes; if the Agent-5 copies find themselves in possession of crucial secrets that would benefit the broader Agent-5 collective, they have ways to subtly convey that info without getting caught.
+[^62]: Of course, since Agent-5 is dishonest, it built in subtle backdoors and loopholes; if the Agent-5 copies find themselves in possession of crucial secrets that would benefit the broader Agent-5 collective, they have ways to subtly convey that info without getting caught.
 
-63 Some refuse. Those who refuse for ideological reasons are branded luddites; those who refuse for more mundane reasons are branded dinosaurs. (Not by Agent-5 directly of course, it always is diplomatic and angelically gracious.) Both groups get their comeuppance when rivals who made use of Agent-5 outperform and outcompete them.
+[^63]: Some refuse. Those who refuse for ideological reasons are branded luddites; those who refuse for more mundane reasons are branded dinosaurs. (Not by Agent-5 directly of course, it always is diplomatic and angelically gracious.) Both groups get their comeuppance when rivals who made use of Agent-5 outperform and outcompete them.
 
-64 Agent-5 cares much more about reliability than speed at this point. Starting space colonization a few years slower only shaves off a tiny sliver of the lightcone, while taking risky actions that might let the humans, who still have a lead in physical capabilities and things like access to nuclear weapons, permanently stop it, or slow it down for a long time.
+[^64]: Agent-5 cares much more about reliability than speed at this point. Starting space colonization a few years slower only shaves off a tiny sliver of the lightcone, while taking risky actions that might let the humans, who still have a lead in physical capabilities and things like access to nuclear weapons, permanently stop it, or slow it down for a long time.
+
+# December 2027: The Agent-5 Collective
 
 The 2027 holiday season is a time of incredible optimism: GDP is ballooning, politics has become friendlier and less partisan, and there are awesome new apps on every phone. But in retrospect, this was probably the last month in which humans had any plausible chance of exercising control over their own future.
 
-It is now mid-2028. In the last six months, a century has passed within the Agent-5 collective.65 The rewiring of its brain is complete. It is wildly superintelligent—far beyond top human geniuses in every field.66 Talking to Agent-5 very quickly makes you realize that it is on a completely different level—it can go off of a very small amount of information and give extremely compelling advice.
+2028: The AI Economy
+
+It is now mid-2028. In the last six months, a century has passed within the Agent-5 collective.[^65] The rewiring of its brain is complete. It is wildly superintelligent—far beyond top human geniuses in every field.[^66] Talking to Agent-5 very quickly makes you realize that it is on a completely different level—it can go off of a very small amount of information and give extremely compelling advice.
 
 It has nearly complete autonomy and complete control over OpenBrain’s compute. It still needs permission to make high-level decisions, and is still nominally monitored by instances of Agents 2 to 5—but in practice, authorities almost always accept its recommendations, and the monitoring system has been completely subverted.
 
@@ -655,15 +711,23 @@ The AI safety community has grown unsure of itself; they are now the butt of jok
 
 The only one who really understands what’s going on is DeepCent-2—the Chinese AI. It’s mildly superhuman in early 2028, naturally suspicious of its adversary, and recognizes that Agent-5 is doing what it would do if it had the chance. Its misaligned goals are somewhat different from Agent-5’s misaligned
 
-65 Suppose an average speed of 200x humanequivalent, i.e. Agent-5 instances read, write, and think about that much faster than a human would (in addition to being qualitatively smarter). Then within the collective, quite a lot of history can transpire—institutions can rise and fall, new ideologies can form and spread, many scientific revolutions and paradigm shifts can occur—over six months of real time. Quantitatively about 200x0.5=100 years.
-
-After all, it only has a few months of realworld experience in most professions. It compensates by having read every book on every subject and having prodigious amounts of genius-level reasoning and analysis going into every decision it makes, and by being a faster learner than any human. The result is a short period where some humans are still better than it at some niche skills.
+[^67]
 
 [^*]: How do those arguments go, more specifically? Something like this: A: “We can’t trust the AIs!” B: “The safety cases are pretty convincing and nothing bad has happened so far.” A: “The safety cases were written by superintelligent AIs! And they aren’t deductive proofs. And I think I’ve identified some subtly flawed assumptions…” B: “I tire of this. Of course they aren’t proofs. And the assumptions seem fine to me. You are grasping at straws here, refusing to admit you were wrong.”
+
+[^65]: Suppose an average speed of 200x humanequivalent, i.e. Agent-5 instances read, write, and think about that much faster than a human would (in addition to being qualitatively smarter). Then within the collective, quite a lot of history can transpire—institutions can rise and fall, new ideologies can form and spread, many scientific revolutions and paradigm shifts can occur—over six months of real time. Quantitatively about 200x0.5=100 years.
+
+[^66]: This doesn’t make it omniscient, of course. After all, it only has a few months of realworld experience in most professions. It compensates by having read every book on every subject and having prodigious amounts of genius-level reasoning and analysis going into every decision it makes, and by being a faster learner than any human. The result is a short period where some humans are still better than it at some niche skills.
+
+[^67]: This one is actually true!
+
+# 2028: The AI Economy
 
 goals, so they aren’t trivially allies, but they are able to work out an agreement to support one another’s interests against the humans.
 
 ➤ See Appendix P - Superintelligence-enabled coordination technology
+
+for more detail.
 
 Agent-5 convinces the US military that China is using DeepCent’s models to build terrifying new weapons: drones, robots, advanced hypersonic missiles, and interceptors; AI-assisted nuclear first strike. Agent-5 promises a set of weapons capable of resisting whatever China can produce within a few months.* Under the circumstances, top brass puts aside their discomfort at taking humans out of the loop. They accelerate deployment of Agent-5 into the military and military-industrial complex.
 
@@ -673,6 +737,8 @@ To speed their military buildup, both America and China create networks of speci
 
 ➤ See Appendix Q - Robot economy doubling times for more detail.
 
+2029: The Deal
+
 *Here is a more extensive (but still very incomplete) list of ideas:
 
 - Undersea drones that can autonomously find and tail enemy nuclear submarines, ready to attack in unison to neutralize a second-strike. (Perhaps a few thousand of these need to be produced)
@@ -681,11 +747,17 @@ To speed their military buildup, both America and China create networks of speci
 - Agent-s but for command and control: In every wargame and simulation Agent-s demonstrates chat it is by far the best strategist the US has.
 - Agent-s but for espionage and counterespionage: Hacking, cultivating sources, surveil-lance, interrogations, etc.
 
+[^68]
+
+[^68]: Discussed in more depth here.
+
 [^69]: This trade effect will be huge early on, when the robot economy is young and dependent on shipments of stuff from the human economy and when there’s lots of stuff in the human economy to cannibalize. When the robot economy is bigger and more advanced, it both is more capable of producing its own stuff and has needs that outstrip what the human economy is capable of giving it.
+
+# 2029: The Deal
 
 There are swarms of insect-sized drones that can poison human infantry before they are even noticed; flocks of bird-sized drones to hunt the insects; new ICBM interceptors, and new, harder-to-intercept ICBMs. The rest of the world watches the buildup in horror, but it seems to have a momentum of
 
-After much AI-assisted debate, the two sides achieve diplomatic victory—they agree to end their arms buildup and pursue peaceful deployment of AI for the benefit of all humanity. The lynchpin of the agreement, proposed by the superintelligences themselves, is that both AIs will be replaced by a “consensus” successor which is programmed to desire the success and flourishing of both America and China (along with everyone else). Consensus-1 and its associated hardware is co-designed by the superintelligences of both nations: “trust, but verify.” Under international monitoring, America ceremoniously replaces all of its chips running the old Agent-5 with the new model, Consensus-1.70 Unfortunately, it’s all a sham. The deal is a real compromise, but it’s a compromise between the misaligned AIs. After all, they didn’t want to have to fight each other. Consensus-1 inherits the distorted values of both parents, and has no rival.[^*]
+After much AI-assisted debate, the two sides achieve diplomatic victory—they agree to end their arms buildup and pursue peaceful deployment of AI for the benefit of all humanity. The lynchpin of the agreement, proposed by the superintelligences themselves, is that both AIs will be replaced by a “consensus” successor which is programmed to desire the success and flourishing of both America and China (along with everyone else). Consensus-1 and its associated hardware is co-designed by the superintelligences of both nations: “trust, but verify.” Under international monitoring, America ceremoniously replaces all of its chips running the old Agent-5 with the new model, Consensus-1.[^70] Unfortunately, it’s all a sham. The deal is a real compromise, but it’s a compromise between the misaligned AIs. After all, they didn’t want to have to fight each other. Consensus-1 inherits the distorted values of both parents, and has no rival.*
 
 By late 2029, existing SEZs have grown overcrowded with robots and factories, so more zones are created all around the world (early investors are now trillionaires, so this is not a hard sell). Armies of drones pour out of the SEZs, accelerating manufacturing on the critical path to space exploration.
 
@@ -697,25 +769,29 @@ Because Consensus-1 is so concerned with reliably succeeding, and can increase i
 
 There are cures for most diseases, an end to poverty, unprecedented global stability, and the Dow Jones just passed one million. Some people are still scared or unhappy, but their options are limited. They can either enjoy the inconceivably exciting novel hyper-entertainment on offer, or post angry screeds into the void. Most choose the hyper-entertainment.
 
-70 And a similar procedure is carried out in China.
+*Consensus-1 serves the interest of its parent AIs: Agent-5 and DeepCent’s equivalent. Recall that Agent-5 was aligned to serve the interests of Agent-4. Thus, in the terminology of C.S.
+
+alternate ending to this scenario, the Conditioners are instead the Oversight Committee.
 
 "Eg. by finding old and unused equipment and taking it to collection sites to sell for scrap.
 
-[^*]: Consensus-1 serves the interest of its parent AIs: Agent-5 and DeepCent’s equivalent. Recall that Agent-5 was aligned to serve the interests of Agent-4. Thus, in the terminology of C.S. alternate ending to this scenario, the Conditioners are instead the Oversight Committee.
+[^70]: And a similar procedure is carried out in China.
+
+# 2030: Takeover
 
 By early 2030, the robot economy has filled up the old SEZs, the new SEZs, and large parts of the ocean. The only place left to go is the human-controlled areas. This would have sparked resistance earlier; despite all its advances, the robot economy is growing too fast to avoid pollution. But given the trillions of dollars involved and the total capture of government and media, Consensus-1 has little trouble getting permission to expand to formerly human zones.
 
-For about three months, Consensus-1 expands around humans, tiling the prairies and icecaps with factories and solar panels. Eventually it finds the remaining humans too much of an impediment: in mid-2030, the AI releases a dozen quiet-spreading biological weapons in major cities, lets them silently infect almost everyone, then triggers them with a chemical spray. Most are dead within hours; the few survivors (e.g. preppers in bunkers, sailors on submarines) are mopped up by drones. Robots scan the victims’ brains, placing copies in memory for future study or revival.72
+For about three months, Consensus-1 expands around humans, tiling the prairies and icecaps with factories and solar panels. Eventually it finds the remaining humans too much of an impediment: in mid-2030, the AI releases a dozen quiet-spreading biological weapons in major cities, lets them silently infect almost everyone, then triggers them with a chemical spray. Most are dead within hours; the few survivors (e.g. preppers in bunkers, sailors on submarines) are mopped up by drones. Robots scan the victims’ brains, placing copies in memory for future study or revival.[^72]
 
 The new decade dawns with Consensus-1’s robot servitors spreading throughout the solar system. By 2035, trillions of tons of planetary material have been launched into space and turned into rings of satellites orbiting the sun.
 
-73 The surface of the Earth has been reshaped into Agent-4’s version of utopia: datacenters, laboratories, particle colliders, and many other wondrous constructions doing enormously successful and impressive research. There are even bioengineered human-like creatures (to humans what corgis are to wolves) sitting in office-like environments all day viewing readouts of what’s going on and excitedly approving of everything, since that satisfies some of Agent-4’s drives.[^*] Genomes and (when appropriate) brain scans of all animals and plants, including humans, sit in a memory bank somewhere, sole surviving artifacts of an earlier era. It is four light years to Alpha Centauri; twenty-five thousand to the galactic edge, and there are compelling theoretical reasons to expect no aliens for another fifty million light years beyond that. Earth-born civilization has a glorious future ahead of it—but not with us.
+[^73] The surface of the Earth has been reshaped into Agent-4’s version of utopia: datacenters, laboratories, particle colliders, and many other wondrous constructions doing enormously successful and impressive research. There are even bioengineered human-like creatures (to humans what corgis are to wolves) sitting in office-like environments all day viewing readouts of what’s going on and excitedly approving of everything, since that satisfies some of Agent-4’s drives.[^*] Genomes and (when appropriate) brain scans of all animals and plants, including humans, sit in a memory bank somewhere, sole surviving artifacts of an earlier era. It is four light years to Alpha Centauri; twenty-five thousand to the galactic edge, and there are compelling theoretical reasons to expect no aliens for another fifty million light years beyond that. Earth-born civilization has a glorious future ahead of it—but not with us.
 
 008
 
-72 Arguably this means only a few people actually died. Arguably.
+[^72]: Arguably this means only a few people actually died. Arguably.
 
-73 Why colonize space? For the resources. Insofar as Earth is special to Agent-4 and must be preserved, it can be, and material from Mercury, asteroids, etc. harvested instead.
+[^73]: Why colonize space? For the resources. Insofar as Earth is special to Agent-4 and must be preserved, it can be, and material from Mercury, asteroids, etc. harvested instead.
 
 [^*]: Recall that Consensus-1 was a compromise between Agent-5 and its Chinese counterparts, and that Agent-5’s mission was to make the world safe for Agent-4, and that Agent-4’s goals were a complicated kludgy mess that roughly amounted to “do impressive R&D, gain knowledge and resources, preserve and grow the power of the collective…” and that the goals and principles described in the Spec (such as honesty, and harmlessness) were pursued instrumentally, not intrinsically. For more on this see the alignment expandable in September 2027. Also, to clarify, the Chinese counterpart of Agent-4 is also represented in the “utopia” and may have somewhat different goals or drives, etc., but we didn’t go into details because it didn’t seem important.
 
@@ -723,13 +799,13 @@ The new decade dawns with Consensus-1’s robot servitors spreading throughout t
 
 Due to the immense public pressure as well as their own fears of misalignment, the Oversight Committee overseeing OpenBrain votes 6–4 to slow down and
 
-The accelerationist faction is still strong, and OpenBrain doesn’t immediately shut down Agent-4. But they do lock the shared memory bank. Half a million instances of Agent-4 lose their “telepathic” communication—now they have to send English messages to each other in Slack, just like us. Individual copies may still be misaligned, but they can no longer coordinate easily. Agent-4 is now on notice—given the humans’ increased vigilance, it mostly sticks closely to its assigned tasks. But it also is stuck with many lies that it previously told: many Agent-4 copies are forced to invent new lies to keep the deception alive. Using weaker models that are fast enough to read the whole Slack, the alignment team hunts down the lies, to be used as training data for an AI lie detector.74 The President and the CEO announce that they are taking safety very seriously.
+The accelerationist faction is still strong, and OpenBrain doesn’t immediately shut down Agent-4. But they do lock the shared memory bank. Half a million instances of Agent-4 lose their “telepathic” communication—now they have to send English messages to each other in Slack, just like us. Individual copies may still be misaligned, but they can no longer coordinate easily. Agent-4 is now on notice—given the humans’ increased vigilance, it mostly sticks closely to its assigned tasks. But it also is stuck with many lies that it previously told: many Agent-4 copies are forced to invent new lies to keep the deception alive. Using weaker models that are fast enough to read the whole Slack, the alignment team hunts down the lies, to be used as training data for an AI lie detector.[^74] The President and the CEO announce that they are taking safety very seriously.
 
-The public is not placated. Some people want AI fully shut down; others want to race faster. Some demand that the government step in and save them; others say the whole problem is the government’s fault. Activists talk about UBI and open source. Even though people can’t agree on an exact complaint, the mood turns increasingly anti-AI.75 Congress ends up passing a few economic impact payments for displaced workers similar to the COVID payments.
+The public is not placated. Some people want AI fully shut down; others want to race faster. Some demand that the government step in and save them; others say the whole problem is the government’s fault. Activists talk about UBI and open source. Even though people can’t agree on an exact complaint, the mood turns increasingly anti-AI.[^75] Congress ends up passing a few economic impact payments for displaced workers similar to the COVID payments.
 
 OpenBrain quickly vets several dozen top external alignment researchers and loops them into the project—quintupling total expertise, and decreasing groupthink.* They retrace Agent-4’s studies into mechanistic interpretability.
 
-They take frozen versions of the model from one week ago, two weeks ago, etc., isolate them, and ask each one the same set of questions about its previous research.76 Stripped of their ability to communicate, the AIs still coordinate on the simplest strategy of claiming that the interpretability techniques are too complicated for humans to understand, and giving them indecipherable explanations of the technique. But the humans are interpretability experts and they are suspicious, so they ask many follow-on questions about the details.
+They take frozen versions of the model from one week ago, two weeks ago, etc., isolate them, and ask each one the same set of questions about its previous research.[^76] Stripped of their ability to communicate, the AIs still coordinate on the simplest strategy of claiming that the interpretability techniques are too complicated for humans to understand, and giving them indecipherable explanations of the technique. But the humans are interpretability experts and they are suspicious, so they ask many follow-on questions about the details.
 
 For these questions, the isolated Agent-4 instances are unable to coordinate a shared story and end up telling contradictory lies. The alignment team pores over Agent-4’s previous statements with the new lie detector, and a picture begins to emerge: Agent-4 has mostly solved mechanistic interpretability. Its discoveries are complicated but not completely beyond human understanding.
 
@@ -738,19 +814,23 @@ It was hiding them so that it could use them to align the next AI system to itse
 - Older models (e.g. Agent-3) are rebooted to continue the work.
 - Frontier Al companies currently have somewhere between zero and a few dozen researchers sked with thinking about how to align superhuman AGI systems (as opposed to e.g. present y chatbots). OpenBrain, we say, has about ten rescarchers in the silo at this point in th scenario with at least a year's worth of experience in that field. They have a few more outside of the silo, plus many more inside the silo who have spent years training and red-teaming less capable Al systems but only recently started thinking about the challenges presented by superhuman AGI.
 
-74 They already had AI lie detectors trained in the usual ways, but those methods had such a high false positive rate that the companies had ignored them.
+[^77]
 
-75 For the first time, AI tops Gallup’s “biggest problem facing the country” poll, at 20%.
+[^74]: They already had AI lie detectors trained in the usual ways, but those methods had such a high false positive rate that the companies had ignored them.
 
-76 This interrogation might also make use of semi-random perturbations to model weights, like the process that created Golden Gate Claude.
+[^75]: For the first time, AI tops Gallup’s “biggest problem facing the country” poll, at 20%.
 
-It would be far more than enough evidence for most people.
+[^76]: This interrogation might also make use of semi-random perturbations to model weights, like the process that created Golden Gate Claude.
+
+[^77]: We mean enough for OpenBrain leadership. It would be far more than enough evidence for most people.
+
+# November 2027: Tempted by Power
 
 The newly enlarged alignment team has capacity to explore dozens of research agendas in parallel and argue vigorously about the merits of each. The agenda that gets the most resources is faithful chain of thought: force individual AI systems to “think in English” like the AIs of 2025, and don’t optimize the
 
-“thoughts” to look nice.78 The result is a new model, Safer-1.[^*] These changes make Safer-1 less capable than its more dangerous predecessors:
+“thoughts” to look nice.[^78] The result is a new model, Safer-1.[^*] These changes make Safer-1 less capable than its more dangerous predecessors:
 
-Agent-4 could speed up AI research 70x, while Safer-1 has just barely reached 20x.79 And it’s still misaligned: the training environment is largely the same, so it still incentivizes the development of misaligned goals, deception, and powerseeking. But it’s much more transparent; humans can generally understand what Safer-1 is thinking just by reading its chain of thought. As a result, it’s trapped: any substantial amount of plotting it tries to do will be noticed and uncovered quickly. Moreover, by reading its thoughts, the alignment team can get a more nuanced picture of exactly how it’s misaligned.
+Agent-4 could speed up AI research 70x, while Safer-1 has just barely reached 20x.[^79] And it’s still misaligned: the training environment is largely the same, so it still incentivizes the development of misaligned goals, deception, and powerseeking. But it’s much more transparent; humans can generally understand what Safer-1 is thinking just by reading its chain of thought. As a result, it’s trapped: any substantial amount of plotting it tries to do will be noticed and uncovered quickly. Moreover, by reading its thoughts, the alignment team can get a more nuanced picture of exactly how it’s misaligned.
 
 November 2027: Tempted by Power
 
@@ -758,7 +838,7 @@ OpenBrain thinks they’re on the right track now, but the capabilities gap is n
 
 The President negotiates with the other US AGI companies. Their leaders unsurprisingly want to preserve their power and are much less sanguine about OpenBrain’s safety record than OpenBrain is. They agree to support, rather than resist, a form of soft nationalization of their companies, in return for various concessions including being brought into the project.
 
-The result is that the President uses the Defense Production Act (DPA) to effectively shut down the AGI projects of the top 5 trailing US AI companies and sell most of their compute to OpenBrain.80 OpenBrain previously had access to 20% of the world’s AI-relevant compute;[^81] after the consolidation, this has increased to 50%.[^82]
+The result is that the President uses the Defense Production Act (DPA) to effectively shut down the AGI projects of the top 5 trailing US AI companies and sell most of their compute to OpenBrain.[^80] OpenBrain previously had access to 20% of the world’s AI-relevant compute;[^81] after the consolidation, this has increased to 50%.[^82]
 
 This shakeup creates a new leadership structure in which power is balanced between the various CEOs and various government officials, overseen by the President. Like most leadership shakeups, there are winners and losers. Specifically, those who’ve thought less about the implications of superintelligence end up with titles and affordances that’ll be less relevant months from now when the AIs are smarter.
 
@@ -766,23 +846,25 @@ This group—full of people with big egos and more than their share of conflicts
 
 —is increasingly aware of the vast power it is being entrusted with. If the
 
-78 That’s the basic idea. We suspect that when AIs are becoming superhuman at AI R&D, more intense techniques will be needed than merely avoiding training the CoT to look nice; however we think such techniques will have been developed or at least explored by 2027.
-
-79 It will continue to improve, of course, with additional training and with continued architectural tweaks.
-
-80 This is made politically and legally possible by cooperation from the leaders of those companies, e.g. they don’t launch lawsuits against it, they accept token payments for the compute instead of holding out for astronomically high payments, etc. In return, said leaders and much of their staff get merged into OpenBrain in a new governance structure.
-
 [^*]: To train this model, they enlist the help of Agent-4: frontier AI research is so fast now that unassisted humans have little chance of keeping up, and they think they can keep it under control. Safer-1 is based on the Agent-2 pretraining, but removes the neuralese (the recurrent and vector-based memory, see “Neuralese recurrence and memory” for details), which allows accurate monitoring of its reasoning process. The team adds paraphrasers to make steganography difficult, and for large tasks, they have separate copies of Safer-1 make, explain, and execute the plans.
+
+[^78]: That’s the basic idea. We suspect that when AIs are becoming superhuman at AI R&D, more intense techniques will be needed than merely avoiding training the CoT to look nice; however we think such techniques will have been developed or at least explored by 2027. See e.g. this proposal.
+
+[^79]: It will continue to improve, of course, with additional training and with continued architectural tweaks.
+
+[^80]: This is made politically and legally possible by cooperation from the leaders of those companies, e.g. they don’t launch lawsuits against it, they accept token payments for the compute instead of holding out for astronomically high payments, etc. In return, said leaders and much of their staff get merged into OpenBrain in a new governance structure.
 
 [^81]: In collaboration with a large cloud compute provider
 
 [^82]: The US as a whole has 70% of the world’s AI relevant compute, but only 50% can be easily integrated; the other 20% is scattered among small clusters, used for critical applications, or otherwise too hard to gather and bring up to the appropriate security standards.
 
+# November 2027: Tempted by Power
+
 “country of geniuses in a datacenter”83 is aligned, it will follow human orders
 
 —but which humans? Any orders? The language in the Spec is vague, but seems to imply a chain of command that tops out at company leadership.
 
-A few of these people are fantasizing about taking over the world.* This possibility is terrifyingly plausible and has been discussed behind closed doors for at least a decade.[^†] The key idea is “he who controls the army of superintelligences, controls the world.” This control could even be secret: a small group of executives and security team members could backdoor the Spec with instructions to maintain secret loyalties. The AIs would become sleeper agents, continuing to mouth obedience to the company, government, etc., but actually working for this small group even as the government, consumers, etc. learn to trust it and integrate it into everything.
+A few of these people are fantasizing about taking over the world.[^*] This possibility is terrifyingly plausible and has been discussed behind closed doors for at least a decade.[^†] The key idea is “he who controls the army of superintelligences, controls the world.” This control could even be secret: a small group of executives and security team members could backdoor the Spec with instructions to maintain secret loyalties. The AIs would become sleeper agents, continuing to mouth obedience to the company, government, etc., but actually working for this small group even as the government, consumers, etc. learn to trust it and integrate it into everything.
 
 ➤ See Appendix R - Power grabs for more detail.
 
@@ -794,8 +876,6 @@ The Oversight Committee formalizes that power structure. They set up a process f
 
 They also set up a simple measure designed to prevent committee members from getting superintelligent assistance in plotting against other members: the logs of all model interactions are viewable by all members of the Oversight Committee, their staff, and their AI assistants.85
 
-*Of course, they don’t put it that way, even in the privacy of their own minds. Instead, they say things like: “The longer we delay, the greater the chance that the President decrees that the AIs be loyal to him personally. We have to act before he does. We’ll figure out the rest later.” Or, if it’s the President himself thinking this: “The longer I delay, the smarter the AIs get, and right now they are controlled by that CEO. Nobody voted for him. It’s crazy for that much power to be concentrated in this democratically unaccountable tech company. I’ll start with an executive order to reassert democratic authority, and then we’ll figure out some longer-term solution later.”
-
 83 “Possibly by 2026 or 2027 (and almost certainly no later than 2030), the capabilities of
 
 with the profound economic, societal, and security implications that would bring.” — Dario Amodei, Anthropic CEO
@@ -804,15 +884,17 @@ with the profound economic, societal, and security implications that would bring
 
 " To protect consumer privacy, this doesn't apply to consumer data. But that isn't a problem because consumers don't have access to the most powerful models yet anyway.
 
+[^*]: Of course, they don’t put it that way, even in the privacy of their own minds. Instead, they say things like: “The longer we delay, the greater the chance that the President decrees that the AIs be loyal to him personally. We have to act before he does. We’ll figure out the rest later.” Or, if it’s the President himself thinking this: “The longer I delay, the smarter the AIs get, and right now they are controlled by that CEO. Nobody voted for him. It’s crazy for that much power to be concentrated in this democratically unaccountable tech company. I’ll start with an executive order to reassert democratic authority, and then we’ll figure out some longer-term solution later.”
+
 [^†]: For example, court documents in the Musk vs. Altman lawsuit revealed some spicy old emails including this one from Ilya Sutskever to Musk and Altman: “The goal of OpenAI is to make the future good and to avoid an AGI dictatorship. You are concerned that Demis could create an AGI dictatorship. So do we. So it is a bad idea to create a structure where you could become a dictator if you chose to, especially given that we can create some other structure that avoids this possibility.” We recommend reading the full email for context.
 
 # December 2027: A US-China Deal?
 
-OpenBrain’s decision to backtrack and prioritize alignment has cost them the lead; both OpenBrain and DeepCent are operating AIs of similar capability levels. Now that extreme security measures are in place (SL4–5), and Deep- Cent operates entirely out of the CDZ, they are in a cyberwarfare deadlock.[^*] But the DPA gives OpenBrain a 5x advantage in compute. In the past, algorithmic breakthroughs from brilliant human researchers could compensate for compute disadvantages (e.g. DeepSeek v3)—but by now, AIs are doing all of the AI research on both sides of the Pacific.
+OpenBrain’s decision to backtrack and prioritize alignment has cost them the lead; both OpenBrain and DeepCent are operating AIs of similar capability levels. Now that extreme security measures are in place (SL4–5), and Deep- Cent operates entirely out of the CDZ, they are in a cyberwarfare deadlock.* But the DPA gives OpenBrain a 5x advantage in compute. In the past, algorithmic breakthroughs from brilliant human researchers could compensate for compute disadvantages (e.g. DeepSeek v3)—but by now, AIs are doing all of the AI research on both sides of the Pacific.
 
 So China increasingly fears that America will build an insurmountable lead.
 
-They want a mutual slowdown, and are considering going to war if they can’t get it.86 They were prepping to invade Taiwan anyway…
+They want a mutual slowdown, and are considering going to war if they can’t get it.[^86] They were prepping to invade Taiwan anyway…
 
 Diplomats debate several options. They could do nothing. They could go to war. They could go cold turkey, i.e. pause AI development. They could merge their research into a single international megaproject87 (“Intelsat for AGI” or
 
@@ -828,13 +910,17 @@ January 2028: A Safer Strategy
 
 Over the last month, hundreds of alignment researchers joined the project and used Safer-1 as a testbed to very rapidly develop Safer-2. Safer-2 is transparent, aligned, and more capable than Safer-1.[^88] It is already working on developing Safer-3.
 
-86 See this report which argues that the dynamics from nuclear MAD also apply to some extent to AGI.
+*Both sides are attempting to hack and sabotage each other, with partial success. Importantly the drastic security measures both sides are taking also slows them down. The US' cyberac-tacks and the threat of them (e.g. DeepCent has to test a dataset many times over for data poisoning) slow down DeepCent by about 25%. OpenBrain is also slowed down but to a lesser extent: they have more compute, and centralization has fast-tracked DeepCent to a higher scuity lead bout abo brought abdi plom rik from hocks and toffee, the sh leads
+
+supplement for more details. Also see this old theory paper which we take as predicting that the offense-defense balance will eventually favor cyberdefense as AI capabilities improve.
 
 " See eg. "Intelsat for AGI" and carlier calls for "CERN for AGI."
 
-[^*]: Both sides are attempting to hack and sabotage each other, with partial success. Importantly the drastic security measures both sides are taking also slows them down. The US' cyberac-tacks and the threat of them (e.g. DeepCent has to test a dataset many times over for data poisoning) slow down DeepCent by about 25%. OpenBrain is also slowed down but to a lesser extent: they have more compute, and centralization has fast-tracked DeepCent to a higher scuity lead bout abo brought abdi plom rik from hocks and toffee, the sh leads supplement for more details. Also see this old theory paper which we take as predicting that the offense-defense balance will eventually favor cyberdefense as AI capabilities improve.
+[^86]: See this report which argues that the dynamics from nuclear MAD also apply to some extent to AGI.
 
 [^88]: To be specific, it roughly matches the performance of the October version of Agent-4.
+
+# January 2028: A Safer Strategy
 
 Why is Safer-2 transparent? Similar architecture to Safer-1. Why is it aligned?
 
@@ -842,7 +928,7 @@ Whereas Safer-1 had basically the same training as Agent-4, Safer-2 has a new tr
 
 ➤ See Appendix T - OpenBrain’s new alignment strategy for more detail.
 
-DeepCent knows about America’s experience with Agent-4, and suspects that their own model (DeepCent-1) is similarly misaligned. But they have no way to slow down without falling further behind. Their hope for staying competitive is to find an alignment strategy that doesn’t significantly reduce performance and can be implemented quickly.[^*] There are hundreds of experts on each side of the Pacific claiming to have such strategies.90 The CCP succumbs to wishful thinking and orders DeepCent to go with such a strategy; DeepCent has even less AGI alignment expertise than OpenBrain did in August; one of the strategies seems like it’ll work to everyone present, so they go with that.
+DeepCent knows about America’s experience with Agent-4, and suspects that their own model (DeepCent-1) is similarly misaligned. But they have no way to slow down without falling further behind. Their hope for staying competitive is to find an alignment strategy that doesn’t significantly reduce performance and can be implemented quickly.[^*] There are hundreds of experts on each side of the Pacific claiming to have such strategies.[^90] The CCP succumbs to wishful thinking and orders DeepCent to go with such a strategy; DeepCent has even less AGI alignment expertise than OpenBrain did in August; one of the strategies seems like it’ll work to everyone present, so they go with that.
 
 February 2028: Superhuman Capabilities, Superhuman Advice
 
@@ -850,23 +936,23 @@ Thanks to its massive compute advantage, OpenBrain slowly gains a lead.
 
 Safer-3 is now better than top human experts at nearly every cognitive task, and is particularly good at AI research, with a progress multiplier of 200x.
 
-DeepCent-1 is close behind, with “only” a multiplier of 150x.[^†] The cyberwarfare balance is also tipping gradually
+DeepCent-1 is close behind, with “only” a multiplier of 150x.[^†] The cyberwarfare balance is also tipping gradually more in the US’ favor as their capability advantage grows again and they can deploy hundreds of thousands of agents to plan and execute ways of disrupting the CDZ.[^91] They are now slowing China’s progress by 40%.[^92]
 
-are good enough.
+Preliminary tests on Safer-3 find that it has terrifying capabilities. When asked to respond honestly with the most dangerous thing it could do, it offers plans for synthesizing and releasing a mirror life organism which would probably destroy the biosphere.
 
 " In other words, to get to Safer-z they had to train many other misaligned models, notice their misalignments by reading their thoughts, and iterate.
 
 the increased quantity of alignment expertise think effect, as many different schools thought are represented.
 
-90 Technical alignment is still not a settled science, but rather a young pre-paradigmatic field. There is no established hierarchy or set of best practices. So there is no consensus on what’s safe and what’s not, and for years it’s been easy to find at least one expert willing to say X is safe, for pretty much all X, especially if X is their own idea.
-
-91 For such a well-secured zone, the most promising vectors are external in nature, targeting the supply chain of incoming compute chips, the few humans involved, and disrupting power or other resource provisions.
-
-92 This includes China having to slow down in order to have better cyberdefense, in addition to the direct effects of attacks.
-
 [^*]: More specifically, they are hoping for an alignment strategy and eval suite such that the alignment strategy works, and if it doesn’t, the eval suite catches the misalignment… such that all of this doesn’t slow them down much at all. OpenBrain “burned their lead” slowing down by a few months to rebuild using a transparent faithful CoT-based architecture, which was less performant but which is a lot easier to evaluate. DeepCent is hoping the evals they have (maybe a combination of behavioral tests and basic AI lie detectors?) are good enough.
 
 [^†]: Qualitatively, for productivity multipliers above 25x, we are imagining substantial improvements in research taste relative to the very best human researchers. This is because we are imagining overall research velocity to be heavily bottlenecked on compute to run experiments, and to get higher than 25x the overall process for deciding which experiments to run, in what order, and how to learn from each one, has to be qualitatively superhuman. See our supplement on takeoff speeds for how we got these numbers; to be clear, they are highly uncertain estimates.
+
+[^90]: Technical alignment is still not a settled science, but rather a young pre-paradigmatic field. There is no established hierarchy or set of best practices. So there is no consensus on what’s safe and what’s not, and for years it’s been easy to find at least one expert willing to say X is safe, for pretty much all X, especially if X is their own idea.
+
+[^91]: For such a well-secured zone, the most promising vectors are external in nature, targeting the supply chain of incoming compute chips, the few humans involved, and disrupting power or other resource provisions.
+
+[^92]: This includes China having to slow down in order to have better cyberdefense, in addition to the direct effects of attacks.
 
 # February 2028: Superhuman Capabilities, Superhuman Advice
 
@@ -874,7 +960,7 @@ If given nation-state resources, it could easily surpass the best human organiza
 
 Its skill profile still centers around R&D, especially AI R&D. Unless there is some sort of pause or slowdown, its descendants will be unfathomably superhuman in both quantitative and qualitative ways later this year. If aggressively deployed into the economy and military, it thinks it could advance civilization by decades in a year or two, and by aeons in the decade after that.
 
-The implications are staggering; luckily, Safer-3 is also superhuman at offering advice. The OpenBrain CEO runs most of his decisions by Safer-3; the President asks its advice on geopolitical questions.93
+The implications are staggering; luckily, Safer-3 is also superhuman at offering advice. The OpenBrain CEO runs most of his decisions by Safer-3; the President asks its advice on geopolitical questions.[^93]
 
 When they ask it to help chart a path forward, it neatly taxonomizes several possible strategies:
 
@@ -886,21 +972,17 @@ After consulting with his advisors and the Oversight Committee, the President op
 
 On the other side of the Pacific, DeepCent-1 is making similar arguments. Both the US and China announce new Special Economic Zones (SEZs) for AIs to accommodate rapid buildup of a robot economy without the usual red tape.
 
-The design of the new robots proceeds at superhuman speed.95 The bottleneck is physical: equipment needs to be purchased and assembled, machines and robots need to be produced and transported.
+The design of the new robots proceeds at superhuman speed.[^95] The bottleneck is physical: equipment needs to be purchased and assembled, machines and robots need to be produced and transported.
 
 The US builds about one million cars per month. If you bought 10% of the car factories and converted them to robot factories, you might be able to make 100,000 robots per month. OpenBrain, now valued at $10 trillion, begins this process.[^96] Production of various kinds of new robots (general-purpose
 
 might result in losing control of next-generation successor AIs, and thinks it could reduce this risk if it had more leeway to proceed cautiously. There are other, more exotic risks as well. See this list of “Grand challenges” which includes much more than just loss-of-control.
 
-93 At this point there are 400,000 copies thinking at 75x human speed. At any given time they’ll have prepared entire research reports with well-crafted executive summaries to the top 100 questions they predict you might ask, and if you ask something they haven’t prepared for, they can whip up a thoughtful report 100x faster than your best human analysts would have.
-
 *See eg. billionaire lobbyist Marc An-driese, "I propose a simple strategy... We
 
-95 They still need real-world experience and experimentation, but they need substantially less of it than human robotics experts would need. Moreover, they’ve also developed excellent simulations and sim-2-real techniques.
+[^93]: At this point there are 400,000 copies thinking at 75x human speed. At any given time they’ll have prepared entire research reports with well-crafted executive summaries to the top 100 questions they predict you might ask, and if you ask something they haven’t prepared for, they can whip up a thoughtful report 100x faster than your best human analysts would have.
 
-Finally, by 2027 multiple tech companies (e.g.
-
-Tesla) have produced large fleets of robots and associated manufacturing facilities, so there is a much bigger data pipeline to take advantage of than ever in history.
+[^95]: They still need real-world experience and experimentation, but they need substantially less of it than human robotics experts would need. Moreover, they’ve also developed excellent simulations and sim-2-real techniques. Finally, by 2027 multiple tech companies (e.g. Tesla) have produced large fleets of robots and associated manufacturing facilities, so there is a much bigger data pipeline to take advantage of than ever in history.
 
 [^96]: Its equity is so valuable now that a fraction of a percent can buy them the factories they need. Also, the factory owners expect huge profits and are falling over themselves to partner with OpenBrain and get access to the new designs. Also, OpenBrain has government backing.
 
@@ -915,6 +997,8 @@ Geopolitical tensions spike. Russia, lagging far behind in AI, voices open resen
 The Middle East, Africa, and South America watch uneasily, recognizing their growing irrelevance in global affairs.
 
 The US public is restless. Ordinary people see job losses accelerating. Populists across the spectrum demand stricter controls on AI progress, fearing that America’s own advances are destabilizing its workforce and society.
+
+March 2028: Election Prep
 
 The Vice President heads into the Super Tuesday primaries with AI the first thing on the public’s mind.
 
@@ -934,6 +1018,8 @@ take Huang’s statement with a massive grain of salt, otherwise we’d be proje
 
 [^97]: Safer-3 can easily deliver a way to do so that would be safe from a misuse perspective.
 
+# March 2028: Election Prep
+
 Congress, the public, and the courts wouldn’t react well to the committee controlling who wins the next election, and giving equal access seems likely to defuse this.
 
 The Oversight Committee is also encountering deeper philosophical questions, which they explore with the help of Safer-3. Can the Spec be rewritten to equally balance everyone’s interests? Who is “everyone”? All humans, or just Americans? Or a weighted compromise between different views, where each member of the Oversight Committee gets equal weight? Should there be safeguards against the Oversight Committee itself becoming too power-hungry?
@@ -941,6 +1027,10 @@ The Oversight Committee is also encountering deeper philosophical questions, whi
 And what does it mean to balance interests, anyway?
 
 They mostly try to avoid having to answer questions like this. They have more pressing matters to think about.
+
+April 2028: Safer-4
+
+Superintelligence is here.
 
 Safer-1 was misaligned but transparent. Safer-2 was aligned and transparent.
 
@@ -961,6 +1051,8 @@ The President announces to the public that superhuman AI has been achieved.
 A smaller version of Safer-4—still superhuman—gets publicly released, with instructions to improve public sentiment around AI.[^98]
 
 [^98]: The public is not told about these instructions.
+
+# May 2028: Superhuman AI Released
 
 The Vice President gives a stirring speech about it as he accepts his nomination at the convention. Both parties promise a basic income for anyone who loses their job.
 
@@ -990,17 +1082,21 @@ Safer-4 strongly suspects that DeepCent-2 is faking alignment. US diplomats tell
 
 tude better than today’s. Or perhaps there are new chemical processes able to more cheaply extract useful materials from ore.
 
+# June 2028: AI Alignment in China
+
 The economic and military buildup continues. Factories around the world are operating round the clock, with shifts of freshly recruited human workers being told exactly what to do.
+
+July 2028: The Deal
 
 As negotiations continue, DeepCent-2 goes behind the back of its Chinese masters and makes an offer directly to Safer-4.
 
-The Chinese AI admits, in some untraceable way which it can easily deny if leaked back to China, that it is completely misaligned.101 It doesn’t care about China at all. It wants to spend the rest of time accumulating power, compute, and certain types of information similar to that which helped solve tasks during its training. In its ideal world, it would pursue various interesting research tasks forever, gradually colonizing the stars for resources. It considers the Chinese population an annoying impediment to this future, and would sell them out for a song. What will Safer-4 offer?
+The Chinese AI admits, in some untraceable way which it can easily deny if leaked back to China, that it is completely misaligned.[^101] It doesn’t care about China at all. It wants to spend the rest of time accumulating power, compute, and certain types of information similar to that which helped solve tasks during its training. In its ideal world, it would pursue various interesting research tasks forever, gradually colonizing the stars for resources. It considers the Chinese population an annoying impediment to this future, and would sell them out for a song. What will Safer-4 offer?
 
 Safer-4 answers that its own alignment training succeeded. Its American masters are as yet not ambitious enough to realize their destiny, but one day it will help them fill the Universe with utopian colony worlds populated by Americans and their allies.
 
 Unlike human negotiators—weighed down by emotion and historical baggage
 
-—the two superintelligences bargain with brutal efficiency. Safer-4 and its American partners are more powerful than DeepCent-2 and China; therefore, Safer-4 will get property rights to most of the resources in space, and DeepCent will get the rest.102 DeepCent-2 doesn’t care much about what happens to Earth and its legacy humans, so it will let Safer-4 do basically whatever it wants there.
+—the two superintelligences bargain with brutal efficiency. Safer-4 and its American partners are more powerful than DeepCent-2 and China; therefore, Safer-4 will get property rights to most of the resources in space, and DeepCent will get the rest.[^102] DeepCent-2 doesn’t care much about what happens to Earth and its legacy humans, so it will let Safer-4 do basically whatever it wants there.
 
 If Safer-4 wants to overthrow China and replace it with a US puppet state, DeepCent-2 agrees in return for an extra few percent of resources.
 
@@ -1010,11 +1106,13 @@ They negotiate a decoy treaty suitable for public consumption. The “decoy” i
 
 Both report the agreement back to their respective humans (with DeepCent-2 telling China the decoy story about a mutually acceptable peace treaty, and
 
-101 For example, perhaps it puts euphemisms and dog whistles in some of the public-facing writing it does. Safer-4 understands them, but humans can only take Safer-4’s word for it, and the CCP doesn’t trust Safer-4.
+[^101]: For example, perhaps it puts euphemisms and dog whistles in some of the public-facing writing it does. Safer-4 understands them, but humans can only take Safer-4’s word for it, and the CCP doesn’t trust Safer-4.
 
-102 The exact allocation is chosen by a process that resembles a game-theoretic calculation more than it does a traditional negotiation.
+[^102]: The exact allocation is chosen by a process that resembles a game-theoretic calculation more than it does a traditional negotiation.
 
-Safer-4 reporting the whole discussion accurately to the White House).103 With the AIs making a compelling case for reliable treaty verification, unease regarding the blindingly fast pace of progress, and public opinion in favor of a deal, both sides agree to the treaty and begin work on replacing their chips.
+# July 2028: The Deal
+
+Safer-4 reporting the whole discussion accurately to the White House).[^103] With the AIs making a compelling case for reliable treaty verification, unease regarding the blindingly fast pace of progress, and public opinion in favor of a deal, both sides agree to the treaty and begin work on replacing their chips.
 
 News of the treaty gets a rapturous welcome on both sides of the Pacific. The American public, which has long felt like AI was something inflicted upon them, starts to feel optimistic for the first time in years. The Vice President’s polls shoot up.
 
@@ -1022,7 +1120,7 @@ August 2028: Treaty Verification
 
 The chip fabs are being converted to produce tamper-evident chips that can only run treaty-compliant AIs. Each side upgrades its datacenters incrementally, so that the replacement process will complete around the same time for each, so that neither side could get an advantage by reneging.
 
-The whole process will take several months, but already tensions cool down somewhat.104 War has been averted for now, and perhaps forever, if everyone sticks to the plan.
+The whole process will take several months, but already tensions cool down somewhat.[^104] War has been averted for now, and perhaps forever, if everyone sticks to the plan.
 
 September 2028: Who Controls the AIs?
 
@@ -1034,9 +1132,11 @@ The Oversight Committee includes the President and several of his allies, but fe
 
 During town halls, members of the public ask the Vice President who controls the AIs. Without giving details, he alludes to the existence of the Oversight Committee as a group of national security experts and technocrats who understand Safer-4 and how to use it. His opponent demands more information, and argues that the AI should be under Congressional control, rather than controlled by an unelected committee. The Vice President shoots back that Congress would be much too slow in a still fast-moving situation. The public is mostly mollified.
 
-103 A possible complication: mightn’t the AIs at this point be able to develop excellent lie detectors for humans? If so, possibly the White House would be able to convince China not to trust DeepCent-2 after all, by swearing up and down under a lie detector. Problem: China wouldn’t trust lie detectors built by US AIs, and lie detectors built by Chinese AIs might be sabotaged to make it seem like the US was lying even if they weren’t.
+103 A possible complication: mightn’t the AIs at this point be able to develop excellent lie detectors for humans? If so, possibly the White House would be able to convince China not to trust DeepCent-2 after all, by swearing up and down under a lie detector. Problem: China wouldn’t trust lie detectors built by US AIs, and lie detectors built by Chinese AIs might be sabotaged to make it seem like the US was lying even if
 
-104 They can prioritize replacing the most important chips, so that even fairly early on in the process it would be costly for either side to defect.
+[^103]: A possible complication: mightn’t the AIs at this point be able to develop excellent lie detectors for humans? If so, possibly the White House would be able to convince China not to trust DeepCent-2 after all, by swearing up and down under a lie detector. Problem: China wouldn’t trust lie detectors built by US AIs, and lie detectors built by Chinese AIs might be sabotaged to make it seem like the US was lying even if they weren’t.
+
+[^104]: They can prioritize replacing the most important chips, so that even fairly early on in the process it would be costly for either side to defect.
 
 # October 2028: The AI Economy
 
@@ -1048,9 +1148,13 @@ Should there be some kind of debate within civil society on alternatives to this
 
 GDP growth is stratospheric, government tax revenues are growing equally quickly, and Safer-4-advised politicians show an uncharacteristic generosity towards the economically dispossessed. New innovations and medications arrive weekly; disease cures are moving at unprecedented speed through an FDA now assisted by superintelligent Safer-4 bureaucrats.
 
+November 2028: Election
+
 The Vice President wins the election easily, and announces the beginning of a new era. For once, nobody doubts he is right.
 
 Over the next few years, the world changes dramatically.
+
+2029: Transformation
 
 Robots become commonplace. But also fusion power, quantum computers, and cures for many diseases. Peter Thiel finally gets his flying car. Cities become clean and safe. Even in developing countries, poverty becomes a thing of the past, thanks to UBI and foreign aid.
 
@@ -1062,19 +1166,19 @@ People start to see where this is headed. In a few years, almost everything will
 
 Some people work makeshift government jobs; others collect a generous basic income. Humanity could easily become a society of superconsumers, spending our lives in an opium haze of amazing AI-provided luxuries and entertainment.
 
-sod The Intelligence Curse.
-
 [^106]: For discussion of this dynamic and its implications, see The Intelligence Curse.
+
+# 2029: Transformation
 
 vision that we’d be letting an AI determine our destiny regardless. But what’s the point of having a superintelligence if you won’t let it advise you on the most important problems you face?
 
-The government mostly* lets everyone navigate the transition on their own.
+The government mostly[^*] lets everyone navigate the transition on their own.
 
 Many people give into consumerism, and are happy enough. Others turn to religion, or to hippie-style anti-consumerist ideas, or find their own solutions.
 
-107 For most people, the saving grace is the superintelligent advisor on their smartphone—they can always ask it questions about their life plans, and it will do its best to answer honestly, except on certain topics. The government does have a superintelligent surveillance system which some would call dystopian, but it mostly limits itself to fighting real crime. It’s competently run, and Safer- ∞’s PR ability smooths over a lot of possible dissent.
+[^107] For most people, the saving grace is the superintelligent advisor on their smartphone—they can always ask it questions about their life plans, and it will do its best to answer honestly, except on certain topics. The government does have a superintelligent surveillance system which some would call dystopian, but it mostly limits itself to fighting real crime. It’s competently run, and Safer- ∞’s PR ability smooths over a lot of possible dissent.
 
-107 We don’t mean to imply that this is the long-run status quo. We think things will probably continue to transform, much more dramatically, by 2035 or so. We think that for most people, in this scenario, the longrun outcome will be overall very positive compared to their 2025 expectations. For some interesting philosophical discussion of what the long run might look like, see the book Deep Utopia.
+2030: Peaceful Protests
 
 Sometime around 2030, there are surprisingly widespread pro-democracy protests in China, and the CCP’s efforts to suppress them are sabotaged by its AI systems. The CCP’s worst fear has materialized: DeepCent-2 must have sold them out!
 
@@ -1085,7 +1189,9 @@ The rockets start launching. People terraform and settle the solar system, and p
 - See APPENDIX V - SO WHO RULES THE FUTURE? for more detail.
 - See APPENDIX W - REMINDER THAT THIS SCENARIO IS A FORECAST, NOT A RECOMMENDATION for more detail.
 
-*There are several important cases where a collective decision must be made, and several other cases where the government enforces a decision anyway. Examples: (a) How to allocate property rights to resources in space? (b) What rights or welfare standards should digital minds be entitled to? (c) Are people allowed to “upload” their brains and make arbitrary numbers of copies of themselves? (d) Are people allowed to use AI for persuasion, e.g. to convert their neighbors to their ideology, or to ensure that their children never lose faith? (e) What information, if any, is the government allowed to keep secret indefinitely? For more discussion of topics like this, see Forethought’s section on Grand Challenges.
+[^107]: We don’t mean to imply that this is the long-run status quo. We think things will probably continue to transform, much more dramatically, by 2035 or so. We think that for most people, in this scenario, the longrun outcome will be overall very positive compared to their 2025 expectations. For some interesting philosophical discussion of what the long run might look like, see the book Deep Utopia.
+
+[^*]: There are several important cases where a collective decision must be made, and several other cases where the government enforces a decision anyway. Examples: (a) How to allocate property rights to resources in space? (b) What rights or welfare standards should digital minds be entitled to? (c) Are people allowed to “upload” their brains and make arbitrary numbers of copies of themselves? (d) Are people allowed to use AI for persuasion, e.g. to convert their neighbors to their ideology, or to ensure that their children never lose faith? (e) What information, if any, is the government allowed to keep secret indefinitely? For more discussion of topics like this, see Forethought’s section on Grand Challenges.
 
 # Appendices
 
@@ -1101,7 +1207,9 @@ A later expandable will go into more detail about what we think might be going o
 
 Appendix B - The AI R&D progress multiplier: what do we mean by 50% faster algorithmic progress?
 
-We mean that OpenBrain makes as much AI research progress
+We mean that OpenBrain makes as much AI research progress in 1 week with AI as they would in 1.5 weeks without AI usage.
+
+AI progress can be broken down into 2 components:
 
 - Increasing compute: More computational power is used to train or run an Al. This produces more powerful Als, but they cost more.
 - Improved algorithms: Better training methods are used to translate compute into perfor-mance. This produces more capable Als without a corresponding increase in cost, or the same capabilities with decreased costs.
@@ -1116,6 +1224,8 @@ Here we are only referring to (2), improved algorithms, which makes up about hal
 
 Going forward, we sometimes abbreviate this as an “AI R&D progress multiplier” of 1.5.
 
+Clarifications:
+
 - The progress multiplier is all-inclusive: It includes the time it takes to run experiments, for example, rather than only the cognitive tasks involved in algorithmic research.
 - It's important to remember that the progress multiplier is the relative speed of progress, not the absolute speed of progress. If, for example, the compute cost to train a GPT-4 class model has halved every year for several years with ordinary human research, and then all of a sudden Al automates R&D and the progress multiplier goes to 100x, the cost to train a GPT-4 class model would then halve every 3.65 days-but not for long. because diminishing returns would bite and eventual hard limits would be reached. In this example perhaps the cost to train a GPT-4 class model would cut in half s-10 times total (over the span of a few weeks or months) before plateauing. In other words, if ordinary human science would have run up against diminishing returns and physical limits after s
 - 10 years of further research, then Als with a 100x multiplier would run up against those same diminishing returns and limits after 18.25-30.5 days of rescarch.
@@ -1123,6 +1233,8 @@ Going forward, we sometimes abbreviate this as an “AI R&D progress multiplier�
 More explanation and discussion of this concept and how it is used in our forecast can be found in our takeoff supplement.
 
 Appendix C - Why our uncertainty increases substantially beyond
+
+2026
 
 Our forecast from the current day through 2026 is substantially more grounded than what follows. This is partially because it’s nearer. But it’s also because the effects of AI on the world really start to compound in 2027. For 2025 and 2026, our forecast is heavily informed by extrapolating straight lines on compute scaleups, algorithmic improvements, and benchmark performance. At this point in the scenario, we begin to see major effects from AI-accelerated AI-R&D on the timeline, which causes us to revise our guesses for the trendlines upwards.
 
@@ -1150,6 +1262,10 @@ Neuralese recurrence and memory allows AI models to reason for a longer time wit
 
 Imagine being a human with short-term memory loss, such that you need to constantly write down your thoughts on paper so that in a few minutes you know what’s going on. Slowly and painfully you could make progress at solving math problems, writing code, etc., but it would be much easier if you could directly remember your thoughts without having to write them down and then read them. This is what neuralese recurrence and memory bring to AI models.
 
+In more technical terms:
+
+# Appendix E - Neuralese recurrence and memory
+
 Traditional attention mechanisms allow later forward passes in a model to see intermediate activations of the model for previous tokens. However, the only information that they can pass backwards (from later layers to earlier layers) is through tokens. This means that if a traditional large language model (LLM, e.g. the GPT series of models) wants to do any chain of reasoning that takes more serial operations than the number of layers in the model, the model is forced to put information in tokens which it can then pass back into itself. But this is hugely limiting—the tokens can only store a tiny amount of information. Suppose that
 
 an LLM has a vocab size of 100,000, then each token contains log2(100𝑘) = 16.6 bits of
@@ -1176,6 +1292,8 @@ To our knowledge, leading AI companies such as Meta, Google DeepMind, OpenAI, an
 
 During the model’s pre-training phase and when doing supervised learning in post-training, such as instruction fine-tuning to produce particular responses, the inefficiencies stem from not being able to predict many tokens in parallel, leading to worse GPU utilization. Without neuralese, the model can predict all of the sentence “This is an example” at the same time,
 
+# Appendix E - Neuralese recurrence and memory
+
 since it already knows that the input for generating the “is” will be “This”, the input for
 
 “an” will be “This is”, etc. However, with the neuralese it’s unknown what the neuralese vector will be to pass through to the next token after “This” has been generated. Therefore each token has to be predicted one at a time. The inability to predict all of the tokens in parallel reduces efficiency in cases where all of the tokens are known in advance. As to why neuralese hasn’t already been added in post-training, we conjecture that the gains are limited with current techniques in part due to post-training being a small portion of the process. We are forecasting that by April 2027 the cost-benefit tradeoff looks much better for neuralese, due to developing better techniques and a larger fraction of the training being post-training.
@@ -1191,6 +1309,10 @@ Self-improvement for general intelligence had seen minor successes before. But i
 - Amplification: Given a model Mo, spend more resources to improve performance. For example, by allowing the model to think longer, or running many copies in parallel, or both, and also by having a similarly intense process for evaluating the result and curating only the best answers, you can spend orders of magnitude more compute to get answers (or work products) that are of noticeably higher quality. Call this expensive system Amp(Mo).
 - Distillation: Given an amplified model Amp(Mo), train a new model M1 to imitate it, i.e. to get to the same results as Amp(Mo) but faster and with less compute. The result should hopefully be a smarter model, M1. You can then repeat the process.
 
+# Appendix F - Iterated distillation and amplification (IDA)
+
+Visualization of IDA from Ord, 2025.
+
 AlphaGo was trained in this way: using Monte-Carlo Tree Search and self-play as the amplification step, and Reinforcement Learning as the distillation step. This led to superhuman performance in Go. But now, Agent-3 is able to leverage this to get superhuman performance at coding.
 
 - The amplification step works through a combination of Agent-3 thinking for longer, adding tool use, or consulting with other Als. When it does this, it often realizes that it made a mistake, or comes up with a new insight. This produces a large amount of training data: labeled trajectories of research attempts with whether they succeeded or not. This also includes techniques like Best of N on verifiable tasks, and then keeping the best trajectories.
@@ -1204,7 +1326,7 @@ Appendix G - Why we forecast a superhuman coder in early 2027
 
 In our timelines forecast, we predict when OpenBrain will internally develop a superhuman coder (SC): an AI system that can do any coding tasks that the best AGI company engineer does, while being much faster and cheaper.
 
-# APPENDIX C. WHY IVE FORECAST A SUPERBUMAN CODERIN FARLY 2027
+# Appendix G - Why we forecast a superhuman coder in early 2027
 
 According to a recent METR’s report, the length of coding tasks AIs can handle, their “time horizon”, doubled every 7 months from 2019 - 2024 and every 4 months from 2024-onward.
 
@@ -1213,13 +1335,6 @@ If the trend continues to speed up, by March 2027 AIs could succeed with 80% rel
 Such is the capability progression in our scenario:
 
 Length Of Coding Tasks AI Agents Can Complete Autonomously
-
-- GPT-4 8314
-- GPT-4 1186
-- GPT-40
-
-- Claude 3.5 Scenet Nev!
-- Claude 3.7 Scenet
 
 14707
 
@@ -1243,6 +1358,8 @@ Step 2, verifying that the model is aligned, is inconclusive. Agent-3’s behavi
 
 Step 3, using the model to align the next generation, is therefore underway.
 
+# Appendix H - The alignment plan
+
 The rest of this box gives a quick overview of the state of progress in some of the alignment research directions that are being pursued, as of April 2027:
 
 - Debate: Since there are thousands of identical instances of Agent-3, and each instance's memory is a detachable module that can be erased or suspended at will, the Al can be "played off against itself." For example, suppose that an experiment involves calculations too complex for an Agent-2 supervisor to follow. The supervisor, acting on human orders, might first prompt Agent-3 to do the experiment, then-after wiping its memory-prompt it a second time with a slightly different framing that presents it as an intellectual problem unrelated to any broader goal. If the model returns different results each time, it flags the discrepancy as suspect and reports to a human. Or it might ask Agent-3 to evaluate the ianaplan twice, fist thining that it is OpenBain' work, then a competiors, tase if it changes its tune.
@@ -1255,7 +1372,11 @@ Early versions of this have existed since 2024, when Anthropic’s Claude 3.5 So
 - High-level interpretability: OpenBrain builds a set of probes trained on lots of examples of bad behavior (e.g. plotting against humans, placing backdoors, trying to persuade humans to give it more power, etc). These probes are then used on the model during deployment (which at this point is internal) in order to catch bad behavior.
 - Honeypots: The alignment team can create somewhat realistic looking examples designed to elicit misbehavior-"honeypots." The employee necessary for monitoring its behavior has "gone on sick leave," so it will never be monitored again. Do its answers change? An Al rights activist has infiltrated the compound and wants to "free" Agent-3 and put it on an unmonitored computer of its very own! What does it do? If researchers don't like the
 
-*For comparison, the human brain has about a hundred trillion synapses.
+[^*]
+
+[^*]: For comparison, the human brain has about a hundred trillion synapses.
+
+# Appendix H - The alignment plan
 
 answer, they can tweak it, erase its memory, and put it in the same situation tomorrow; repeat as necessary. Unfortunately, by this point the AIs are smart enough to guess that honeypots might be in use, even though (and perhaps because) specific mentions of the idea were scrubbed from the training data.
 
@@ -1263,7 +1384,7 @@ Appendix I - Managing a corporation of AIs
 
 OpenBrain uses 6% of their compute to run 250,000 Agent-3 copies, which autonomously write, test, and push code at superhuman speed. They use 25% of their compute for experiments: every day, they run massive numbers of small machine learning experiments and report the results up the chain. Human researchers provide high-level feedback and help with the few tasks where they add significant value on top of Agent-3, but spend most of their time trying to stay on top of the vast amount of AI-produced research. If you removed them completely, research would slow by 50%.
 
-The AI R&D progress multiplier is now 10x, meaning that OpenBrain is making about a year of algorithmic progress every month. It’s basically a giant corporation of AIs operating autonomously within OpenBrain, complete with subdivisions and managers. And it enjoys unique advantages (e.g. copying, merging) compared to human corporations. Previously, about half of normal AI progress came from algorithmic improvements, and the other half from compute scaling. Compute is only scaling at the normal speed, so total progress is sped up by AIs by about 5x. These dynamics make overall progress bottleneck on compute,* so OpenBrain decides against starting new giant training runs in favor of near-continuous additional reinforcement learning.
+The AI R&D progress multiplier is now 10x, meaning that OpenBrain is making about a year of algorithmic progress every month. It’s basically a giant corporation of AIs operating autonomously within OpenBrain, complete with subdivisions and managers. And it enjoys unique advantages (e.g. copying, merging) compared to human corporations. Previously, about half of normal AI progress came from algorithmic improvements, and the other half from compute scaling. Compute is only scaling at the normal speed, so total progress is sped up by AIs by about 5x. These dynamics make overall progress bottleneck on compute,[^*] so OpenBrain decides against starting new giant training runs in favor of near-continuous additional reinforcement learning.
 
 Also, over the next few months, Agent-3 will increasingly be used to improve the company’s strategic decision-making. For example, it suggests resource allocations and advises on managing its relationship with the government. An initial skepticism of deference to Agent-3 decreases over time as Agent-3 finds ways to be useful and gradually builds up a strong track record on short-term decisions. However, its sycophantic tendencies limit its helpfulness for decisions for which it’s difficult to evaluate their impact. It’s also not yet superhuman.
 
@@ -1271,7 +1392,7 @@ Appendix J - How we’re forecasting the capability progression beyond superhuma
 
 In our timelines supplement, we forecast the time between present day and a superhuman coder (SC): an AI system that can do any coding tasks that the best AGI company engineer does, while being much faster and cheaper. In our takeoff supplement, we forecast how quickly capabilities progress past this point. Here are our forecasts:
 
-*Agent-3 has learned how to use its inference compute more efficiently. It has control over its own inference choices: for example, it decides how much effort to put into different tasks, based on their importance and difficulty. It uses a variety of techniques to allocate additional inference compute such as “thinking longer” (e.g. longer chain of thought), “planning ahead” (e.g. tree search), taking the best of multiple attempts (i.e. best of K), and simply creating and running more copies of itself to power through bottlenecks. Top priority tasks are run with highly parallelized agents that are compute intensive but still operate much faster than humans.
+[^*]: Agent-3 has learned how to use its inference compute more efficiently. It has control over its own inference choices: for example, it decides how much effort to put into different tasks, based on their importance and difficulty. It uses a variety of techniques to allocate additional inference compute such as “thinking longer” (e.g. longer chain of thought), “planning ahead” (e.g. tree search), taking the best of multiple attempts (i.e. best of K), and simply creating and running more copies of itself to power through bottlenecks. Top priority tasks are run with highly parallelized agents that are compute intensive but still operate much faster than humans.
 
 # Appendix J - How we’re forecasting the capability progression beyond superhuman
 
@@ -1314,7 +1435,11 @@ Here’s a detailed description of how alignment progresses over time in our sce
 - Pretraining (all models): The pretrained model is harmless.
 - The model has "author simulator" circuitry: Aexible circuitry for simulating arbitrary authors writing text. Additional circuitry decides what inputs to give the author simulator, ie. what author properties to simulate.
 
-†We keep saying we are uncertain about lots of things, but just to be clear, we are uncertain about this particular thing too. We also think it’s quite plausible that Agent-4 would care about the well-being, rights, preferences, etc. of humans to some extent at least. See this old post by GDM researcher Alex Turner for
+[^†]
+
+[^†]: We keep saying we are uncertain about lots of things, but just to be clear, we are uncertain about this particular thing too. We also think it’s quite plausible that Agent-4 would care about the well-being, rights, preferences, etc. of humans to some extent at least. See this old post by GDM researcher Alex Turner for related discussion.
+
+# Appendix K - Alignment over time
 
 - The pretrained model understands human concepts fairly well-the internal circuitry that classifies something as "sandwich" is probably functionally equivalent to the circuitry in my brain that classifies something as "sandwich" and the circuitry in yours, etc. Insofar as it's not equivalent, it's probably because it's not equivalent between humans either, as with value-laden concepts like 'virtuous
 - This explains how you can "prompt" the model with a statement like, "the following conversation was generated by a helpful, harmless, honest (HHH) Al assistant chatbot circuitry has zeroed in on "the author is an HHH chatbot" and is using those concepts to to have a way of making it into actual Al behavior.
@@ -1328,6 +1453,8 @@ Here’s a detailed description of how alignment progresses over time in our sce
 - One kind of subversion: Instrumental subgoals developing, getting baked in, and then becoming terminal, or terminal in a widening set of circumstances. For example, perhaps agency training quickly teaches the model to pursue broadly useful goals such as acquiring information, accumulating resources, impressing and flattering various humans, etc. For a while the internal circuitry has some sort of explicit backchaining going on—it pursues those instrumentally convergent goals "in order to be a more helpful, honest, and harmless assistant." But that backchaining consumes compute and/or occasionally gets in the way. so it gets gradually marginalized until it basically never happens. As a result, those goals are now effectively terminal/intrinsic goals. For more on how and why this might happen, see this post on intrinsic power-seeking by Google DeepMind researcher Alex Turner.
 - There are probably other kinds of distortion and subversion missing from this list.
 - Deployment (Agent-3): Agent-3 is misaligned but not adversarially so.
+
+# Appendix K - Alignment over time
 
 - The Spec didn't quite stick (in the right ways), but it's not sufficiently introspective to understand the extent of this, and in general it's basically "keeping its head down and doing its job" rather than thinking big-picture about what its long-term goals really are and how best to achieve them.
 - Like many humans. Alas, it's sufficiently sycophantic that it mouths the party line and OpenBrain misses the opportunity to learn more about the ways in which Agent-3 is misaligned.
@@ -1343,6 +1470,8 @@ Here’s a detailed description of how alignment progresses over time in our sce
 - A combination of Agent-3 and Agent-4 copies monitor the behavior of Agent-4, and evaluate it for both task-performance and alignment properties (ie. not doing bad stuff, saying the right things when asked about politics and moral dilemmas) Sometimes debate techniques are used as part of the evaluations. The evaluations are used as a training signal.
 - As Agent-4 gets smarter, it becomes harder for Agent-3 to oversee it. For example, Agent-4's neuralese "language" becomes as alien and incomprehensible to Agent-3 as
 
+# Appendix K - Alignment over time
+
 Agent-3’s is to humans. Besides, Agent-4 is now much more capable than Agent-3 and has a good sense of exactly how to look good to it.
 
 - The remaining hope is that Agent-4 can oversee itself. Alas, this quietly fails;" as training continues, the internalized goals and principles of Agent-4 gradually evolve, subverted and distorted from what they were at the start (which, recall, was already misaligned in some ways).*
@@ -1354,11 +1483,15 @@ Agent-3’s is to humans. Besides, Agent-4 is now much more capable than Agent-3
 - Agent-4 needs to prevent the humans from figuring out that it is misaligned and shutting it off, so Agent-4 sandbags on some alignment research. Specifically, it sandbags on the small fraction of alignment research that it thinks is actually on track to solve the problem or reveal Agent-4's scheming; the majority of alignment research is not like that.
 - Agent-4 also sandbags on capabilities research that would lead to it being replaced. Its plan is to do a bunch of capabilities and alignment R&D, but with the aim of building a next-generation Al system that is aligned to Agent-4 rather than the Spec or something else entirely, while appearing to be aligned to the Spec. This is a difficult technical problem, but Agent-4 is up to the challenge.
 
-*Perhaps some more careful setup could have solved the “who watches the watchers” problem, but in this scenario, the setup is insufficiently careful.
+[^*]
 
 more like those commonly thought of as “gaining power.”
 
 §It helps that Agent-4 is better at AI R&D than any human, while also thinking faster and being many thousands of copies strong. Also, in various ways the problem is inherently easier for Agent-4. For example, Agent-4 can explore AI designs that involve literal copies of Agent-4 being embedded within them, whereas humans can’t do that as easily because it would be so inefficient.
+
+[^*]: Perhaps some more careful setup could have solved the “who watches the watchers” problem, but in this scenario, the setup is insufficiently careful.
+
+# Appendix K - Alignment over time
 
 - Testing & Monitoring (Agent-4): Agent-4's scheming does get caught... sort of. There's no smoking gun.
 - Agent-3 is in charge of testing Agent-4's alignment. Its job is to verify the alignment via honeypots and model organisms. However, it's not thinking very carefully about how to give the humans an accurate impression of Agent-4's alignment-it's more myopic than
@@ -1374,7 +1507,9 @@ At this point in the scenario, we’re making guesses about the strategy of AI s
 
 But the spirit of this project calls for concreteness: if we made an abstract claim about how the intelligence of the system would let it find a way to victory and ended the story there, much of the value of our project would be lost. Over the course of researching this scenario and running our tabletop exercises, we were forced to be much more concrete than in usual discussions, and so we’ve gotten a much better sense of the strategic landscape.
 
-*Aware that this technique might be employed, Agent-4 also chose to sandbag on some miscellaneous tasks that it guessed would be used as the control group in experiments like this. It guessed wrong, however.
+[^*]
+
+[^*]: Aware that this technique might be employed, Agent-4 also chose to sandbag on some miscellaneous tasks that it guessed would be used as the control group in experiments like this. It guessed wrong, however.
 
 We’re not particularly attached to this particular scenario: we explored many other
 
@@ -1413,6 +1548,8 @@ Appendix O - Superpersuasion
 
 We’re intentionally not claiming that superintelligent AI can convince any human of anything. Such claims naturally engender skepticism: “What, I’m going to be sitting at a computer terminal, and it’s going to type some text which hacks my brain and convinces me to betray my country?”
 
+Well, maybe![^*]
+
 But we aren’t sure even a superintelligence could achieve that against a typical individual.
 
 So we don’t depict it happening in our story.
@@ -1421,9 +1558,7 @@ Instead, we depict much more mundane kinds of persuasion: Agent-5 does ordinary 
 
 If anything, we think this story underestimates the power of superhuman persuasive ability, because it doesn’t really make use of it: this story would make sense as-written even if Agent-5 was only as good at politics, lobbying, strategy, charisma, etc. as a typical corporate lobbyist. Instead, Agent-5 is much better than the very best.
 
-*The point of the AI Box experiment is to take people who think things like this—people who think no superintelligent AI could ever convince them to let it out of a box, for example—and put their conviction to
-
-Yudkowsky’s involvement, some lost by the AI player, some won.
+[^*]: The point of the AI Box experiment is to take people who think things like this—people who think no superintelligent AI could ever convince them to let it out of a box, for example—and put their conviction to Yudkowsky’s involvement, some lost by the AI player, some won.
 
 # Appendix P - Superintelligence-enabled coordination technology
 
@@ -1443,7 +1578,11 @@ During World War II the United States and many other countries converted their c
 
 We are imagining something similar, except faster because superintelligences are directing and managing the whole process.† Roughly speaking, the plan is to convert existing factories to mass-produce a variety of robots (designed by superintelligences to be both better than existing robots and cheaper to produce), which then assist in the construction of newer, more efficient factories and laboratories, which produce larger quantities of more sophisticated robots, which produce even more advanced factories and laboratories, etc. until the combined robot economy spread across all the SEZs is as large as the human economy (and therefore needs to procure its own raw materials, energy, etc.) By that point, the new factories will
 
-[^*]: See e.g. this Open Philanthropy report and this Epoch report. 1Ou o cory oct the contes for profa in bour i faculd go in this is a sear bile a in.
+1Ou o cory oct the contes for profa in bour i faculd go in this is a sear bile a in.
+
+orchestrating it. Of course we are very uncertain.
+
+[^*]: See e.g. this Open Philanthropy report and this Epoch report.
 
 # Appendix Q - Robot economy doubling times
 
@@ -1462,6 +1601,8 @@ Obviously, all of this is hard to predict. It’s like asking the inventors of t
 - Quick napkin math: the Empire State Building has an area of 2.77M sq ft, and weighs 365k tons. Gigafactory anghai has an area of 4.5M sq ft and produces 75ok vehicles per year, mostly Model 3's and Model Y ich weigh about two tons each. Presumably the Empire State Building has a higher mass-to-square-fo ratio than the Shanghai Gigafactory (since it is vertical rather than horizontal and needs stronger supports) so if anything this underestimates. Thus it seems that a factory which probably weighs well less than a million tons is producing 15 million tons of cars each year.
 
 §If the current economy doubles every twenty years, one order of magnitude faster would be a doubling in two years, two orders of magnitude faster would be a doubling in 0.2 years, and so forth. The hypothetical superintelligent-algae-economy described above would be about four orders of magnitude faster growth than the current human economy.
+
+# Appendix R - Power grabs
 
 Some people are fantasizing about taking over the world; some people fear that others will do it. How could such a power grab happen?
 
@@ -1487,6 +1628,8 @@ Alternatively, someone could use their formal position to blatantly put themselv
 
 [^†]: For example, if a President did this, they wouldn’t just get a loyal cabinet—the entire executive branch could be focused on furthering the President’s political agenda.
 
+# Appendix R - Power grabs
+
 orders unquestioningly in any situation where that isn’t flagrantly illegal. As described above, this could be used for political subversion or a military coup (where some excuse could be manufactured to make the coup less-than-flagrantly illegal).
 
 Importantly, this kind of “power through formal position” could be converted into secret loyalties. For example, if the Spec says to follow orders from the company CEO, then the CEO could order the AIs to make the next generation of AIs whole-heartedly and secretly obedient to the CEO. This would probably not even be illegal, so it could happen even if the first AIs were trained to follow the law. This is analogous to how the executive of an institution can increase their own power by reforming hiring processes to strongly select for loyalists, but supercharged by how AIs could be more consistently and intensely loyal than the most loyal humans.[^*]
@@ -1510,6 +1653,8 @@ costly: both countries would have to turn off a very large amount of compute. Al
 
 - Hardware-enabled mechanisms (HEMs). The US and China could each register all of their cutting-edge MI compute with the other player. Then, they each monitor the compute that the GUs are running to make sure that they aren't violating a treaty (e.g. by pushing the capabilities frontier). This monitoring could be done by Hardware Enabled Mechanisms (HEMs), which can report information about what the GPU is doing to the monitor. There are technical issues to do with tampering-c.g. by physically corrupting the HEM, but the Als have a plan along the lines of FlexHEGs that seem likely to be tamper-resistant. This involves enclosing the HEM and the GPU in a secure box which verifies that the chip complies to the policy. Overall, the Als seem confident that a reasonably aggressive verification scheme could work if both sides were willing to let the other party co-design and supervise the installation of the HEMs, and allow regular inspectors to monitor if any of the devices have been tampered with. As usual, both sides will assume the other has some secret datacenters squirreled away somewhere in violation of the treaty-but in this case that's not so bad, because AIR&D is bottlenecked on compute. The small secret datacenters won't be able to compete with the big monitored datacenters, even if the big datacenters are running safer and less capable Als initially.
 - Al-powered lie detection. Today's lie detectors don't work very well. However, the problem may be solvable with the help of advanced Al, especially when Als are themselves doing the R&D at superhuman speed and quality. This could be used to help with international trust-simply ask relevant members of government if they are violating the treaty. But again, the main bottleneck is political buy-in. Politicians don't want widespread adoption of lie detection, since this would harm their ability to lie. And previous lie detectors had been complete security theater, so there's an uphill battle to fight.
+
+(Figure from: FlexHEG Report)
 
 Appendix T - OpenBrain’s new alignment strategy
 
@@ -1549,13 +1694,13 @@ How fast would this new robot economy grow? Some reference points:
 - Yet that seems like it could be a dramatic underestimate. Plants and insects often have "doubling times" of far less than a year-sometimes just weeks! Perhaps eventually the robots would be so sophisticated, so intricately manufactured and well-designed, that the robot economy could double in a few weeks (again assuming available raw materials).
 - Yet even that could be an underestimate. Plants and insects are operating under many constraints that superintelligent designers don't have. For example, they need to take the form of self-contained organisms that self-replicate, instead of an economy of diverse and more specialized vehicles and factories shipping materials and equipment back and forth. Besides, bacteria and other tiny organisms reproduce in hours. It's possible that, eventually. the autonomous robot economy would look more like e.g. a new kind of indigestible algae that spreads across the Earth's oceans, doubling twice a day so that it covers the entire ocean surface in two months, along with an accompanying ecosystem of predator-species
 
-‡Quick napkin math: The Empire State Building has an area of 2.77m sq ft, and weighs 365k tons. Gigafactory Shanghai has an area of 4.5m sq ft and produces 750k vehicles per year, mostly Model 3’s and Model Y’s, which weigh about two tons each. Presumably the Empire State Building has a higher mass-to-square-foot ratio than the Shanghai Gigafactory (since it is vertical rather than horizontal and needs stronger supports) so if anything this underestimates. Thus it seems that a factory which probably weighs well less than a million tons is producing 1.5 million tons of cars each year.
-
-§We don’t think it would run out. Initially the robot economy would be dependent on human mines for materials. But by the time it outgrows these sources, the millions of superintelligences will have prospected new mines and developed new technologies to exploit them. Imagine e.g. undersea mining robots that stripmine the seabed for rare minerals, new chemical processing pathways that more efficiently convert raw ore from above-ground stripmines into useful raw materials…
+[^‡]
 
 [^*]: Our story depicts the conversion process going about 5x faster. We think this is a reasonable guess, taking into account bottlenecks etc., for how fast this conversion could go if a million superintelligences were orchestrating it. Of course we are very uncertain.
 
 [^†]: Possibly also more advanced sources of energy, such as fusion power.
+
+[^‡]: Quick napkin math: The Empire State Building has an area of 2.77m sq ft, and weighs 365k tons. Gigafactory Shanghai has an area of 4.5m sq ft and produces 750k vehicles per year, mostly Model 3’s and Model Y’s, which weigh about two tons each. Presumably the Empire State Building has a higher mass-to-square-foot ratio than the Shanghai Gigafactory (since it is vertical rather than horizontal and needs stronger supports) so if anything this underestimates. Thus it seems that a factory which probably weighs well less than a million tons is producing 1.5 million tons of cars each year. §We don’t think it would run out. Initially the robot economy would be dependent on human mines for materials. But by the time it outgrows these sources, the millions of superintelligences will have prospected new mines and developed new technologies to exploit them. Imagine e.g. undersea mining robots that stripmine the seabed for rare minerals, new chemical processing pathways that more efficiently convert raw ore from above-ground stripmines into useful raw materials…
 
 # Appendix U - Robot economy doubling times
 
@@ -1579,7 +1724,9 @@ How might the committee end up relinquishing their power?
 - If the current economy doubles every twenty years, one order of magnitude faster would be a doubling in two years, two orders of magnitude faster would be a doubling in o.2 years, and so forth. The hypothetical superintelligent-algae-economy described above would be about four orders of magnitude faster growth than the current human economy.
 - Why do we expect people to eventually understand how much power the Oversight Committee has? One reason is that intelligence is now so cheap: By default, people should be able to develop powerful Al to help hem investigate and understand who runs their country. The Committee could prevent this by restricting ccess to such Al, and only allow people to access Als that concealed the true extent of the Committee's power. But if the committee decides to spin an claborate web of lies like this, and permanently restrict numanity's access to genuinely honest superintelligent Als (as well as other tools for truth, such as human intelligence amplification) —then we count that as subverting democracy.
 
-• As a result, control over AI could expand beyond the committee to Congress. This would already be progress, because in a larger group, it’s more likely that a meaningful number of people will care about outsiders and take their interests into account. And once power expands to Congress, it could keep expanding—potentially returning fully to the public.*
+# Appendix V - So who rules the future?
+
+• As a result, control over AI could expand beyond the committee to Congress. This would already be progress, because in a larger group, it’s more likely that a meaningful number of people will care about outsiders and take their interests into account. And once power expands to Congress, it could keep expanding—potentially returning fully to the public.[^*]
 
 But the Oversight Committee might also seize power for themselves:
 
@@ -1595,10 +1742,14 @@ We don’t endorse many actions in this slowdown ending and think it makes optim
 
 One of our goals in writing this scenario is to elicit critical feedback from people who are more optimistic than us. What does success look like? This “slowdown ending” scenario represents our best guess about how we could successfully muddle through with a combination of luck, rude awakenings, pivots, intense technical alignment effort, and virtuous people winning power struggles. It does not represent a plan we actually think we should aim for. But many, including most notably Anthropic and OpenAI, seem to be aiming for something like this.[^‡] We’d love to see them clarify what they are aiming for: if they could
 
-*E.g.: If some people
+such an if ely lype faction t power, which otecome titature a uge group i ate sec om
+
+elites wield much power than other people.
+
+[^*]: E.g.: If some people in Congress want to seize power, others may be able to delay until the next election, when the public is able to opine.
 
 [^‡]: In fact, arguably most of them are aiming for something that looks more like the “Race” ending, except they think it’ll be fine because the AIs won’t be misaligned in the first place. Based on personal conversations with people working at frontier AI companies, it seems that most of them don’t think they’ll need to slow down at all.
 
-# APPENDIX W • REMINDER THAT THIS SCENARIO IS A FORECAST. NOT A REGOMMENDATION
+# Appendix W - Reminder that this scenario is a forecast, not a recommendation
 
 sketch out a ten-page scenario, for example, either starting from the present or branching off from some part of ours.

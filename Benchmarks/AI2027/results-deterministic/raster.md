@@ -1244,9 +1244,6 @@ Such is the capability progression in our scenario:
 
 Length Of Coding Tasks AI Agents Can Complete Autonomously
 
-- GPT-4 1186
-- GPT-40
-
 -4.30%
 
 ruch nore conslex than 1 hoar tasks, tut we project there aren't as nany extra skills needed to go fron 1 veck to 1 year.

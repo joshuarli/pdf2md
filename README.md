@@ -83,6 +83,13 @@ licensing cautions live in `Benchmarks/AI2027/README.md`.
 
 ## Known limitations
 
+- Foundation Models repair is disabled by default (`Pipeline`'s default
+  repairer is `NoRepair`): text-only repair on macOS 26 was measured against
+  the deterministic baseline and changed the score by nothing measurable
+  while costing roughly 15x wall-clock (`Benchmarks/AI2027/README.md`,
+  baseline E). Pass an explicit `FoundationRepairer()` (or `--repair` to
+  `pdfmd-bench ai2027`) to opt back in once repair is re-measured against
+  the current deterministic result and shown to help a page class.
 - Multimodal Foundation Models image repair is availability-gated: the model
   receives the page image only on macOS 27+ (`if #available`). On macOS 26
   the repair stage runs text-only from structured Page IR plus the

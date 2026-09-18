@@ -19,6 +19,21 @@ public protocol ModelRepairing: Sendable {
     func repair(page: PageIR, draft: String, pageImage: CGImage?) async -> String?
 }
 
+/// No-op repairer: `modelAvailable` is always false, so the pipeline never
+/// attempts a repair call. This is `Pipeline`'s default. Benchmark evidence
+/// (`Benchmarks/AI2027/README.md`, baseline E) found text-only repair on
+/// macOS 26 changed the score by nothing measurable while costing roughly
+/// 15x wall-clock — routing a page to a repair that doesn't help is exactly
+/// the complexity plan.md section 41 says not to keep. Pass
+/// `FoundationRepairer()` explicitly to opt back in once repair is
+/// re-measured against the current deterministic baseline and shown to help
+/// a page class.
+public struct NoRepair: ModelRepairing {
+    public init() {}
+    public var modelAvailable: Bool { false }
+    public func repair(page: PageIR, draft: String, pageImage: CGImage?) async -> String? { nil }
+}
+
 public struct FoundationRepairer: ModelRepairing {
     public init() {}
 

@@ -30,6 +30,14 @@ private struct ComplexPageRecognizer: DocumentRecognizing {
     }
 }
 
+// Repair is opt-in: text-only macOS 26 repair was measured against the
+// deterministic baseline and changed the score by nothing measurable while
+// costing ~15x wall-clock (Benchmarks/AI2027/README.md, baseline E). The
+// default pipeline must never attempt it until re-proven.
+@Test func defaultPipelineRepairerIsDisabled() {
+    #expect(Pipeline().repairer.modelAvailable == false)
+}
+
 @Test func pipelineSkipsUnavailableRepairerForComplexPage() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)

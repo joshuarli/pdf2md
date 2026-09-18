@@ -29,7 +29,7 @@ Benchmarks/AI2027/
 ## Run
 
 ```bash
-swift run pdfmd-bench ai2027 [--dir Benchmarks/AI2027]
+swift run pdfmd-bench ai2027 [--dir Benchmarks/AI2027] [--repair]
 ```
 
 Reports born-digital and raster text-match plus novel-text rates, the worst
@@ -45,11 +45,44 @@ substantive raster page below ~85% (plan.md section 11 guardrail).
 - B: `RecognizeDocumentsRequest` only — _pending_
 - C: Vision + deterministic Markdown (pre-line reconciliation) — 71.45%
   born / 71.72% raster, 14.7% / 14.3% novel (`results-deterministic/`)
-- D: + native line-level reconciliation — in progress
-- E: + text-only FM repair (macOS 26) — 71.17% born / 71.72% raster; repair
-  changed nothing measurable and costs 15x wall-clock; disabled until the
-  deterministic path is worth repairing
+- D: + native line-level reconciliation — 89.13% born / 85.66% raster, 5.3%
+  / 7.29% novel; worst page 70.3% (page 50, a chart whose title/axis text
+  Vision reads as prose — data-point labels misread as a list are now
+  suppressed, but the chart's own title paragraph and a garbled caption
+  line are not) for born, 54.6% (page 4, a raster page whose garbled
+  footnote markers `relocateFootnotes`'s geometric fallback can't pair) for
+  raster. Both tracks still miss the >=99%/>=95% gates; still in progress —
+  see plan.md section 51 for the live punch list and hill-climbing method.
+- E: + text-only FM repair (macOS 26) — 71.17% born / 71.72% raster (stale,
+  pre-D); repair changed nothing measurable and cost 15x wall-clock when
+  last measured against baseline C. Disabled by default until re-measured
+  against D — pass `--repair` to `pdfmd-bench ai2027` to re-measure.
 - Final: + selective multimodal repair (macOS 27+) — _blocked on Xcode 27_
+
+Bugs found and fixed on the way to D (all with regression tests): a greedy
+footnote-body span match could anchor on a single spurious common-word hit
+in an unrelated intervening paragraph and blank everything between it and
+the real body (`FootnoteRelocation.longestDenseRun`); the same scan's
+window was too narrow to reach a margin-column body separated from its
+main-column reference by the rest of the column; two footnotes opening
+with near-identical phrasing could steal each other's leading words
+(`longestOrderedMatchCount`-based coverage recheck after a block-floor
+snap); `isOrphanPosition` compared a next-token's capitalization against
+an already-lowercased copy of itself, so it could never fire; a genuine
+sentence's line-wrap tail stranded in a tiny box was suppressed as OCR
+confetti (`suppressFragments` now exempts `.reconciled`-source blocks);
+`reconcileParagraphs` — a fully-tested native/Vision title-and-heading
+reconciler with a lenient threshold built for exactly this — was never
+wired into `Pipeline`, so severely garbled display type never got
+corrected at all; `fontLines` split the page's whole linearized
+`attributedString` on newlines rather than asking each geometric line
+(`selectionsByLine`) for its own font, so a two-column page's last
+main-column line and its margin footnote's first line could share one
+"line" in that flat string and inherit the main column's body-sized font,
+sinking the footnote below `nativeFootnoteItems`'s size gate entirely; and
+a chart's data-point labels, OCR'd as a short bullet list, are confetti by
+the same area/token measure as a misread caption, but `suppressFragments`
+exempted every list unconditionally.
 
 First pipeline measurement (deterministic, pre-footnote-relocation):
 77.46% match / 17.3% novel, 44,213/45,328 gold tokens matched. The penalty

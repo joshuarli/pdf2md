@@ -54,6 +54,31 @@ import Testing
     #expect(disagreement)
 }
 
+// AI 2027 page 50: Vision emits the same garbled banner twice — once as
+// `.title`, once as an overlapping `.paragraph` observation. Deduplication
+// must run on the RAW blocks (while both copies still read identically)
+// before the lenient title fallback rewrites one of them; fixing the title
+// first makes its text diverge from the still-garbled paragraph copy, and
+// text-overlap dedup no longer recognizes them as the same banner. This is
+// the composition contract `Pipeline.convertWithPageDrafts` relies on.
+@Test func dedupBeforeTitleFallbackMergesDuplicateGarbledBanner() throws {
+    let native = "Body text.\nAppendix G - Why we forecast a superhuman coder in early 2027\nMore body."
+    let region = NormalizedRect(x: 0.1, y: 0.1, width: 0.6, height: 0.05)
+    let garbled = "APPENDIX C. WHY IVE FORECAST A SUPERBUMAN CODERIN FARLY 2027"
+    let title = PageBlock(kind: .title(garbled), region: region, source: .vision)
+    let duplicateParagraph = PageBlock(kind: .paragraph(garbled), region: region, source: .vision)
+
+    let deduped = deduplicate([title, duplicateParagraph])
+    try #require(deduped.count == 1)
+    let fixed = reconcileParagraphs(nativeText: native, quality: .trustworthy, blocks: deduped)
+    try #require(fixed.blocks.count == 1)
+    guard case .title(let text) = fixed.blocks[0].kind else {
+        Issue.record("expected title")
+        return
+    }
+    #expect(text == "Appendix G - Why we forecast a superhuman coder in early 2027")
+}
+
 @Test func garbledTitleReconcilesToNativeLine() {
     let native = "Some body text here.\nAppendix G - Why we forecast a superhuman coder in early 2027\nMore body text."
     let (blocks, _) = reconcileParagraphs(
