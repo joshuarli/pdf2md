@@ -1599,3 +1599,269 @@ One of our goals in writing this scenario is to elicit critical feedback from pe
 Appendix W - Reminder that this scenario is a forecast, not a recommendation
 
 sketch out a ten-page scenario, for example, either starting from the present or branching off from some part of ours.
+
+## Visual transcript appendix
+
+Page numbers below refer to page order in the pinned PDF. This appendix records legible text printed inside figures and recurring status cards; figure captions and body prose already transcribed in the main sequence are not repeated here. Repeated card labels and identical timeline labels are represented once. Curves, filled areas, icons, and pixel/bar counts are visual marks rather than printed text, so they are not converted into new measurements.
+
+### Recurring status cards (pages 2–43)
+
+The status cards label the six categories Hacking, Coding, Politics, Bioweapons, Robotics, and Forecasting under AI CAPABILITIES; their ring is labeled Compute. Their repeated metric headings are Approval, Revenue, Valuation, Importance, Datacenters, and Timeline. The table records each card's dated model caption and those six displayed values, in heading order.
+
+| PDF page | Date and card caption | Approval / revenue / valuation | Importance / datacenters / timeline |
+|---:|---|---|---|
+| 2 | Apr 2025 — 2,000 Unreliable Agent copies thinking at 8x human speed | −25%; $8B/yr; $413B | 1%; $308B/yr; 2042 |
+| 3 | Aug 2025 — 5,000 Unreliable Agent copies thinking at 10x human speed | −25%; $12B/yr; $610B | 1%; $351B/yr; 2041 |
+| 3 | Dec 2025 — 10, 000 Unreliable Agent copies thinking at 12x human speed | −25%; $18B/yr; $900B | 1%; $400B/yr; 2040 |
+| 6 | Apr 2026 — 22,000 Reliable Agent copies thinking at 13x human speed | −26%; $26B/yr; $1T | 2%; $458B/yr; 2039 |
+| 6 | Aug 2026 — 50,000 Reliable Agent copies thinking at 15x human speed | −26%; $38B/yr; $2T | 2%; $524B/yr; 2038 |
+| 8 | Dec 2026 — 100, 000 Reliable Agent copies thinking at 17x human speed | −27%; $55B/yr; $3T | 3%; $600B/yr; 2037 |
+| 8 | Jan 2027 — 150, 000 Reliable Agent copies thinking at 21x human speed | −27%; $61B/yr; $0 | 4%; $626B/yr; 2037 |
+| 9 | Feb 2027 — 190, 000 Reliable Agent copies thinking at 25x human speed | −25%; $67B/yr; $3T | $653B/yr; 2036 |
+| 11 | Mar 2027 — 200K Superhuman coder copies thinking at 30x human speed | −28%; $74B/yr; $3T | 5%; $682B/yr; 2036 |
+| 12 | Apr 2027 — 220K Superhuman coder copies thinking at 31x human speed | −29%; $82B/yr; $4T | 6%; $711B/yr; 2035 |
+| 13 | May 2027 — 230K Superhuman coder copies thinking at 32x human speed | −29%; $91B/yr; $4T | 7%; $742B/yr; 2035 |
+| 14 | Jun 2027 — 250K Superhuman coder copies thinking at 33x human speed | −300; $100B/yr; $5T | 1; 7%; $775B/yr |
+| 15 | Jul 2027 — 270K Superhuman coder copies thinking at 38x human speed | −35%; $120B/yr; $5T | 8%; $808B/yr; 2034 |
+| 17 | Aug 2027 — 290K Superhuman AI Researcher copies thinking at 43x human speed | −37%; $144B/yr; $7T | 11%; $843B/yr; 2033 |
+| 18 | Sep 2027 — 300K Superhuman AI Researcher copies thinking at 50x human speed | −38%; $173B/yr; $8T | 14%; $880B/yr; 2032 |
+| 21 | Oct 2027 — 330K Superhuman AI Researcher copies thinking at 57x human speed | −39%; $191B/yr; $8T | 17%; $918B/yr; 2031 |
+| 23 | Oct 2027 — 360K Superhuman remote worker copies thinking at 63x human speed | −40%; $208B/yr; $9T | 19%; $918B/yr; 2031 |
+| 24 | Nov 2027 — 400K Superintelligent AI Researcher copies thinking at 79x human speed | −45%; $250B/yr; $9T | 26%; $958B/yr; 2030 |
+| 26 | Dec 2027 — 500K Generally Superintelligent copies thinking at 100x human speed | −50%; $300B/yr; $10T | 35%; $1T/yr; 2029 |
+| 27 | Jun 2028 — 2M Wildly Superintelligent copies thinking at 300x human speed | −20%; $950B/yr; $20T | 40%; $2T/yr; 2028 |
+| 28 | Dec 2028 — 10M Wildly Superintelligent copies thinking at 600x human speed | 10%; $3T/yr; $50T | 45%; $5T/yr; 2028 |
+| 28 | Dec 2029 — 100M Wildly Superintelligent copies thinking at | 25%; $8T/yr; $160T | 40%; $16T/yr; 2028 |
+| 30 | Dec 2030 — 1B Wildly Superintelligent copies thinking at 5000x human speed | −100%; $24T/yr; $500T | 35%; $50T/yr; 2028 |
+| 30 | Dec 2035 — 1T Wildly Superintelligent copies thinking at 10000x human speed | 100%; $480T/yr; $10,000T | 10%; $5000T/yr; 2028 |
+| 32 | Nov 2027 — 300K Superhuman AI Researcher copies thinking at 62x human speed | −27%; $221B/yr; $9T | 26%; $950B/yr; 2031 |
+| 34 | Dec 2027 — 300K Superhuman AI Researcher copies thinking at 69x human speed | −25%; $245B/yr; $9T | 3%; $1T/yr; 2031 |
+| 34 | Jan 2028 — 330K Superhuman AI Researcher copies thinking at 72x human speed | −23%; $271B/yr; $10T | 36%; $1T/yr; 2030 |
+| 35 | Feb 2028 — 360K Superhuman remote worker copies thinking at 74x human speed | −22%; $300B/yr; $10T | 38%; $1T/yr; 2030 |
+| 37 | Mar 2028 — 400K Superintelligent AI Researcher copies thinking at 77x human speed | −20%; $337B/yr; $11T | 39%; $1T/yr; 2030 |
+| 38 | Apr 2028 — 420K Generally Superintelligent copies thinking at 79x human speed | −13%; $378B/yr; $11T | 40%; $2T/yr; 2029 |
+| 38 | May 2028 — 430K Generally Superintelligent copies thinking at 82x human speed | 8%; $424B/yr; $12T | 41%; $2T/yr; 2029 |
+| 39 | Jun 2028 — 500K Generally Superintelligent copies thinking at 85x human speed | −5%; $476B/yr; $13T | 43; $2T/yr; 2028 |
+| 40 | Jul 2028 — 500K Wildly Superintelligent copies thinking at 100x human speed | 10%; $534B/yr; $14T | 44%; $2T/yr; 2028 |
+| 41 | Aug 2028 — 600K Wildly Superintelligent copies thinking at 120x human speed | 15%; $599B/yr; $15T | 45%; $3T/yr; 2028 |
+| 41 | Sep 2028 — 600K Wildly Superintelligent copies thinking at 140x human speed | 20%; $672B/yr; $16T | 46%; $3T/yr; 2028 |
+| 42 | 700K Wildly Superintelligent copies thinking at 160x human speed | 27%; $754B/yr; $17T | 48%; $3T/yr; 2028 |
+| 42 | Nov 2028 — 800K Wildly Superintelligent copies thinking at 190x human speed | 37%; $847B/yr; $19T | 49%; $4T/yr; 2028 |
+| 42 | Jun 2029 — 10M Wildly Superintelligent copies thinking at 600x human speed | 50%; $3T/yr; $50T | 45%; $8T/yr; 2028 |
+| 43 | caption/date not visible | 55%; $5T/yr; $100T | 40%; $15T/yr; 2028 |
+| 43 | Dec 2030 — 1B Wildly Superintelligent copies thinking at 5000x human speed | 60%; $20T/yr; $400T | 35%; $40T/yr; 2028 |
+| 43 | Dec 2035 — 1T Wildly Superintelligent copies thinking at 10000x human speed | 70%; $400T/yr; $8000T | 10%; $5000T/yr; 2028 |
+
+### Standalone charts and diagrams
+
+Page 4: GPT-3 (3 x 10^23 FLOPS)
+GPT-4 (2 x 10^25 FLOPS)
+Agent-1 (3 x 10^27 FLOPS)
+
+Page 8: KEY METRICS 2026
+GLOBAL AI CAPEX $1T COST OF OWNERSHIP OF ACTIVE COMPUTE
+GLOBAL AI POWER 38GW PEAK POWER
+SHARE OF US POWER ON AI 2.5% 33 GW OF 1.34TW CAPACITY
+OPENBRAIN REVENUE $45B 2026 ANNUAL
+OPENBRAIN COMPUTE COSTS $40B 2026 ANNUAL
+CAPITAL EXPENDITURE $200B COST OF OWNERSHIP OF OPENBRAIN'S ACTIVE COMPUTE
+OPENBRAIN POWER REQUIREMENT 6GW PEAK POWER
+
+Page 10: China's Compute Centralization, 2025-2027 Growing share of total compute in CDZ: 0→70%
+Rest of China
+Rest of DeepCent
+CDZ
+Dec 2025
+Jun 2026
+Dec 2026
+Feb 2027 (40%)
+Jun 2027
+Dec 2027
+
+Page 11: OpenBrain's Compute Allocation, 2024 vs 2027
+2024 estimate
+Research experiments
+External Deployment
+Training
+Data generation
+2027 projection
+External Deployment
+Research experiments
+Data generation
+Running AI assistants
+Training
+
+Page 15: Research Automation Deployment Tradeoff
+Parallel Copies
+10K
+100K
+1M
+10M
+Speed (tokens/sec)
+10
+100
+1,000
+10,000
+  Mar 2027   Jun 2027 Sep 2027
+300K copies 50x Human speed
+200K copies 30x Human speed
+Human thinking speed 10 words/sec
+10x Human thinking speed
+100x Human thinking speed
+
+Page 16: LLM inference prices have fallen 9x to 900x/year, depending on the task Price (USD per million tokens)
+0.1
+1
+10
+100
+Release Date Oct. 2021 Apr.2022 Oct.2022 Apr.2023 Oct.2023 Apr. 2024 Oct.2024Apr.2025
+GPT-3.5 Turbo level or better on general knowledge (MMLU) GPT-4 level or better on Ph.D. level science questions (GPQA)
+  GPT-4o level or better on Ph.D. level science questions (GPQA) Other benchmarks and performance levels
+Mid-range 40x/year
+Fastest 900x/year
+Slowest 9x/year
+Data source: Epoch AI, Artificial Analysis CC-BY
+EPOCH AI
+epoch.ai
+
+Page 47: Chain-of-Thought (CoT) x_i+1 x_i+2
+Chain of Continuous Thought (Coconut) Last hidden states are used as input embeddings
+output token (sampling) last hidden state
+Large Language Model
+input embedding input token
+[Question]
+x_i
+x_i+1
+x_i+2
+x_i+j
+[Answer]
+[Answer]
+Large Language Model
+x_i+j
+[Question] <bot>
+<eot>
+Figure 1 A comparison of Chain of Continuous Thought (Coconut) with Chain-of-Thought (CoT). In CoT, the model
+generates the reasoning process as a word token sequence (e.g., [x_i, x_i+1,...,x_i+j] in the figure). Coconut regards the
+last hidden state as a representation of the reasoning state (termed "continuous thought"), and directly uses it as the
+next input embedding. This allows the LLM to reason in an unrestricted latent space instead of a language space.
+
+Page 49: AI ABILITY
+M_0
+M_1
+M_2
+M_3
+M_max
+M_0 + SEARCH
+M_1 + SEARCH
+M_2 + SEARCH
+M_3 + SEARCH
+M_max + SEARCH
+DISTILL AMPLIFY
+INFERENCE-SCALED MODELS
+
+Page 50: Length Of Coding Tasks AI Agents Can Complete Autonomously
+Task time (for humans), 80% success rate
+8 sec
+30 sec
+2 min
+8 min
+30 min
+2 hrs
+8 hrs
+1 week
+1 month
+4 months
+16 months
+5 years
+2025 2024 Model release date
+2021
+2022
+2023
+2026
+2027
+2028
+METR's DATA
+OUR PROJECTION
+gpt-3.5-turbo-instruct
+GPT-4 0314
+GPT-4 1106
+GPT-4o
+o1-preview
+o1
+Claude 3.5 Sonnet (Old) Claude 3.5 Sonnet (New) Claude 3.7 Sonnet
+Agent-0
+Agent-1
+Agent-2
+Trendline Each doubling gets 15% easier*
+ai-2027.com
+*Forecast: Going from 1 week to 1 year might be ~2x easier than going from 1 hour to 1 week. Reasoning: 1 week tasks can be
+much more complex than 1 hour tasks, but we project there aren't as many extra skills needed to go from 1 week to 1 year.
+
+Page 51: Superhuman Coder Arrival, Benchmarks and Gaps
+Probability Density
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14
+Year
+0.00
+2028
+2030
+2034
+Eli (AI 2027 author) Nikola
+Eli (AI 2027 author): 10th: Dec 2025
+50th: Dec 2028 90th: >2050
+FutureSearch
+Nikola: 10th: Oct 2025 50th: Oct 2027
+90th: Jun 2044
+FutureSearch: 10th: Jun 2026
+50th: Jan 2032 90th: >2050
+
+Page 54: AI Takeoff Forecast, Assuming Superhuman Coder in Mar 2027 SAR: Superhuman
+Probability Density
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+Year
+2027
+2028
+2029
+2030
+2031
+2032
+1e-5
+SAR SIAR
+AI Researcher 10th: Mar 2027
+ASI
+50th: Jul 2027 90th: Mar 2028
+SIAR: Superintelligent AI Researcher
+10th: May 2027 50th: Nov 2027 90th: Jan 2034
+ASI: Artificial Superintelligence
+10th: Jun 2027 50th: Apr 2028 90th: >2100
+
+Page 66: Power isolation Untrusted trusted (left) (right)
+Encrypted I/O
+Management &
+data loading
+Hardware Security Module*
+Data I/O
+AI processor
+opto-isolation
+Secure processor
+Memory
+anti-tamper sensors
+Router
+self-disable mechanism
+galvanic isolation
+Battery (offline power)
+Power supply
+Secure enclosure
+Other cluster units

@@ -14,13 +14,16 @@ Benchmarks/AI2027 — manifest and notes; PDF and golden.md stay local/untracked
 
 ## Rules
 
-- Use `pdf_oxide` and the crates already listed in `Cargo.toml`. Ask before
-  adding a dependency.
+- Use `pdf_oxide` and the crates already listed in `Cargo.toml`. Apple Vision
+  bindings are approved for selective figure and status-card transcription;
+  ask before adding other dependencies.
 - Make small reversible changes; tie deterministic heuristics to a failing
   fixture or benchmark page.
-- Deterministic bugs get deterministic fixes. Do not paper over them with OCR
-  or a model.
-- `cargo test` must never need network access, OCR, model files, or Homebrew.
+- Fix native-text extraction and layout bugs deterministically. Apple Vision
+  is for text drawn inside figures and status cards, not a fallback for missing
+  native body text.
+- `cargo test --release` must never need network access, Vision recognition,
+  model files, or Homebrew.
 - stdout is clean Markdown only. Normal errors are one line on stderr.
 - Comments explain why, especially for coordinate transforms, span grouping,
   footnote placement, and benchmark-driven thresholds.
@@ -29,6 +32,6 @@ Benchmarks/AI2027 — manifest and notes; PDF and golden.md stay local/untracked
 
 ## Build
 
-- `cargo build` / `cargo build --release` / `cargo test --release`
+- `cargo build --release` / `cargo test --release`
 - `make install` installs both binaries to `~/usr/bin` by default
 - `cargo run --release --bin pdfmd-bench -- ai2027` runs the benchmark

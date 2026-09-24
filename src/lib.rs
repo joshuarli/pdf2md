@@ -6,3 +6,5 @@ pub mod output;
 pub mod page;
 pub mod pipeline;
 pub mod score;
+#[cfg(target_os = "macos")]
+pub mod ocr;

@@ -3,8 +3,9 @@
 `pdfmd` converts PDF native text into clean Markdown using Rust and
 [`pdf_oxide`](https://crates.io/crates/pdf_oxide). It groups positioned text
 spans into paragraphs, recognizes display headings, moves footnotes to page
-end, and removes repeated page furniture. The CLI does not run OCR and makes
-no network requests.
+end, and removes repeated page furniture. On macOS, Apple Vision adds legible
+text from figures and recurring status cards to a visual appendix. The CLI
+makes no network requests.
 
 ## Layout
 
@@ -20,14 +21,13 @@ design. The active implementation is the Rust crate at the repository root.
 ## Requirements
 
 - Rust `nightly-2026-09-15` (pinned in `rust-toolchain.toml`)
-- `pdf_oxide` plus the directly listed serialization, hashing, regex, and
-  Unicode crates in `Cargo.toml`
-- No OCR engine, model download, or runtime network access
+- `pdf_oxide`, the directly listed parsing crates, and macOS Apple Vision
+  bindings in `Cargo.toml`
+- No model download or runtime network access
 
 ## Build and check
 
 ```bash
-cargo build
 cargo build --release
 cargo test --release
 make install
@@ -59,16 +59,16 @@ Run the born-digital AI 2027 benchmark with:
 cargo run --release --bin pdfmd-bench -- ai2027
 ```
 
-The current deterministic Rust result is 89.77% text match and 5.65% novel
-text, measured in 0.16 seconds for 71 pages. This is above the prior Swift
-result of 89.57%. The benchmark manifest retains the broader 99% target, so
-the runner still reports that gate as failed. The raster track is reported as
-skipped because this build has no OCR. Details and historical measurements are
-in `Benchmarks/AI2027/README.md`.
+The current result is 90.22% text match and 5.39% novel text across 71 pages;
+the manifest gate is 90%. Conversion took 64.56 seconds on the measured
+machine, including selective Vision recognition for figure and card text.
+Raster-only pages still need full-page OCR, so that track is reported as
+skipped. Details and historical measurements are in
+`Benchmarks/AI2027/README.md`.
 
 ## Privacy and limitations
 
-PDF content stays on the device. Conversion uses the text layer present in the
-PDF; scanned or image-only pages need OCR and are not recognized by this
-build. The benchmark PDF, raster twin, and golden transcription remain local
-and untracked.
+PDF content stays on the device. Native text is used for page content, with
+Apple Vision used for selected visual labels. Scanned and image-only pages are
+not yet transcribed. The benchmark PDF, raster twin, and golden transcription
+remain local and untracked.

@@ -19,8 +19,10 @@ Benchmarks/AI2027/
 
 1. Download the source PDF and check it against the manifest:
    `shasum -a 256 ai-2027.pdf` must match `manifest.json`.
-2. The raster twin remains a local historical artifact. The Rust CLI has no
-   OCR, so the current benchmark reports the raster track as skipped.
+2. The raster twin remains a local historical artifact. The Rust pipeline
+   uses Apple Vision selectively on born-digital pages to transcribe visual
+   labels; full-page OCR for raster-only pages is not implemented, so that
+   track remains skipped.
 3. Curate `golden.md` independently of `pdfmd`: PDF native text, geometry,
    visual inspection, and high-quality extractors as signals — never the
    tool's own output. When the live website and the pinned PDF disagree,
@@ -37,22 +39,21 @@ invented as numeric data.
 cargo run --release --bin pdfmd-bench -- ai2027 [--dir Benchmarks/AI2027]
 ```
 
-Reports born-digital text match and novel-text rates, the worst aligned page,
-and that raster was skipped. The full project target remains >=99% born-digital
-and >=95% raster with <1% novel text; this Rust port is still below the 99%
-born-digital target.
+Reports born-digital text match and novel-text rates, the approximate worst
+aligned page, and that raster was skipped. The active born-digital gate is
+90%; the original product target remains >=99% born-digital and >=95% raster
+with <1% novel text.
 
 ## Rust port
 
 - Raw `pdf_oxide::extract_text` — 85.02% match / 8.16% novel against the
   earlier prose-only golden.
-- Current span-based pipeline — 84.63% match / 5.69% novel against the
-  expanded golden, 0.16 seconds for 71 pages. The earlier 89.77% Rust and
-  89.57% Swift measurements used the prose-only golden, before figure and
-  status-card text was added; they are not directly comparable to this score.
-  The worst interpolated page is 47.93%; raster is skipped because there is
-  no OCR.
-- `cargo test --release` — 13 deterministic tests pass. The benchmark writes
+- Current Rust pipeline — 90.22% match / 5.39% novel against the complete
+  local golden, 64.56 seconds for 71 pages. It uses Apple Vision for figure
+  and status-card text on born-digital pages. The 52.61% worst-page estimate
+  is diagnostic: it interpolates page boundaries into one continuous golden
+  transcript and is not an exit gate. Raster-only OCR remains skipped.
+- `cargo test --release` — 51 deterministic tests pass. The benchmark writes
   the current candidate to `results-deterministic/born.md` and its page drafts
   to `results-deterministic/born-pages.json`.
 

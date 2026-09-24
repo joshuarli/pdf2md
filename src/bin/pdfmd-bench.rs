@@ -104,9 +104,9 @@ fn run_ai2027(directory: &Path) -> Result<bool, String> {
         }
         None => println!("  worst page:      n/a (no substantive page)"),
     }
-    // The raster twin needs OCR, which the pdf_oxide port does not do yet
-    // (native text only). Reported, not scored, so the gate stays honest.
-    println!("\nAI 2027 — raster: skipped (no OCR in this build)");
+    // Visual OCR supplements born-digital pages, but raster-only pages still
+    // need a full-page OCR path before that separate track can be scored.
+    println!("\nAI 2027 — raster: skipped (full-page OCR not implemented)");
     println!("conversion: {:.2}s", converted_in.as_secs_f64());
 
     let pass = report.text_match >= manifest.born_digital_text_match;
