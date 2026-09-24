@@ -1,8 +1,8 @@
+/target/
+/.build/
+/.research/
 *.pdf
-.build/
-.research/
 Benchmarks/AI2027/golden.md
 Benchmarks/AI2027/*-raster.pdf
 debug-out/
 *.tmp.md
-/target/

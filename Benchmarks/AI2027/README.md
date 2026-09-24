@@ -1,9 +1,9 @@
 # AI 2027 benchmark
 
 End-to-end quality gate (plan.md sections 7-11). The pinned source PDF and
-the frozen golden Markdown stay **local and untracked** — do not commit them
-until licensing is verified (plan.md section 7.2). The repository carries
-only `manifest.json`, the scoring code (`PdfmdCore`), and this note.
+the golden Markdown stay **local and untracked** — do not commit them until
+licensing is verified (plan.md section 7.2). The repository carries
+`manifest.json`, the Rust scorer and benchmark runner in `src/`, and this note.
 
 ## Files (local only, gitignored)
 
@@ -11,7 +11,7 @@ only `manifest.json`, the scoring code (`PdfmdCore`), and this note.
 Benchmarks/AI2027/
   ai-2027.pdf          pinned source (ai-2027.com/ai-2027.pdf at manifest SHA-256)
   ai-2027-raster.pdf   raster-only twin: same pages as images, no text layer
-  golden.md            frozen independent transcription of the pinned PDF
+  golden.md            independent transcription, including visual figure text
   manifest.json        SHA-256, sizes, thresholds (committed)
 ```
 
@@ -19,25 +19,47 @@ Benchmarks/AI2027/
 
 1. Download the source PDF and check it against the manifest:
    `shasum -a 256 ai-2027.pdf` must match `manifest.json`.
-2. Generate the raster twin (helper in `PDFSource.buildRasterOnlyTwin`,
-   ~300 DPI) and verify `twinHasNativeText` is false.
+2. The raster twin remains a local historical artifact. The Rust CLI has no
+   OCR, so the current benchmark reports the raster track as skipped.
 3. Curate `golden.md` independently of `pdfmd`: PDF native text, geometry,
    visual inspection, and high-quality extractors as signals — never the
    tool's own output. When the live website and the pinned PDF disagree,
    the pinned PDF wins. Record ambiguous inclusion calls here.
 
+The visual transcript appendix records legible printed text inside figures
+and the recurring status cards, keyed by PDF page. Identical repeated card
+labels are listed once; plotted curves and other non-text marks are not
+invented as numeric data.
+
 ## Run
 
 ```bash
-swift run pdfmd-bench ai2027 [--dir Benchmarks/AI2027] [--repair]
+cargo run --release --bin pdfmd-bench -- ai2027 [--dir Benchmarks/AI2027]
 ```
 
-Reports born-digital and raster text-match plus novel-text rates, the worst
-page per track (pages with >=20 aligned tokens only), and exits non-zero when
-the gates miss: >=99% born-digital, >=95% raster with <1% novel text, and no
-substantive raster page below ~85% (plan.md section 11 guardrail).
+Reports born-digital text match and novel-text rates, the worst aligned page,
+and that raster was skipped. The full project target remains >=99% born-digital
+and >=95% raster with <1% novel text; this Rust port is still below the 99%
+born-digital target.
 
-## Baselines (record here as they land)
+## Rust port
+
+- Raw `pdf_oxide::extract_text` — 85.02% match / 8.16% novel against the
+  earlier prose-only golden.
+- Current span-based pipeline — 84.63% match / 5.69% novel against the
+  expanded golden, 0.16 seconds for 71 pages. The earlier 89.77% Rust and
+  89.57% Swift measurements used the prose-only golden, before figure and
+  status-card text was added; they are not directly comparable to this score.
+  The worst interpolated page is 47.93%; raster is skipped because there is
+  no OCR.
+- `cargo test --release` — 13 deterministic tests pass. The benchmark writes
+  the current candidate to `results-deterministic/born.md` and its page drafts
+  to `results-deterministic/born-pages.json`.
+
+## Historical Swift baselines
+
+These measurements are retained for comparison; the Swift implementation was
+removed after the Rust port exceeded its 89.57% result.
 
 - A: `PDFPage.string` only — 93.06% match / 4.7% novel (raw native join vs
   gold; the gap is the curation delta: footnote relocation, dropped running
@@ -75,8 +97,7 @@ substantive raster page below ~85% (plan.md section 11 guardrail).
   row* fixed it without touching any of the existing keep cases.
 - E: + text-only FM repair (macOS 26) — 71.17% born / 71.72% raster (stale,
   pre-D); repair changed nothing measurable and cost 15x wall-clock when
-  last measured against baseline C. Disabled by default until re-measured
-  against D — pass `--repair` to `pdfmd-bench ai2027` to re-measure.
+  last measured against baseline C.
 - Final: + selective multimodal repair (macOS 27+) — _blocked on Xcode 27_
 
 Bugs found and fixed on the way to D (all with regression tests): a greedy
@@ -185,11 +206,11 @@ stream when they disagree):
 - Website cross-check was not needed: the PDF is self-consistent throughout;
   per the spec the PDF would win any disagreement anyway.
 
-## Open gold issues (fix before freezing)
+## Golden curation
 
-- The curation script was a one-off under `/tmp` and is gone. The frozen
-  `golden.md` plus this README are the durable artifacts: `golden.md` is
-  final (hand fixes for the Appendix J table, keep-hyphen compounds, the
-  p20 footnote continuation, and the p70/p71 tail join are already applied
-  in it). Do not regenerate it from a curation script; edit it directly
-  and record every change above.
+- Hand fixes for the Appendix J table, keep-hyphen compounds, the p20 footnote
+  continuation, and the p70/p71 tail join are applied in `golden.md`. Its
+  visual transcript appendix now records legible text in the figures and
+  recurring status cards throughout the PDF. The curation script was a
+  one-off under `/tmp`; edit the local golden against the pinned PDF and
+  record any further scope or inclusion decisions here.

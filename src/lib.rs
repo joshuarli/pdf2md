@@ -3,5 +3,6 @@
 pub mod bench;
 pub mod cli;
 pub mod output;
+pub mod page;
 pub mod pipeline;
 pub mod score;

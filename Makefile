@@ -1,19 +1,19 @@
-NAME      := pdfmd
-BUILD_DIR := .build/release
+CARGO     ?= cargo
 PREFIX    ?= $(HOME)/usr
+TARGET_DIR := target/release
 
 build:
-	swift build -c release
+	$(CARGO) build --release
 
 test:
-	swift test
+	$(CARGO) test --release
 
 install: build
 	mkdir -p $(PREFIX)/bin
-	cp $(BUILD_DIR)/$(NAME) $(PREFIX)/bin/$(NAME)
-	cp $(BUILD_DIR)/pdfmd-bench $(PREFIX)/bin/pdfmd-bench
+	cp $(TARGET_DIR)/pdfmd $(PREFIX)/bin/pdfmd
+	cp $(TARGET_DIR)/pdfmd-bench $(PREFIX)/bin/pdfmd-bench
 
 bench-ai2027:
-	swift run -c release pdfmd-bench ai2027
+	$(CARGO) run --release --bin pdfmd-bench -- ai2027
 
 .PHONY: build test install bench-ai2027

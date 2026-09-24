@@ -7,8 +7,8 @@ use std::path::Path;
 use std::process::ExitCode;
 
 use pdfmd::cli::{CliAction, USAGE, VERSION, parse_arguments};
-use pdfmd::output::write_atomically;
-use pdfmd::pipeline::convert;
+use pdfmd::output::{write_atomically, write_debug_pages};
+use pdfmd::pipeline::convert_with_debug;
 
 fn main() -> ExitCode {
     let options = match parse_arguments(std::env::args().skip(1)) {
@@ -26,7 +26,11 @@ fn main() -> ExitCode {
             return ExitCode::from(2);
         }
     };
-    let conversion = match convert(Path::new(&options.input), options.pages.as_deref()) {
+    let conversion = match convert_with_debug(
+        Path::new(&options.input),
+        options.pages.as_deref(),
+        options.debug_dir.is_some(),
+    ) {
         Ok(c) => c,
         Err(e) => {
             eprintln!("{e}");
@@ -34,6 +38,13 @@ fn main() -> ExitCode {
         }
     };
     let markdown = conversion.markdown();
+    if let Some(directory) = &options.debug_dir {
+        let pages = conversion.debug_pages.as_deref().unwrap_or_default();
+        if let Err(error) = write_debug_pages(Path::new(directory), pages) {
+            eprintln!("pdfmd: cannot write debug output {directory}: {error}");
+            return ExitCode::FAILURE;
+        }
+    }
     let written = match &options.output {
         Some(out) => write_atomically(&markdown, Path::new(out))
             .map_err(|e| format!("pdfmd: cannot write {out}: {e}")),

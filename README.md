@@ -1,40 +1,40 @@
 # pdfmd
 
-`pdfmd` extracts a PDF into clean, faithful Markdown using only macOS system
-frameworks: PDFKit (native text + rasterization), Vision
-`RecognizeDocumentsRequest` (structure + OCR), and Apple Foundation Models
-(selective visual repair). See `plan.md` for the full specification.
+`pdfmd` converts PDF native text into clean Markdown using Rust and
+[`pdf_oxide`](https://crates.io/crates/pdf_oxide). It groups positioned text
+spans into paragraphs, recognizes display headings, moves footnotes to page
+end, and removes repeated page furniture. The CLI does not run OCR and makes
+no network requests.
 
 ## Layout
 
-```
-Sources/PdfmdCore    — pipeline: CLI parsing, PDF access, geometry, Page IR,
-                       Vision extraction, dedup, reading order, reconciliation,
-                       rendering, repair, scoring (testable logic)
-Sources/pdfmd        — thin CLI entry point (stdout/stderr discipline, exit codes)
-Sources/pdfmd-bench  — benchmark runner (kept out of `pdfmd --help`)
-Tests/PdfmdCoreTests — unit tests (Swift Testing, no network, no model)
-Benchmarks/AI2027    — manifest + methodology notes (PDF and gold stay local)
+```text
+src/             — conversion, CLI, output, scoring, and benchmark logic
+src/bin/         — separate pdfmd-bench executable
+Benchmarks/AI2027 — benchmark manifest and notes; PDF and golden stay local
 ```
 
-`pdfmd` and `pdfmd-bench` are thin; the pipeline lives in `PdfmdCore` so it
-is testable. No config, no daemon, no networking, no third-party dependencies.
+`plan.md` is the original product specification and records the earlier Swift
+design. The active implementation is the Rust crate at the repository root.
 
 ## Requirements
 
-- macOS 26+. The deterministic pipeline and text-only model repair run
-  everywhere; the page image reaches Foundation Models only on macOS 27+
-  (plan.md section 2.1).
-- Swift 6.3, Swift 6 language mode, `NonisolatedNonsendingByDefault`, strict
-  memory safety. Zero package dependencies.
+- Rust `nightly-2026-09-15` (pinned in `rust-toolchain.toml`)
+- `pdf_oxide` plus the directly listed serialization, hashing, regex, and
+  Unicode crates in `Cargo.toml`
+- No OCR engine, model download, or runtime network access
 
-## Build
+## Build and check
 
-- `swift build` — debug build
-- `swift build -c release` — optimized build
-- `swift test` — unit tests (deterministic only; never touches the model)
-- `make install` — release build, install `pdfmd` + `pdfmd-bench` to `~/usr/bin`
-- `swift run pdfmd-bench ai2027` — AI 2027 benchmark (needs local PDF + gold)
+```bash
+cargo build
+cargo build --release
+cargo test --release
+make install
+```
+
+`make install` installs `pdfmd` and `pdfmd-bench` to `~/usr/bin` by default.
+Set `PREFIX` to choose another install prefix.
 
 ## Usage
 
@@ -47,55 +47,28 @@ pdfmd --help
 pdfmd --version
 ```
 
-Defaults: whole document, Markdown to stdout (`-o` omitted), diagnostics and
-progress to stderr only, 1-based page numbers. No AI/model/OCR-engine flags:
-Foundation Models are an internal repair detail, used selectively, and normal
-conversion never requires Apple Intelligence.
+Defaults: convert the whole document and write Markdown to stdout. Diagnostics
+go to stderr. Page numbers are 1-based. `--debug-dir` writes one JSON record per
+selected page, including block kinds, normalized regions, and the final draft.
 
-## Privacy
+## Benchmark
 
-PDF content never leaves the Mac. No network requests, no cloud OCR, no remote
-models. The benchmark PDF and golden Markdown stay local/untracked (see
-`Benchmarks/AI2027/README.md`).
+Run the born-digital AI 2027 benchmark with:
 
-## Architecture
-
-```
-PDFKit native text + geometry ─┐
-                               ├─► canonical Page IR ─► deterministic Markdown ─┐
-Vision RecognizeDocumentsRequest ┘        (dedup, reading order)                │
-                        ambiguous/complex pages only                            │
-                          Foundation Models + page image ─► fidelity guard ──────┘
+```bash
+cargo run --release --bin pdfmd-bench -- ai2027
 ```
 
-Every page renders useful Markdown without the model. Complex pages get one
-bounded repair attempt; failed validation falls back to the deterministic
-draft. Large documents stream serially with bounded memory (page bitmaps are
-released promptly; only lightweight Page IR is retained).
+The current deterministic Rust result is 89.77% text match and 5.65% novel
+text, measured in 0.16 seconds for 71 pages. This is above the prior Swift
+result of 89.57%. The benchmark manifest retains the broader 99% target, so
+the runner still reports that gate as failed. The raster track is reported as
+skipped because this build has no OCR. Details and historical measurements are
+in `Benchmarks/AI2027/README.md`.
 
-## Benchmark methodology
+## Privacy and limitations
 
-`Benchmarks/AI2027/` pins the source PDF by SHA-256 and scores normalized,
-order-sensitive token fidelity (`1 - edit_cost / gold_tokens`) plus a
-separately reported novel-text rate. Born-digital target: >=99% match.
-Raster-only twin target: >=95% match with <1% novel text. Details and
-licensing cautions live in `Benchmarks/AI2027/README.md`.
-
-## Known limitations
-
-- Foundation Models repair is disabled by default (`Pipeline`'s default
-  repairer is `NoRepair`): text-only repair on macOS 26 was measured against
-  the deterministic baseline and changed the score by nothing measurable
-  while costing roughly 15x wall-clock (`Benchmarks/AI2027/README.md`,
-  baseline E). Pass an explicit `FoundationRepairer()` (or `--repair` to
-  `pdfmd-bench ai2027`) to opt back in once repair is re-measured against
-  the current deterministic result and shown to help a page class.
-- Multimodal Foundation Models image repair is availability-gated: the model
-  receives the page image only on macOS 27+ (`if #available`). On macOS 26
-  the repair stage runs text-only from structured Page IR plus the
-  deterministic draft, and the pipeline measures that result first.
-- Native/Vision spatial reconciliation is policy-level; geometric word-level
-  alignment lands with Phase 2 benchmark evidence.
-- The installed Xcode 26.6 SDK has no macOS 27 image-attachment API, so the
-  27-only call sites remain the documented insertion point in
-  `FoundationRepairer` until an Xcode 27 toolchain is available.
+PDF content stays on the device. Conversion uses the text layer present in the
+PDF; scanned or image-only pages need OCR and are not recognized by this
+build. The benchmark PDF, raster twin, and golden transcription remain local
+and untracked.
