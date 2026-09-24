@@ -1,0 +1,34 @@
+[package]
+name = "pdfmd"
+version = "0.2.0"
+edition = "2024"
+description = "PDF to faithful Markdown, built on pdf_oxide"
+publish = false
+
+[lib]
+name = "pdfmd"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pdfmd"
+path = "src/main.rs"
+
+[[bin]]
+name = "pdfmd-bench"
+path = "src/bin/pdfmd-bench.rs"
+
+# pdf_oxide is the extraction engine. The other four are already in
+# pdf_oxide's own dependency tree at these versions, so they add no crates
+# to the build. Default features (icc colour management) are irrelevant to
+# text; legacy-crypto keeps RC4/MD5-encrypted PDFs readable.
+[dependencies]
+pdf_oxide = { version = "0.3.78", default-features = false, features = ["legacy-crypto"] }
+regex = "1.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.11"
+unicode-normalization = "0.1.25"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
